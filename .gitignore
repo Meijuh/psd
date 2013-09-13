@@ -1,2 +1,4 @@
 doc/bin/*
 doc/tmp/*
+doc/sim/*.bak
+bin/*
