@@ -73,7 +73,7 @@
           </authors>
           <description />
           <creation-date>09/11/2013 12:37:00</creation-date>
-          <change-date>09/11/2013 17:38:38</change-date>
+          <change-date>09/13/2013 12:03:33</change-date>
           <revision-count>0</revision-count>
           <version />
         </meta>
@@ -458,7 +458,7 @@
               <end-role id="" name="" multiplicity="0..*" navigability="yes" association-type="association" visibility="private" />
             </relation>
           </item>
-          <item id="di942826579556098584" cid="C022" type="class" name="BeanField" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="09/11/2013 15:43:23">
+          <item id="di942826579556098584" cid="C022" type="class" name="ExtraBeanField" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="09/11/2013 15:43:23">
             <stereotypes />
             <tagged-values />
             <associated-diagrams />
@@ -826,13 +826,6 @@
               <start-role id="" name="" navigability="" association-type="association" visibility="private" />
               <end-role id="" name="" multiplicity="1" navigability="yes" association-type="association" visibility="private" />
             </relation>
-          </item>
-          <item id="di711632169249076625" cid="GNR004" type="generalization" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="09/11/2013 16:59:38">
-            <stereotypes />
-            <tagged-values />
-            <associated-diagrams />
-            <owned-items />
-            <style class="default" />
           </item>
           <item id="di209623906689640101" cid="REL005" type="relationship" name="" style-class="default" is-abstract="false" is-root="false" is-leaf="false" is-active="false" creation-date="09/11/2013 17:00:50">
             <stereotypes />
@@ -1647,15 +1640,6 @@
             </layout>
             <relation from="di426987068505835807" from-iid="91b708b74ba84f36ba0e233d1dd60176" to="di649250803472737542" to-iid="a9aa2d2d41ef462093374f4edbc038fe" />
             <role-positions start-role="25,15" end-role="25,-15" start-multiplicity="25,-15" end-multiplicity="25,15" />
-          </item>
-          <item id="di711632169249076625" iid="70b83643ed844368aff7a7ed6ec2b858" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="09/11/2013 16:59:38" order-index="44" type="relation">
-            <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" auto-path="" x1="1550" y1="731" x2="1310" y2="599" start-border-pos="0.935444068908691" end-border-pos="0.435444068908691">
-              <points>
-                <point x="1550" y="731" />
-                <point x="1310" y="599" />
-              </points>
-            </layout>
-            <relation from="di942826579556098584" from-iid="d857b72e71da4f7cb350c1452cd553af" to="di271507668787402632" to-iid="6d58ad332abd4b63973c3f8afb4fe096" />
           </item>
           <item id="di209623906689640101" iid="8784144e37d64f339bc6693079a8d8a0" show-cid="false" show-parent-name="false" show-stereotypes="true" show-tagged-values="false" creation-date="09/11/2013 17:00:50" order-index="45" type="relation">
             <layout line-style="oblique" lock-start-point="false" lock-end-point="false" name-position="10,-10" auto-path="" x1="1623" y1="430" x2="1621" y2="690" start-border-pos="0.625901794433594" end-border-pos="0.126360648018973">
