@@ -1,5 +1,5 @@
 package bohnanza.game.player;
 
-public class Area {
+public abstract class Area {
 
 }

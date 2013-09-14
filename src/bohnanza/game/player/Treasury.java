@@ -1,5 +1,17 @@
 package bohnanza.game.player;
 
-public class Treasury {
+import bohnanza.game.Field;
+import bohnanza.game.factory.CardsAlreadyCreatedException;
+
+public class Treasury extends Field {
+
+    public Treasury() throws CardsAlreadyCreatedException {
+        super();
+    }
+
+    @Override
+    protected void initializeCollection() throws CardsAlreadyCreatedException {
+        // treasury is initially empty
+    }
 
 }

@@ -1,5 +1,7 @@
 package bohnanza.game.gameplay;
 
-public enum GameState {
+public abstract class GameState implements State {
+
+    public abstract void execute(GameContext context);
 
 }

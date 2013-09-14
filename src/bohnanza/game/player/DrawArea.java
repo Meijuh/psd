@@ -1,5 +1,17 @@
 package bohnanza.game.player;
 
-public class DrawArea {
+import bohnanza.game.Field;
+import bohnanza.game.factory.CardsAlreadyCreatedException;
+
+public class DrawArea extends Field {
+
+    protected DrawArea() throws CardsAlreadyCreatedException {
+        super();
+    }
+
+    @Override
+    protected void initializeCollection() throws CardsAlreadyCreatedException {
+        // draw area is initially empty
+    }
 
 }
