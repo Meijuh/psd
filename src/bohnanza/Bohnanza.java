@@ -11,6 +11,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import bohnanza.game.factory.CardsAlreadyCreatedException;
 import bohnanza.game.gameplay.GameContext;
 
 public class Bohnanza {
@@ -57,7 +58,11 @@ public class Bohnanza {
                 int playerCount = Integer.parseInt(commandLine
                         .getOptionValue(OPTION_PLAYERS));
 
-                GameContext.getInstance(playerCount).execute();
+                GameContext gameContext = GameContext.getInstance(playerCount);
+
+                while (gameContext.getState() != null) {
+                    gameContext.execute();
+                }
 
             }
         } catch (ParseException e) {
@@ -66,6 +71,8 @@ public class Bohnanza {
         } catch (NumberFormatException e) {
             LOGGER.log(Level.SEVERE,
                     String.format(NOT_A_NUMBER, e.getMessage()));
+        } catch (CardsAlreadyCreatedException e) {
+            LOGGER.log(Level.SEVERE, e.getMessage());
         }
     }
 }

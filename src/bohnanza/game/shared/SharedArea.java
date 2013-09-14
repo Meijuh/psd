@@ -17,6 +17,8 @@ public class SharedArea {
 
     private final DiscardPile discardPile;
 
+    private static final int INITIAL_HAND_SIZE = 5;
+
     private SharedArea() throws CardsAlreadyCreatedException {
         drawDeck = DrawDeck.getInstance();
         discardPile = DiscardPile.getInstance();
@@ -31,4 +33,7 @@ public class SharedArea {
         return instance;
     }
 
+    public DrawDeck getDrawDeck() {
+        return drawDeck;
+    }
 }

@@ -15,4 +15,8 @@ public class Hand extends Deck<Bean> {
         // hand is initially empty
     }
 
+    public void add(Bean card) {
+        getCards().add(card);
+    }
+
 }

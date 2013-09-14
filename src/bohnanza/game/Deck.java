@@ -10,4 +10,8 @@ public abstract class Deck<E extends Card> extends
     protected Deck() throws CardsAlreadyCreatedException {
         super(new LinkedList<E>());
     }
+
+    public E draw() {
+        return getCards().pop();
+    }
 }

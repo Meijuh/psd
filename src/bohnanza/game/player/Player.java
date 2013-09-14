@@ -1,16 +1,17 @@
 package bohnanza.game.player;
 
+import bohnanza.game.factory.CardsAlreadyCreatedException;
+
 public class Player {
 
-    private final Age age;
-
-    private final String name;
+    private String name;
 
     private Player leftPlayer;
 
-    public Player(Age age, String name) {
-        this.age = age;
-        this.name = name;
+    private final Hand hand;
+
+    public Player() throws CardsAlreadyCreatedException {
+        hand = new Hand();
     }
 
     public void setLeftPlayer(Player player) {
@@ -21,16 +22,20 @@ public class Player {
         return leftPlayer;
     }
 
-    public Age getAge() {
-        return age;
-    }
-
     @Override
     public String toString() {
         return getName();
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public Hand getHand() {
+        return hand;
     }
 }
