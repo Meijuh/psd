@@ -5,7 +5,7 @@ import bohnanza.game.Beanometer;
 
 public class Cocoa extends Bean {
 
-    private static final String TYPE = "cocoa";
+    public static final String TYPE = "cocoa";
 
     Cocoa(Beanometer beanometer) {
         super(TYPE, beanometer);

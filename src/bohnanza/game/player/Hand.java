@@ -19,4 +19,12 @@ public class Hand extends Deck<Bean> {
         getCards().add(card);
     }
 
+    public int size() {
+        return getCards().size();
+    }
+
+    public Bean get(int number) {
+        return getCards().get(number);
+    }
+
 }

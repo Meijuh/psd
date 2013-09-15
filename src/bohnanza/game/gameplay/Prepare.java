@@ -42,6 +42,7 @@ public class Prepare extends GameState {
         for (Player player : players) {
 
             player.setLeftPlayer(players.get(playerNumber + 1 % players.size()));
+            player.setPlayerNumber(playerNumber + 1);
 
             playerNumber++;
         }

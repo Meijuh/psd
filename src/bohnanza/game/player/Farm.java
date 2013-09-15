@@ -1,19 +1,59 @@
 package bohnanza.game.player;
 
 import bohnanza.game.factory.CardsAlreadyCreatedException;
+import bohnanza.game.factory.ThirdBeanField;
 
 public class Farm {
 
-    private final Bean firstField;
+    public static final int FIRST = 1;
 
-    private final Bean secondField;
+    public static final int SECOND = 2;
 
-    private final Bean thirdField;
+    public static final int THIRD = 3;
+
+    private final BeanField firstBeanField;
+
+    private final BeanField secondBeanField;
+
+    private final BeanField thirdBeanField;
+
+    private ThirdBeanField thirdBeanFieldCard;
 
     public Farm() throws CardsAlreadyCreatedException {
-        firstField = new Bean();
-        secondField = new Bean();
-        thirdField = null;
+        firstBeanField = new BeanField();
+        secondBeanField = new BeanField();
+        thirdBeanField = null;
+        thirdBeanFieldCard = null;
+    }
+
+    public BeanField getBeanField(int nr) throws FarmException {
+        BeanField beanField = null;
+        switch (nr) {
+        case FIRST:
+            beanField = firstBeanField;
+            break;
+        case SECOND:
+            beanField = secondBeanField;
+            break;
+        case THIRD:
+            if (hasThirdBeanField()) {
+                beanField = thirdBeanField;
+            } else {
+                throw new FarmException(FarmException.THIRD_FIELD);
+            }
+            break;
+        default:
+            throw new FarmException(FarmException.NO_FIELD);
+        }
+        return beanField;
+    }
+
+    public void setThirdBeanField(ThirdBeanField thirdBeanField) {
+        this.thirdBeanFieldCard = thirdBeanField;
+    }
+
+    public boolean hasThirdBeanField() {
+        return this.thirdBeanFieldCard != null;
     }
 
 }

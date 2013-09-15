@@ -5,7 +5,7 @@ import bohnanza.game.Beanometer;
 
 public class Stink extends Bean {
 
-    private static final String TYPE = "stink";
+    public static final String TYPE = "stink";
 
     Stink(Beanometer beanometer) {
         super(TYPE, beanometer);

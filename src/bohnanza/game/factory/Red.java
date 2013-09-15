@@ -5,7 +5,7 @@ import bohnanza.game.Beanometer;
 
 public class Red extends Bean {
 
-    private static final String TYPE = "red";
+    public static final String TYPE = "red";
 
     Red(Beanometer beanometer) {
         super(TYPE, beanometer);

@@ -5,7 +5,7 @@ import bohnanza.game.Beanometer;
 
 public class Wax extends Bean {
 
-    private static final String TYPE = "wax";
+    public static final String TYPE = "wax";
 
     Wax(Beanometer beanometer) {
         super(TYPE, beanometer);

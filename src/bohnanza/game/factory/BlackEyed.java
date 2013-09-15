@@ -5,7 +5,7 @@ import bohnanza.game.Beanometer;
 
 public class BlackEyed extends Bean {
 
-    private static final String TYPE = "Black-eyed";
+    public static final String TYPE = "black-eyed";
 
     BlackEyed(Beanometer beanometer) {
         super(TYPE, beanometer);

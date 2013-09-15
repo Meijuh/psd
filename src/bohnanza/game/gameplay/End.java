@@ -10,7 +10,8 @@ public class End extends GameState {
 
     @Override
     public void execute(GameContext context) {
-        // TODO Auto-generated method stub
+        context.setExitStatus(0);
+        context.changeState(null);
 
     }
 

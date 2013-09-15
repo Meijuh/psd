@@ -1,5 +1,8 @@
 package bohnanza.game.shared;
 
+import java.util.HashSet;
+
+import bohnanza.game.Bean;
 import bohnanza.game.Field;
 import bohnanza.game.factory.CardsAlreadyCreatedException;
 
@@ -22,6 +25,10 @@ public class DiscardPile extends Field {
         }
 
         return instance;
+    }
+
+    public void discard(HashSet<Bean> beans) {
+        getCards().addAll(beans);
     }
 
 }

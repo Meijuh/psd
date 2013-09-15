@@ -64,6 +64,8 @@ public class Bohnanza {
                     gameContext.execute();
                 }
 
+                System.exit(gameContext.getExitStatus());
+
             }
         } catch (ParseException e) {
             LOGGER.log(Level.SEVERE,
@@ -74,5 +76,6 @@ public class Bohnanza {
         } catch (CardsAlreadyCreatedException e) {
             LOGGER.log(Level.SEVERE, e.getMessage());
         }
+        System.exit(1);
     }
 }

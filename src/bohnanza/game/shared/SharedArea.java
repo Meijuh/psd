@@ -3,6 +3,9 @@
  */
 package bohnanza.game.shared;
 
+import java.util.HashSet;
+
+import bohnanza.game.Bean;
 import bohnanza.game.factory.CardsAlreadyCreatedException;
 
 /**
@@ -35,5 +38,9 @@ public class SharedArea {
 
     public DrawDeck getDrawDeck() {
         return drawDeck;
+    }
+
+    public void discard(HashSet<Bean> beans) {
+        discardPile.discard(beans);
     }
 }

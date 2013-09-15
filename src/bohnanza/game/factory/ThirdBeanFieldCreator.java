@@ -21,12 +21,4 @@ public class ThirdBeanFieldCreator extends CardCreator<ThirdBeanField> {
 
         return instance;
     }
-
-    public static final BlackEyedCreator getInstance() {
-        if (instance == null) {
-            instance = new BlackEyedCreator();
-        }
-
-        return instance;
-    }
 }

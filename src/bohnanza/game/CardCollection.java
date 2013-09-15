@@ -25,4 +25,8 @@ public abstract class CardCollection<ECard extends Card, ECollection extends Col
         this.cards.addAll(cards);
     }
 
+    public boolean hasCards() {
+        return cards.size() > 0;
+    }
+
 }

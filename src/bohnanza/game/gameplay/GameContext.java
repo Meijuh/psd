@@ -19,6 +19,10 @@ public class GameContext {
 
     private final SharedArea sharedArea;
 
+    private Player currentPlayer;
+
+    private int exitStatus;
+
     private GameContext(int playerCount) throws CardsAlreadyCreatedException {
         players = new HashSet<Player>(playerCount);
 
@@ -66,6 +70,22 @@ public class GameContext {
 
     public SharedArea getSharedArea() {
         return sharedArea;
+    }
+
+    public void setCurrentPlayer(Player player) {
+        currentPlayer = player;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setExitStatus(int exitStatus) {
+        this.exitStatus = exitStatus;
+    }
+
+    public int getExitStatus() {
+        return this.exitStatus;
     }
 
 }
