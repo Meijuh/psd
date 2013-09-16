@@ -2,6 +2,7 @@ package bohnanza.game.player;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
+import bohnanza.game.Type;
 import bohnanza.game.factory.CardsAlreadyCreatedException;
 
 public class DrawArea extends Field {
@@ -21,6 +22,20 @@ public class DrawArea extends Field {
 
     public void remove(Bean bean) {
         getCards().remove(bean);
+    }
+
+    public Bean getBean(Type type) {
+        Bean bean = null;
+
+        while (bean == null) {
+            Bean next = getCards().iterator().next();
+
+            if (type.isType(next)) {
+                bean = next;
+            }
+        }
+
+        return bean;
     }
 
 }

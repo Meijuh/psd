@@ -3,6 +3,7 @@ package bohnanza.game.player;
 import java.util.HashSet;
 
 import bohnanza.game.Bean;
+import bohnanza.game.Type;
 import bohnanza.game.factory.CardsAlreadyCreatedException;
 import bohnanza.game.shared.SharedArea;
 
@@ -81,5 +82,13 @@ public class Player {
 
     public void keep(Bean bean) {
         playerArea.keep(bean);
+    }
+
+    public boolean hasDrawAreaCards() {
+        return getDrawAreaCards().size() > 0;
+    }
+
+    public Bean getDrawAreaCard(Type type) {
+        return playerArea.getDrawAreaCard(type);
     }
 }

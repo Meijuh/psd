@@ -1,6 +1,6 @@
 package bohnanza.game;
 
-public abstract class Card {
+public abstract class Card implements CardType {
 
     private final String type;
 

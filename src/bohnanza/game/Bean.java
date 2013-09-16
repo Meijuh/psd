@@ -1,6 +1,6 @@
 package bohnanza.game;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import bohnanza.game.factory.BlackEyed;
 import bohnanza.game.factory.Blue;
@@ -27,23 +27,28 @@ public abstract class Bean extends Card {
         return beanometer;
     }
 
-    public static final HashSet<String> getBeanTypes() {
+    public static final HashMap<Integer, String> getBeanTypes() {
 
-        HashSet<String> result = new HashSet<String>();
+        HashMap<Integer, String> result = new HashMap<Integer, String>();
 
-        result.add(BlackEyed.TYPE);
-        result.add(Blue.TYPE);
-        result.add(Chili.TYPE);
-        result.add(Cocoa.TYPE);
-        result.add(Coffee.TYPE);
-        result.add(Garden.TYPE);
-        result.add(Green.TYPE);
-        result.add(Red.TYPE);
-        result.add(Soy.TYPE);
-        result.add(Stink.TYPE);
-        result.add(Wax.TYPE);
+        result.put(1, BlackEyed.TYPE);
+        result.put(2, Blue.TYPE);
+        result.put(3, Chili.TYPE);
+        result.put(4, Cocoa.TYPE);
+        result.put(5, Coffee.TYPE);
+        result.put(6, Garden.TYPE);
+        result.put(7, Green.TYPE);
+        result.put(8, Red.TYPE);
+        result.put(9, Soy.TYPE);
+        result.put(10, Stink.TYPE);
+        result.put(11, Wax.TYPE);
 
         return result;
+    }
+
+    @Override
+    public int hashCode() {
+        return Type.getType(getType()).ordinal();
     }
 
 }

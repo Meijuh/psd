@@ -1,9 +1,11 @@
 package bohnanza.game.gameplay;
 
+import java.util.Collection;
 import java.util.HashSet;
 
-import bohnanza.View;
 import bohnanza.game.Bean;
+import bohnanza.game.Type;
+import bohnanza.game.player.Player;
 
 public class SecondTurn extends GameState {
 
@@ -16,28 +18,44 @@ public class SecondTurn extends GameState {
     @Override
     public void execute(GameContext context) {
 
-        context.getCurrentPlayer().drawTwoCards();
+        Collection<Bean> cardsFromHand;
+        Collection<Bean> cardsFromDrawArea;
 
-        HashSet<Bean> beansInDrawArea = context.getCurrentPlayer()
-                .getDrawAreaCards();
-
-        for (Bean bean : beansInDrawArea) {
-            if (context.getView().askKeepCard(context.getCurrentPlayer(), bean)) {
-                context.getCurrentPlayer().keep(bean);
-            }
+        if (context.getCurrentPlayer().hasDrawAreaCards()) {
+            cardsFromDrawArea = context.getView().getOptionsFromDrawArea(
+                    context.getCurrentPlayer().getDrawAreaCards());
+        } else {
+            cardsFromDrawArea = new HashSet<Bean>();
         }
-        
-        if ()
 
-        String area = context.getView().selectCollection(
-                context.getCurrentPlayer());
+        if (context.getCurrentPlayer().getHand().hasCards()) {
+            cardsFromHand = context.getView().getOptionsFromHand(
+                    context.getCurrentPlayer().getHand().getCards());
+        } else {
+            cardsFromHand = new HashSet<Bean>();
+        }
 
-        switch (area) {
-        case View.DRAW_AREA:
+        Collection<Type> proposal = context.getView().getOptionsFromType(
+                Type.getList());
 
-            break;
-        case View.HAND:
-            break;
+        Player tradepartner = context.getView().getTradePartner(proposal,
+                cardsFromDrawArea, cardsFromHand, context.getCurrentPlayer());
+
+        Collection<Bean> counterProposal = context.getView()
+                .getOptionsFromHand(tradepartner.getHand().getCards());
+
+        if (counterProposal != null) {
+            boolean confirmTrade = context.getView().confirmTrade(
+                    cardsFromDrawArea, cardsFromHand, tradepartner,
+                    counterProposal);
+
+            context.getCurrentPlayer().receiveFromHand(counterProposal,
+                    tradepartner);
+            tradepartner.receiveFromHand(cardsFromHand,
+                    context.getCurrentPlayer());
+            tradepartner.receiveFromDrawArea(cardsFromDrawArea,
+                    context.getCurrentPlayer());
+
         }
 
     }
