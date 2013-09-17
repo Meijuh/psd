@@ -1,30 +1,27 @@
-package bohnanza;
+package bohnanza.view;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Scanner;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Type;
 import bohnanza.game.player.Player;
 
-public class View {
+public class TUIView extends View {
 
     private static final String EMPTY_STRING = "";
 
-    public static final String KEEP = "Do you want to keep the '%s' card? (y/n)";
+    private static final String YES = "y";
 
-    public static final String YES = "y";
-
-    public static final String NO = "n";
+    private static final String NO = "n";
 
     private static final String NAME = "Enter player name %d:";
 
     private static final String MUST_PLANT = "You must plant your first card. Type the bean field number (1..%d) to plant in. Non empty bean fields will be harvested and sold.";
 
     private static final String MAY_PLANT = "You may plant your next first card. Type the bean field number (1..%d) to plant in. Non empty bean fields will be harvested and sold. Press enter to skip.";
-
-    private static final String SELECT_AREA = "Select an area; h = hand, d = draw area:";
 
     private static final String SELECT_DRAW_AREA = "Select the type of beans from your draw area (seperate them by an enter, blank line ends selection, may select none):";
 
@@ -40,18 +37,34 @@ public class View {
 
     private static final String SELECT_TYPE = "Select the type of beans (seperate them by an enter, blank line ends selection, may select none):";
 
+    private static final String SELECT_KEEP_CARD = "Select the type of bean from your keep area (1..n):";
+
+    private static final String BUY = "Do you want to buy a third bean field? (y/n):";
+
     private final Scanner scanner;
 
-    public View() {
+    public TUIView() {
         scanner = new Scanner(System.in);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getName(int)
+     */
+    @Override
     public String getName(int player) {
         System.out.println(String.format(NAME, player));
 
         return scanner.nextLine();
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#mustPlant(bohnanza.game.player.Player)
+     */
+    @Override
     public int mustPlant(Player player) {
 
         int beanField = -1;
@@ -71,6 +84,12 @@ public class View {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#mayPlant(bohnanza.game.player.Player)
+     */
+    @Override
     public int mayPlant(Player player) {
 
         int beanField = -1;
@@ -93,22 +112,6 @@ public class View {
 
     }
 
-    public String selectCollection(Player currentPlayer) {
-
-        String line = null;
-
-        while (line == null || (!line.equals(HAND) && !line.equals(DRAW_AREA))) {
-            System.out.println(SELECT_AREA);
-            line = scanner.nextLine();
-        }
-
-        return line;
-    }
-
-    public boolean askKeepCard(Player currentPlayer, Bean bean) {
-        return confirm(String.format(KEEP, bean));
-    }
-
     private boolean confirm(String message) {
         String line = null;
 
@@ -123,14 +126,72 @@ public class View {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromHand(java.util.Collection)
+     */
+    @Override
     public Collection<Bean> getOptionsFromHand(Collection<Bean> options) {
         return getOptions(options, SELECT_HAND);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromDrawArea(java.util.Collection)
+     */
+    @Override
     public Collection<Bean> getOptionsFromDrawArea(Collection<Bean> options) {
         return getOptions(options, SELECT_DRAW_AREA);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionFromKeepArea(java.util.Collection)
+     */
+    @Override
+    public Bean getOptionFromKeepArea(Collection<Bean> options) {
+        Bean result = null;
+
+        while (result == null) {
+            System.out.println(SELECT_KEEP_CARD);
+
+            showOptions(options);
+
+            String line = scanner.nextLine();
+
+            try {
+                int number = Integer.parseInt(line);
+
+                if (0 < number && number < options.size()) {
+
+                    int i = 1;
+                    while (options.iterator().hasNext()) {
+
+                        if (i == number) {
+                            result = options.iterator().next();
+                        }
+
+                        i++;
+                    }
+                }
+
+            } catch (NumberFormatException e) {
+                // try again
+            }
+        }
+
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromType(java.util.Collection)
+     */
+    @Override
     public Collection<Type> getOptionsFromType(Collection<Type> options) {
         return getOptions(options, SELECT_TYPE);
     }
@@ -187,6 +248,13 @@ public class View {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getTradePartner(java.util.Collection,
+     * java.util.Collection, java.util.Collection, bohnanza.game.player.Player)
+     */
+    @Override
     public Player getTradePartner(Collection<Type> proposal,
             Collection<Bean> cardsFromDrawArea, Collection<Bean> cardsFromHand,
             Player currentPlayer) {
@@ -212,16 +280,46 @@ public class View {
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#askTrade()
+     */
+    @Override
     public boolean askTrade() {
         return confirm(ASK_TRADE);
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#confirmTrade(java.util.Collection,
+     * java.util.Collection, bohnanza.game.player.Player, java.util.Collection)
+     */
+    @Override
     public boolean confirmTrade(Collection<Bean> cardsFromDrawArea,
             Collection<Bean> cardsFromHand, Player acceptingPlayer,
             Collection<Bean> counterProposal) {
 
         return confirm(String.format(CONFIRM_TRADE, counterProposal,
                 acceptingPlayer, cardsFromHand, cardsFromDrawArea));
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#confirmBuy()
+     */
+    @Override
+    public boolean confirmBuy() {
+        return confirm(BUY);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+        System.out.println(o);
 
     }
 }

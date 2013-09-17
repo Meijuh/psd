@@ -1,18 +1,19 @@
 package bohnanza.game.player;
 
+import java.util.Collection;
+
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
 import bohnanza.game.Type;
-import bohnanza.game.factory.CardsAlreadyCreatedException;
 
 public class DrawArea extends Field {
 
-    protected DrawArea() throws CardsAlreadyCreatedException {
+    protected DrawArea() {
         super();
     }
 
     @Override
-    protected void initializeCollection() throws CardsAlreadyCreatedException {
+    protected void initializeCollection() {
         // draw area is initially empty
     }
 
@@ -20,8 +21,8 @@ public class DrawArea extends Field {
         getCards().add(bean);
     }
 
-    public void remove(Bean bean) {
-        getCards().remove(bean);
+    public void remove(Collection<Bean> beans) {
+        getCards().remove(beans);
     }
 
     public Bean getBean(Type type) {

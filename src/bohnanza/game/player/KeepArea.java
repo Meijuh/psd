@@ -1,29 +1,29 @@
 package bohnanza.game.player;
 
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.Set;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
-import bohnanza.game.factory.CardsAlreadyCreatedException;
 
 public class KeepArea extends Field {
 
-    protected KeepArea() throws CardsAlreadyCreatedException {
+    protected KeepArea() {
         super();
     }
 
     @Override
-    protected void initializeCollection() throws CardsAlreadyCreatedException {
+    protected void initializeCollection() {
         // keep area is initially empty.
     }
 
     @Override
-    public HashSet<Bean> getCards() {
+    public Set<Bean> getCards() {
         return super.getCards();
     }
 
-    public void add(Bean bean) {
-        getCards().add(bean);
+    public void add(Collection<Bean> counterProposal) {
+        getCards().addAll(counterProposal);
     }
 
 }

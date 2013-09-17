@@ -8,7 +8,8 @@ import bohnanza.game.Card;
 public abstract class CardCreator<E extends Card> {
 
     private final int amount;
-    private boolean cardsCreated;
+
+    private final boolean cardsCreated;
 
     protected CardCreator(int amount) {
         this.amount = amount;
@@ -17,22 +18,18 @@ public abstract class CardCreator<E extends Card> {
 
     protected abstract E createCard();
 
-    public Collection<E> createCards() throws CardsAlreadyCreatedException {
+    public Collection<E> createCards() {
 
-        if (cardsCreated) {
-            throw new CardsAlreadyCreatedException();
-        } else {
+        Collection<E> cards = new HashSet<E>();
 
-            Collection<E> cards = new HashSet<E>();
+        if (!cardsCreated) {
 
             for (int i = 0; i < amount; i++) {
                 cards.add(createCard());
             }
-
-            cardsCreated = true;
-
-            return cards;
         }
+
+        return cards;
 
     }
 }

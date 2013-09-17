@@ -1,17 +1,15 @@
 package bohnanza.game;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
-import bohnanza.game.factory.CardsAlreadyCreatedException;
+public abstract class Deck<E extends Card> extends CardCollection<E, Queue<E>> {
 
-public abstract class Deck<E extends Card> extends
-        CardCollection<E, LinkedList<E>> {
-
-    protected Deck() throws CardsAlreadyCreatedException {
+    protected Deck() {
         super(new LinkedList<E>());
     }
 
     public E draw() {
-        return getCards().pop();
+        return getCards().remove();
     }
 }

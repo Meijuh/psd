@@ -11,8 +11,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
-import bohnanza.game.factory.CardsAlreadyCreatedException;
-import bohnanza.game.gameplay.GameContext;
+import bohnanza.gameplay.GameContext;
 
 public class Bohnanza {
 
@@ -73,8 +72,6 @@ public class Bohnanza {
         } catch (NumberFormatException e) {
             LOGGER.log(Level.SEVERE,
                     String.format(NOT_A_NUMBER, e.getMessage()));
-        } catch (CardsAlreadyCreatedException e) {
-            LOGGER.log(Level.SEVERE, e.getMessage());
         }
         System.exit(1);
     }

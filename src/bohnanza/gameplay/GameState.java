@@ -1,4 +1,4 @@
-package bohnanza.game.gameplay;
+package bohnanza.gameplay;
 
 public abstract class GameState {
 

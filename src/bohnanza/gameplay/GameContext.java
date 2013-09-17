@@ -1,19 +1,22 @@
-package bohnanza.game.gameplay;
+package bohnanza.gameplay;
 
 import java.util.HashSet;
+import java.util.Set;
 
-import bohnanza.View;
-import bohnanza.game.factory.CardsAlreadyCreatedException;
 import bohnanza.game.player.Player;
 import bohnanza.game.shared.SharedArea;
+import bohnanza.view.TUIView;
+import bohnanza.view.View;
 
 public class GameContext {
+
+    private static final int THREE = 3;
 
     private GameState current;
 
     private static GameContext instance = null;
 
-    private final HashSet<Player> players;
+    private final Set<Player> players;
 
     private final View view;
 
@@ -23,16 +26,21 @@ public class GameContext {
 
     private int exitStatus;
 
-    private GameContext(int playerCount) throws CardsAlreadyCreatedException {
+    private int drawDeckExhaustedCount;
+
+    private GameContext(int playerCount) {
         players = new HashSet<Player>(playerCount);
+        drawDeckExhaustedCount = 0;
 
         for (int i = 0; i < playerCount; i++) {
             players.add(new Player());
         }
 
-        view = new View();
+        view = new TUIView();
         sharedArea = SharedArea.getInstance();
         current = Prepare.getInstance();
+
+        sharedArea.addObserver(view);
     }
 
     public void changeState(GameState gameState) {
@@ -47,8 +55,7 @@ public class GameContext {
         current.execute(this);
     }
 
-    public static GameContext getInstance(int players)
-            throws CardsAlreadyCreatedException {
+    public static GameContext getInstance(int players) {
         if (instance == null) {
             instance = new GameContext(players);
         }
@@ -64,7 +71,7 @@ public class GameContext {
         return view;
     }
 
-    public HashSet<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
@@ -86,6 +93,14 @@ public class GameContext {
 
     public int getExitStatus() {
         return this.exitStatus;
+    }
+
+    public void increaseDrawDeckExhausted() {
+        drawDeckExhaustedCount++;
+    }
+
+    public boolean isDrawDeckExhaustedThreeTimes() {
+        return drawDeckExhaustedCount == THREE;
     }
 
 }

@@ -1,6 +1,6 @@
 package bohnanza.game.player;
 
-import bohnanza.game.factory.CardsAlreadyCreatedException;
+import bohnanza.game.Bean;
 import bohnanza.game.factory.ThirdBeanField;
 
 public class Farm {
@@ -19,7 +19,7 @@ public class Farm {
 
     private ThirdBeanField thirdBeanFieldCard;
 
-    public Farm() throws CardsAlreadyCreatedException {
+    Farm() {
         firstBeanField = new BeanField();
         secondBeanField = new BeanField();
         thirdBeanField = null;
@@ -48,12 +48,16 @@ public class Farm {
         return beanField;
     }
 
-    public void setThirdBeanField(ThirdBeanField thirdBeanField) {
-        this.thirdBeanFieldCard = thirdBeanField;
+    public void setThirdBeanFieldCard(ThirdBeanField thirdBeanFieldCard) {
+        this.thirdBeanFieldCard = thirdBeanFieldCard;
     }
 
     public boolean hasThirdBeanField() {
         return this.thirdBeanFieldCard != null;
+    }
+
+    public void plant(int beanFieldNumber, Bean bean) throws FarmException {
+        getBeanField(beanFieldNumber).plant(bean);
     }
 
 }

@@ -16,7 +16,7 @@ import bohnanza.game.factory.Soy;
 import bohnanza.game.factory.Stink;
 import bohnanza.game.factory.Wax;
 
-public enum Type implements CardType {
+public enum Type {
 
     BLACK_EYED, BLUE, CHILI, COCOA, COFFEE, GARDEN, GREEN, RED, SOY, STINK, WAX;
 

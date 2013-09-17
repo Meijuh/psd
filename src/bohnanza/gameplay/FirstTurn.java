@@ -1,4 +1,4 @@
-package bohnanza.game.gameplay;
+package bohnanza.gameplay;
 
 import bohnanza.game.player.FarmException;
 

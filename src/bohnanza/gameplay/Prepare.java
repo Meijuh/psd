@@ -1,4 +1,4 @@
-package bohnanza.game.gameplay;
+package bohnanza.gameplay;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +8,8 @@ import bohnanza.game.player.Player;
 public class Prepare extends GameState {
 
     private static Prepare instance = null;
+
+    private static final int HAND_SIZE = 5;
 
     private Prepare() {
         super();
@@ -47,7 +49,13 @@ public class Prepare extends GameState {
             playerNumber++;
         }
 
-        context.changeState(Deal.getInstance());
+        for (Player player : context.getPlayers()) {
+            for (int i = 0; i < HAND_SIZE; i++) {
+                player.getHand().add(context.getSharedArea().draw());
+            }
+        }
+
+        context.changeState(FirstTurn.getInstance());
 
     }
 }

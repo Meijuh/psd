@@ -1,12 +1,11 @@
 package bohnanza.game;
 
 import java.util.HashSet;
+import java.util.Set;
 
-import bohnanza.game.factory.CardsAlreadyCreatedException;
+public abstract class Field extends CardCollection<Bean, Set<Bean>> {
 
-public abstract class Field extends CardCollection<Bean, HashSet<Bean>> {
-
-    protected Field() throws CardsAlreadyCreatedException {
+    protected Field() {
         super(new HashSet<Bean>());
     }
 

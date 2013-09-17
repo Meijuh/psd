@@ -1,20 +1,20 @@
 package bohnanza.game.player;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Deck;
-import bohnanza.game.factory.CardsAlreadyCreatedException;
 
 public class Hand extends Deck<Bean> {
 
-    protected Hand() throws CardsAlreadyCreatedException {
+    protected Hand() {
         super();
     }
 
     @Override
-    protected void initializeCollection() throws CardsAlreadyCreatedException {
+    protected void initializeCollection() {
         // hand is initially empty
     }
 
@@ -35,14 +35,18 @@ public class Hand extends Deck<Bean> {
         return getCards();
     }
 
-    public HashSet<Bean> get(HashSet<Integer> numbers) {
-        HashSet<Bean> result = new HashSet<Bean>();
+    public Collection<Bean> get(Collection<Integer> numbers) {
+        Collection<Bean> result = new HashSet<Bean>();
 
         for (Integer number : numbers) {
             result.add(get(number));
         }
 
         return result;
+    }
+
+    public void remove(Collection<Bean> counterProposal) {
+        getCards().removeAll(counterProposal);
     }
 
 }
