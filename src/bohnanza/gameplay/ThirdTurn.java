@@ -6,10 +6,12 @@ import bohnanza.game.player.Player;
 
 public class ThirdTurn extends GameState {
 
+    private static final String NAME = "third turn";
+
     private static ThirdTurn instance = null;
 
     private ThirdTurn() {
-        super();
+        super(NAME);
     }
 
     @Override

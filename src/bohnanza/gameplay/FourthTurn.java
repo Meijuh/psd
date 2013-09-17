@@ -1,25 +1,25 @@
 package bohnanza.gameplay;
 
-import bohnanza.game.shared.SharedArea;
-
 public class FourthTurn extends GameState {
 
     private static FourthTurn instance = null;
 
+    private static final String NAME = "fourth turn";
+
     private FourthTurn() {
-        super();
+        super(NAME);
     }
 
     @Override
     public void execute(GameContext context) {
 
-        if (!SharedArea.getInstance().canDrawThreeCards()) {
+        if (!context.getCurrentPlayer().canDrawThreeCards()) {
             context.increaseDrawDeckExhausted();
 
             if (context.isDrawDeckExhaustedThreeTimes()) {
                 context.changeState(End.getInstance());
             } else {
-                SharedArea.getInstance().shuffle();
+                context.getCurrentPlayer().shuffle();
 
                 drawAndContinue(context);
             }

@@ -18,9 +18,9 @@ import bohnanza.game.factory.WaxCreator;
 
 public class DiscardPile extends Field {
 
-    private static DiscardPile instance = null;
+    private static final String TO_STRING_MESSAGE = "discarded: %d";
 
-    private DiscardPile() {
+    DiscardPile() {
         super();
     }
 
@@ -39,16 +39,13 @@ public class DiscardPile extends Field {
         addAll(WaxCreator.getInstance().createCards());
     }
 
-    static final DiscardPile getInstance() {
-        if (instance == null) {
-            instance = new DiscardPile();
-        }
-
-        return instance;
+    public void discard(Collection<Bean> beans) {
+        getCards().addAll(beans);
     }
 
-    void discard(Collection<Bean> beans) {
-        getCards().addAll(beans);
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, getCards().size());
     }
 
 }

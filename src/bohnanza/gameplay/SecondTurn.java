@@ -6,14 +6,15 @@ import java.util.HashSet;
 import bohnanza.game.Bean;
 import bohnanza.game.Type;
 import bohnanza.game.player.Player;
-import bohnanza.game.shared.SharedArea;
 
 public class SecondTurn extends GameState {
+
+    private static final String NAME = "second turn";
 
     private static SecondTurn instance = null;
 
     private SecondTurn() {
-        super();
+        super(NAME);
     }
 
     @Override
@@ -23,13 +24,13 @@ public class SecondTurn extends GameState {
         Collection<Bean> cardsFromDrawArea = new HashSet<Bean>();
         Collection<Type> proposal;
 
-        if (SharedArea.getInstance().canDrawTwoCards()) {
+        if (context.getCurrentPlayer().canDrawTwoCards()) {
             context.getCurrentPlayer().drawTwoCards();
-        } else if (SharedArea.getInstance().canDrawOneCard()) {
+        } else if (context.getCurrentPlayer().canDrawOneCard()) {
             context.getCurrentPlayer().drawOneCard();
         } else {
             context.increaseDrawDeckExhausted();
-            SharedArea.getInstance().shuffle();
+            context.getCurrentPlayer().shuffle();
         }
 
         if (context.getCurrentPlayer().hasDrawAreaCards()) {
@@ -37,9 +38,9 @@ public class SecondTurn extends GameState {
                     context.getCurrentPlayer().getDrawAreaCards());
         }
 
-        if (context.getCurrentPlayer().getHand().hasCards()) {
+        if (context.getCurrentPlayer().hasCardsInHand()) {
             cardsFromHand = context.getView().getOptionsFromHand(
-                    context.getCurrentPlayer().getHand().getCards());
+                    context.getCurrentPlayer().getCardsFromHand());
         }
 
         proposal = context.getView().getOptionsFromType(Type.getList());
@@ -52,7 +53,7 @@ public class SecondTurn extends GameState {
                     context.getCurrentPlayer());
 
             Collection<Bean> counterProposal = context.getView()
-                    .getOptionsFromHand(tradepartner.getHand().getCards());
+                    .getOptionsFromHand(tradepartner.getCardsFromHand());
 
             if (counterProposal != null) {
                 boolean confirmTrade = context.getView().confirmTrade(
@@ -75,9 +76,9 @@ public class SecondTurn extends GameState {
                         context.getCurrentPlayer().getDrawAreaCards());
             }
 
-            if (context.getCurrentPlayer().getHand().hasCards()) {
+            if (context.getCurrentPlayer().hasCardsInHand()) {
                 cardsFromHand = context.getView().getOptionsFromHand(
-                        context.getCurrentPlayer().getHand().getCards());
+                        context.getCurrentPlayer().getCardsFromHand());
             }
 
             proposal = context.getView().getOptionsFromType(Type.getList());

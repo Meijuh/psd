@@ -32,4 +32,9 @@ public abstract class CardCollection<ECard extends Card, ECollection extends Col
         return result;
     }
 
+    @Override
+    public String toString() {
+        return getCards().toString();
+    }
+
 }

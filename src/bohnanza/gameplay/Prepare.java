@@ -9,10 +9,12 @@ public class Prepare extends GameState {
 
     private static Prepare instance = null;
 
+    private static final String NAME = "prepare";
+
     private static final int HAND_SIZE = 5;
 
     private Prepare() {
-        super();
+        super(NAME);
     }
 
     public static Prepare getInstance() {
@@ -43,7 +45,7 @@ public class Prepare extends GameState {
         playerNumber = 0;
         for (Player player : players) {
 
-            player.setLeftPlayer(players.get(playerNumber + 1 % players.size()));
+            player.setLeftPlayer(players.get(playerNumber % players.size()));
             player.setPlayerNumber(playerNumber + 1);
 
             playerNumber++;
@@ -51,7 +53,7 @@ public class Prepare extends GameState {
 
         for (Player player : context.getPlayers()) {
             for (int i = 0; i < HAND_SIZE; i++) {
-                player.getHand().add(context.getSharedArea().draw());
+                player.drawFromSharedArea();
             }
         }
 

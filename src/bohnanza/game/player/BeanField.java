@@ -5,8 +5,11 @@ import bohnanza.game.Field;
 
 public class BeanField extends Field {
 
+    private Bean aCard;
+
     BeanField() {
         super();
+        aCard = null;
     }
 
     @Override
@@ -15,10 +18,16 @@ public class BeanField extends Field {
     }
 
     public Bean peek() {
-        return getCards().iterator().next();
+        return aCard;
     }
 
     public void plant(Bean bean) {
+        aCard = bean;
         getCards().add(bean);
+    }
+
+    @Override
+    public String toString() {
+        return aCard.toString();
     }
 }

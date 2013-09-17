@@ -51,4 +51,9 @@ public abstract class Bean extends Card {
         return Type.getType(getType()).ordinal();
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + beanometer.toString();
+    }
+
 }

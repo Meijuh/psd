@@ -6,8 +6,10 @@ public class FirstTurn extends GameState {
 
     private static FirstTurn instance = null;
 
+    private static final String NAME = "first turn";
+
     private FirstTurn() {
-        super();
+        super(NAME);
     }
 
     public static FirstTurn getInstance() {
@@ -21,7 +23,7 @@ public class FirstTurn extends GameState {
     @Override
     public void execute(GameContext context) {
 
-        if (context.getCurrentPlayer().getHand().hasCards()) {
+        if (context.getCurrentPlayer().hasCardsInHand()) {
 
             int beanFieldNumber = context.getView().mustPlant(
                     context.getCurrentPlayer());
@@ -30,7 +32,7 @@ public class FirstTurn extends GameState {
 
                 context.getCurrentPlayer().plant(beanFieldNumber);
 
-                if (context.getCurrentPlayer().getHand().hasCards()) {
+                if (context.getCurrentPlayer().hasCardsInHand()) {
                     beanFieldNumber = context.getView().mayPlant(
                             context.getCurrentPlayer());
 

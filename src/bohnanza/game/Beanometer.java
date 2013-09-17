@@ -1,13 +1,17 @@
 package bohnanza.game;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
-public class Beanometer extends HashMap<Integer, Integer> {
+public class Beanometer {
 
     /**
      * 
      */
     private static final long serialVersionUID = 8307953604312955607L;
+
+    private final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
     private static final int ONE_COIN = 1;
 
@@ -39,6 +43,8 @@ public class Beanometer extends HashMap<Integer, Integer> {
 
     public static final int TWELVE_CARDS = 12;
 
+    private static final String TO_STRING_MESSAGE = "%d->1, %d->2, %d->3, %d->4";
+
     public int getWorth(int cards) {
 
         Integer worth = null;
@@ -46,7 +52,7 @@ public class Beanometer extends HashMap<Integer, Integer> {
         int test = cards;
 
         while (worth == null && test > 1) {
-            worth = get(test);
+            worth = map.get(test);
             test--;
         }
 
@@ -55,7 +61,7 @@ public class Beanometer extends HashMap<Integer, Integer> {
     }
 
     private void setCardsForCoins(int cards, int coins) {
-        put(cards, coins);
+        map.put(cards, coins);
     }
 
     public void setCardsForOneCoin(int cards) {
@@ -72,5 +78,15 @@ public class Beanometer extends HashMap<Integer, Integer> {
 
     public void setCardsForFourCoins(int cards) {
         setCardsForCoins(cards, FOUR_COINS);
+    }
+
+    @Override
+    public String toString() {
+
+        Set<Integer> cards = map.keySet();
+
+        return String.format(TO_STRING_MESSAGE, cards.iterator().next(), cards
+                .iterator().next(), cards.iterator().next(), cards.iterator()
+                .next());
     }
 }

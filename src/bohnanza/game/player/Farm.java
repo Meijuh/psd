@@ -11,11 +11,15 @@ public class Farm {
 
     public static final int THIRD = 3;
 
+    private static final String TO_STRING_MESSAGE = "farm: %s, %s, %s";
+
+    private static final String NO_THIRD_BEAN_FIELD = "x";
+
     private final BeanField firstBeanField;
 
     private final BeanField secondBeanField;
 
-    private final BeanField thirdBeanField;
+    private BeanField thirdBeanField;
 
     private ThirdBeanField thirdBeanFieldCard;
 
@@ -50,6 +54,7 @@ public class Farm {
 
     public void setThirdBeanFieldCard(ThirdBeanField thirdBeanFieldCard) {
         this.thirdBeanFieldCard = thirdBeanFieldCard;
+        thirdBeanField = new BeanField();
     }
 
     public boolean hasThirdBeanField() {
@@ -58,6 +63,13 @@ public class Farm {
 
     public void plant(int beanFieldNumber, Bean bean) throws FarmException {
         getBeanField(beanFieldNumber).plant(bean);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, firstBeanField,
+                secondBeanField, hasThirdBeanField() ? thirdBeanField
+                        : NO_THIRD_BEAN_FIELD);
     }
 
 }

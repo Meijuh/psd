@@ -1,6 +1,7 @@
 package bohnanza.gameplay;
 
 import java.util.HashSet;
+import java.util.Observable;
 import java.util.Set;
 
 import bohnanza.game.player.Player;
@@ -8,19 +9,15 @@ import bohnanza.game.shared.SharedArea;
 import bohnanza.view.TUIView;
 import bohnanza.view.View;
 
-public class GameContext {
+public class GameContext extends Observable {
 
     private static final int THREE = 3;
 
     private GameState current;
 
-    private static GameContext instance = null;
-
     private final Set<Player> players;
 
     private final View view;
-
-    private final SharedArea sharedArea;
 
     private Player currentPlayer;
 
@@ -28,23 +25,29 @@ public class GameContext {
 
     private int drawDeckExhaustedCount;
 
-    private GameContext(int playerCount) {
+    private static final String TO_STRING_MESSAGE = "State: %s, players: %d, draw deck shuffled: %d times, current player: %s";
+
+    public GameContext(int playerCount) {
         players = new HashSet<Player>(playerCount);
         drawDeckExhaustedCount = 0;
 
-        for (int i = 0; i < playerCount; i++) {
-            players.add(new Player());
-        }
-
         view = new TUIView();
-        sharedArea = SharedArea.getInstance();
-        current = Prepare.getInstance();
+        addObserver(view);
 
+        SharedArea sharedArea = new SharedArea();
         sharedArea.addObserver(view);
+
+        for (int i = 0; i < playerCount; i++) {
+            Player player = new Player(sharedArea);
+            player.addObserver(view);
+            players.add(player);
+        }
+        current = Prepare.getInstance();
     }
 
     public void changeState(GameState gameState) {
         current = gameState;
+        notifyObservers();
     }
 
     public GameState getState() {
@@ -53,14 +56,6 @@ public class GameContext {
 
     public void execute() {
         current.execute(this);
-    }
-
-    public static GameContext getInstance(int players) {
-        if (instance == null) {
-            instance = new GameContext(players);
-        }
-
-        return instance;
     }
 
     public void addPlayer(Player player) {
@@ -75,12 +70,9 @@ public class GameContext {
         return players;
     }
 
-    public SharedArea getSharedArea() {
-        return sharedArea;
-    }
-
     public void setCurrentPlayer(Player player) {
         currentPlayer = player;
+        notifyObservers();
     }
 
     public Player getCurrentPlayer() {
@@ -97,10 +89,17 @@ public class GameContext {
 
     public void increaseDrawDeckExhausted() {
         drawDeckExhaustedCount++;
+        notifyObservers();
     }
 
     public boolean isDrawDeckExhaustedThreeTimes() {
         return drawDeckExhaustedCount == THREE;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, current, players.size(),
+                drawDeckExhaustedCount, currentPlayer);
     }
 
 }

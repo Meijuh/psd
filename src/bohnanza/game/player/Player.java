@@ -2,12 +2,13 @@ package bohnanza.game.player;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Observable;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Type;
 import bohnanza.game.shared.SharedArea;
 
-public class Player {
+public class Player extends Observable {
 
     private String name;
 
@@ -21,10 +22,12 @@ public class Player {
 
     private final SharedArea sharedArea;
 
-    public Player() {
+    private static final String TO_STRING_MESSAGE = "hand: %s, %s";
+
+    public Player(SharedArea sharedArea) {
         hand = new Hand();
         playerArea = new PlayerArea();
-        sharedArea = SharedArea.getInstance();
+        this.sharedArea = sharedArea;
     }
 
     public void setLeftPlayer(Player player) {
@@ -35,21 +38,12 @@ public class Player {
         return leftPlayer;
     }
 
-    @Override
-    public String toString() {
-        return getName();
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public String getName() {
         return name;
-    }
-
-    public Hand getHand() {
-        return hand;
     }
 
     public void setPlayerNumber(int playerNumber) {
@@ -62,16 +56,17 @@ public class Player {
     }
 
     public void plant(int beanFieldNumber) throws FarmException {
-        plant(beanFieldNumber, getHand().draw());
+        plant(beanFieldNumber, hand.draw());
     }
 
     public void plant(int beanFieldNumber, Bean bean) throws FarmException {
         sharedArea.discard(playerArea.harvestAndSell(beanFieldNumber));
-        playerArea.getFarm().plant(beanFieldNumber, bean);
+        playerArea.plant(beanFieldNumber, bean);
+        notifyObservers();
     }
 
     public boolean hasThirdBeanField() {
-        return playerArea.getFarm().hasThirdBeanField();
+        return playerArea.hasThirdBeanField();
     }
 
     public void drawTwoCards() {
@@ -84,9 +79,9 @@ public class Player {
     }
 
     public void drawThreeCards() {
-        getHand().add(sharedArea.draw());
-        getHand().add(sharedArea.draw());
-        getHand().add(sharedArea.draw());
+        hand.add(sharedArea.draw());
+        hand.add(sharedArea.draw());
+        hand.add(sharedArea.draw());
     }
 
     public HashSet<Bean> getDrawAreaCards() {
@@ -104,8 +99,12 @@ public class Player {
     public void receiveFromHand(Collection<Bean> counterProposal, Player player) {
 
         playerArea.setAside(counterProposal);
-        player.getHand().remove(counterProposal);
+        player.removeFromHand(counterProposal);
 
+    }
+
+    private void removeFromHand(Collection<Bean> beans) {
+        hand.remove(beans);
     }
 
     public void receiveFromDrawArea(Collection<Bean> cardsFromDrawArea,
@@ -128,9 +127,41 @@ public class Player {
 
     public void buy() {
 
-        SharedArea.getInstance().discard(playerArea.buy());
+        sharedArea.discard(playerArea.buy());
 
-        playerArea.getFarm().setThirdBeanFieldCard(
-                SharedArea.getInstance().buy());
+        playerArea.setThirdBeanFieldCard(sharedArea.buy());
+    }
+
+    public boolean hasCardsInHand() {
+        return hand.hasCards();
+    }
+
+    public Collection<Bean> getCardsFromHand() {
+        return hand.getCards();
+    }
+
+    public void drawFromSharedArea() {
+        sharedArea.draw();
+    }
+
+    public boolean canDrawThreeCards() {
+        return sharedArea.canDrawThreeCards();
+    }
+
+    public boolean canDrawTwoCards() {
+        return sharedArea.canDrawTwoCards();
+    }
+
+    public boolean canDrawOneCard() {
+        return sharedArea.canDrawOneCard();
+    }
+
+    public void shuffle() {
+        sharedArea.shuffle();
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, hand, playerArea);
     }
 }

@@ -4,8 +4,10 @@ public class End extends GameState {
 
     private static End instance = null;
 
+    private static final String NAME = "end";
+
     private End() {
-        super();
+        super(NAME);
     }
 
     @Override

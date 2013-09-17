@@ -8,7 +8,7 @@ import bohnanza.game.Type;
 
 public class DrawArea extends Field {
 
-    protected DrawArea() {
+    DrawArea() {
         super();
     }
 
@@ -37,6 +37,11 @@ public class DrawArea extends Field {
         }
 
         return bean;
+    }
+
+    @Override
+    public Collection<Bean> getCards() {
+        return super.getCards();
     }
 
 }

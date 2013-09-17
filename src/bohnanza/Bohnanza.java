@@ -23,12 +23,19 @@ public class Bohnanza {
     public static final String OPTION_HELP = "h";
     public static final String OPTION_HELP_DESCRIPTION = "Prints this message";
 
-    public static final String PARSE_EXCEPTION_MESSAGE = "Parsing of command line options failed, reason: %s, try -h to see help.";
+    public static final String PARSE_EXCEPTION_MESSAGE = "Parsing of command line options failed, reason: %s, try 'java bohnanza.Bohnanza -h' to see help.";
 
     public static final String NOT_A_NUMBER = "Could not parse value, reason %s";
 
+    private static final String RUN = "java bohnanza.Bohnanza";
+
+    private static final int MIN_PLAYERS = 2;
+
+    private static final int MAX_PLAYERS = 7;
+
     private static final Logger LOGGER = Logger.getLogger(Bohnanza.class
             .getName());
+    private static final String PLAYER_RANGE = "Amount of players should be between 2 and 7, %d players given.";
 
     public static void main(String[] args) {
         Options options = new Options();
@@ -51,19 +58,25 @@ public class Bohnanza {
             HelpFormatter helpFormatter = new HelpFormatter();
 
             if (commandLine.hasOption(OPTION_HELP)) {
-                helpFormatter.printHelp("java bohnanza.Bohnanza", options);
+                helpFormatter.printHelp(RUN, options);
             } else {
 
                 int playerCount = Integer.parseInt(commandLine
                         .getOptionValue(OPTION_PLAYERS));
 
-                GameContext gameContext = GameContext.getInstance(playerCount);
+                if (MIN_PLAYERS > playerCount || playerCount > MAX_PLAYERS) {
+                    LOGGER.log(Level.SEVERE,
+                            String.format(PLAYER_RANGE, playerCount));
+                } else {
 
-                while (gameContext.getState() != null) {
-                    gameContext.execute();
+                    GameContext gameContext = new GameContext(playerCount);
+
+                    while (gameContext.getState() != null) {
+                        gameContext.execute();
+                    }
+
+                    System.exit(gameContext.getExitStatus());
                 }
-
-                System.exit(gameContext.getExitStatus());
 
             }
         } catch (ParseException e) {

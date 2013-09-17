@@ -18,8 +18,6 @@ import bohnanza.game.factory.ThirdBeanField;
  */
 public class SharedArea extends Observable {
 
-    private static SharedArea instance = null;
-
     private final DrawDeck drawDeck;
 
     private final DiscardPile discardPile;
@@ -32,18 +30,12 @@ public class SharedArea extends Observable {
 
     private static final int THREE = 3;
 
-    private SharedArea() {
-        drawDeck = DrawDeck.getInstance();
-        discardPile = DiscardPile.getInstance();
-        box = Box.getInstance();
-    }
+    private static final String TO_STRING_MESSAGE = "%s, %s, %s";
 
-    public static final SharedArea getInstance() {
-        if (instance == null) {
-            instance = new SharedArea();
-        }
-
-        return instance;
+    public SharedArea() {
+        drawDeck = new DrawDeck();
+        discardPile = new DiscardPile();
+        box = new Box();
     }
 
     public void discard(Collection<Bean> beans) {
@@ -82,5 +74,10 @@ public class SharedArea extends Observable {
 
     private boolean canDraw(int amount) {
         return drawDeck.canDraw(amount);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, box, discardPile, drawDeck);
     }
 }

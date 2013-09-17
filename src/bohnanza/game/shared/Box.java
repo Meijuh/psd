@@ -6,9 +6,9 @@ import bohnanza.game.factory.ThirdBeanFieldCreator;
 
 public class Box extends Deck<ThirdBeanField> {
 
-    private static Box instance = null;
+    private static final String TO_STRING_MESSAGE = "3rd bean field cards: %d";
 
-    private Box() {
+    Box() {
         super();
     }
 
@@ -17,12 +17,9 @@ public class Box extends Deck<ThirdBeanField> {
         addAll(ThirdBeanFieldCreator.getInstance().createCards());
     }
 
-    static final Box getInstance() {
-        if (instance == null) {
-            instance = new Box();
-        }
-
-        return instance;
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, getCards().size());
     }
 
 }

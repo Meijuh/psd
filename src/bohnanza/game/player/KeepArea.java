@@ -8,7 +8,7 @@ import bohnanza.game.Field;
 
 public class KeepArea extends Field {
 
-    protected KeepArea() {
+    KeepArea() {
         super();
     }
 

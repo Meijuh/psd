@@ -9,8 +9,9 @@ import bohnanza.game.Field;
 public class Treasury extends Field {
 
     public static final int THIRD_BEAN_FIELD_COST = 3;
+    private static final String TO_STRING_MESSAGE = "treasury %d coins";
 
-    public Treasury() {
+    Treasury() {
         super();
     }
 
@@ -44,6 +45,11 @@ public class Treasury extends Field {
         }
 
         return beans;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(TO_STRING_MESSAGE, getCards().size());
     }
 
 }

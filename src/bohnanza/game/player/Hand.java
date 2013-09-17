@@ -9,7 +9,7 @@ import bohnanza.game.Deck;
 
 public class Hand extends Deck<Bean> {
 
-    protected Hand() {
+    Hand() {
         super();
     }
 
