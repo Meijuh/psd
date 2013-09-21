@@ -1,9 +1,8 @@
 package bohnanza.game;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
-public abstract class Deck<E extends Card> extends CardCollection<E, Queue<E>> {
+public class Deck<E extends Card> extends CardCollection<E, LinkedList<E>> {
 
     protected Deck() {
         super(new LinkedList<E>());
@@ -11,5 +10,16 @@ public abstract class Deck<E extends Card> extends CardCollection<E, Queue<E>> {
 
     public E draw() {
         return getCards().remove();
+    }
+
+    @Override
+    public LinkedList<E> getCards() {
+        return super.getCards();
+    }
+
+    @Override
+    protected void initializeCollection() {
+        // TODO Auto-generated method stub
+
     }
 }

@@ -1,12 +1,15 @@
 package bohnanza.game.player;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Type;
-import bohnanza.game.shared.SharedArea;
 
 public class Player extends Observable {
 
@@ -60,9 +63,40 @@ public class Player extends Observable {
     }
 
     public void plant(int beanFieldNumber, Bean bean) throws FarmException {
-        sharedArea.discard(playerArea.harvestAndSell(beanFieldNumber));
+
+        if (!playerArea.isType(beanFieldNumber, Type.getType(bean))) {
+            sharedArea.discard(playerArea.harvestAndSell(beanFieldNumber));
+        }
         playerArea.plant(beanFieldNumber, bean);
         notifyObservers();
+    }
+
+    public Collection<Bean> harvestAndSell(int beanFieldNumber)
+            throws FarmException {
+        BeanField beanField = farm.getBeanField(beanFieldNumber);
+
+        Collection<Bean> discard = new HashSet<Bean>();
+        Collection<Bean> profit = new HashSet<Bean>();
+
+        if (beanField.hasCards()) {
+
+            Collection<Bean> beans = beanField.empty();
+
+            int i = 0;
+            for (Bean bean : beans) {
+                if (i < bean.getBeanometer().getWorth(beans.size())) {
+                    profit.add(bean);
+                } else {
+                    discard.add(bean);
+                }
+                i++;
+            }
+        }
+
+        treasury.makeProfit(profit);
+
+        return discard;
+
     }
 
     public boolean hasThirdBeanField() {
@@ -84,7 +118,7 @@ public class Player extends Observable {
         hand.add(sharedArea.draw());
     }
 
-    public HashSet<Bean> getDrawAreaCards() {
+    public Set<Bean> getDrawAreaCards() {
         return playerArea.getDrawAreaCards();
     }
 
@@ -157,7 +191,12 @@ public class Player extends Observable {
     }
 
     public void shuffle() {
-        sharedArea.shuffle();
+        List<Bean> temp = new ArrayList<Bean>(drawDeck.empty());
+        temp.addAll(discardPile.empty());
+
+        Collections.shuffle(temp);
+
+        drawDeck.addShuffledCards(temp);
     }
 
     @Override

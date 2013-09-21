@@ -2,6 +2,7 @@ package bohnanza.game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 public class Beanometer {
@@ -13,13 +14,13 @@ public class Beanometer {
 
     private final Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 
-    private static final int ONE_COIN = 1;
+    public static final int ONE_COIN = 1;
 
-    private static final int TWO_COINS = 2;
+    public static final int TWO_COINS = 2;
 
-    private static final int THREE_COINS = 3;
+    public static final int THREE_COINS = 3;
 
-    private static final int FOUR_COINS = 4;
+    public static final int FOUR_COINS = 4;
 
     public static final int TWO_CARDS = 2;
 
@@ -43,7 +44,11 @@ public class Beanometer {
 
     public static final int TWELVE_CARDS = 12;
 
-    private static final String TO_STRING_MESSAGE = "%d->1, %d->2, %d->3, %d->4";
+    public static final String TO_STRING_MESSAGE = "%d->%d, ";
+
+    public static final int NO_ONE_COIN_SIZE = 3;
+
+    public static final String NO_ONE_COIN = "x,   ";
 
     public int getWorth(int cards) {
 
@@ -83,10 +88,21 @@ public class Beanometer {
     @Override
     public String toString() {
 
-        Set<Integer> cards = map.keySet();
+        String string = new String();
 
-        return String.format(TO_STRING_MESSAGE, cards.iterator().next(), cards
-                .iterator().next(), cards.iterator().next(), cards.iterator()
-                .next());
+        if (map.size() == NO_ONE_COIN_SIZE) {
+            string += NO_ONE_COIN;
+        }
+
+        Set<Entry<Integer, Integer>> entrySet = map.entrySet();
+
+        for (Entry<Integer, Integer> entry : entrySet) {
+            string += String.format(TO_STRING_MESSAGE, entry.getKey(),
+                    entry.getValue());
+        }
+
+        string = string.substring(0, string.length() - 2);
+
+        return string;
     }
 }

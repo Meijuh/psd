@@ -1,6 +1,7 @@
 package bohnanza.game.player;
 
 import java.util.Collection;
+import java.util.Set;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
@@ -22,7 +23,7 @@ public class DrawArea extends Field {
     }
 
     public void remove(Collection<Bean> beans) {
-        getCards().remove(beans);
+        getCards().removeAll(beans);
     }
 
     public Bean getBean(Type type) {
@@ -40,7 +41,7 @@ public class DrawArea extends Field {
     }
 
     @Override
-    public Collection<Bean> getCards() {
+    public Set<Bean> getCards() {
         return super.getCards();
     }
 

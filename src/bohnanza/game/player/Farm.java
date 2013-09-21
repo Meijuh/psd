@@ -11,9 +11,9 @@ public class Farm {
 
     public static final int THIRD = 3;
 
-    private static final String TO_STRING_MESSAGE = "farm: %s, %s, %s";
+    public static final String TO_STRING_MESSAGE = "farm: %s, %s, %s";
 
-    private static final String NO_THIRD_BEAN_FIELD = "x";
+    public static final String NO_THIRD_BEAN_FIELD = "x";
 
     private final BeanField firstBeanField;
 

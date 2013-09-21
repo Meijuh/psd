@@ -18,6 +18,8 @@ public abstract class Bean extends Card {
 
     private final Beanometer beanometer;
 
+    public static final String SPACE = " ";
+
     protected Bean(String type, Beanometer beanometer) {
         super(type);
         this.beanometer = beanometer;
@@ -53,7 +55,7 @@ public abstract class Bean extends Card {
 
     @Override
     public String toString() {
-        return super.toString() + beanometer.toString();
+        return super.toString() + SPACE + beanometer.toString();
     }
 
 }

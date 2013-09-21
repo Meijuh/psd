@@ -5,6 +5,10 @@ import bohnanza.game.Field;
 
 public class BeanField extends Field {
 
+    public static final String EMPTY = "x";
+
+    public static final String BAR = "|";
+
     private Bean aCard;
 
     BeanField() {
@@ -28,6 +32,6 @@ public class BeanField extends Field {
 
     @Override
     public String toString() {
-        return aCard.toString();
+        return BAR + (aCard == null ? EMPTY : aCard.toString()) + BAR;
     }
 }
