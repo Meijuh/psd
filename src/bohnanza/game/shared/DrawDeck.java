@@ -1,22 +1,24 @@
 package bohnanza.game.shared;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Deck;
 
-public class DrawDeck extends Deck<Bean> {
+public class DrawDeck extends Deck<Bean, Queue<Bean>> {
 
-    private static final int ONE = 1;
+    public static final int ONE_CARD = 1;
 
-    private static final int TWO = 2;
+    public static final int TWO_CARDS = 2;
 
-    private static final int THREE = 3;
+    public static final int THREE_CARDS = 3;
 
     private static final String TO_STRING_MESSAGE = "draw deck size: %d";
 
     DrawDeck() {
-        super();
+        super(new LinkedList<Bean>());
     }
 
     @Override
@@ -27,19 +29,7 @@ public class DrawDeck extends Deck<Bean> {
         getCards().addAll(beans);
     }
 
-    public boolean canDrawOneCard() {
-        return canDraw(ONE);
-    }
-
-    public boolean canDrawTwoCards() {
-        return canDraw(TWO);
-    }
-
-    public boolean canDrawThreeCards() {
-        return canDraw(THREE);
-    }
-
-    private boolean canDraw(int amount) {
+    public boolean canDraw(int amount) {
         return getCards().size() == amount;
     }
 

@@ -1,20 +1,20 @@
 package bohnanza.game;
 
-public abstract class Card {
+public class Card<E> {
 
-    private final String type;
+    private final E type;
 
-    protected Card(String type) {
+    protected Card(E type) {
         this.type = type;
     }
 
-    public String getType() {
+    public E getType() {
         return type;
     }
 
     @Override
     public String toString() {
-        return type;
+        return type.toString();
     }
 
 }

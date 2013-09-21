@@ -1,7 +1,5 @@
 package bohnanza.game.shared;
 
-import java.util.Collection;
-
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
 import bohnanza.game.factory.BlackEyedCreator;
@@ -20,27 +18,23 @@ public class DiscardPile extends Field {
 
     private static final String TO_STRING_MESSAGE = "discarded: %d";
 
-    DiscardPile() {
-        super();
-    }
-
     @Override
     protected void initializeCollection() {
-        addAll(BlackEyedCreator.getInstance().createCards());
-        addAll(BlueCreator.getInstance().createCards());
-        addAll(ChiliCreator.getInstance().createCards());
-        addAll(CocoaCreator.getInstance().createCards());
-        addAll(CoffeeCreator.getInstance().createCards());
-        addAll(GardenCreator.getInstance().createCards());
-        addAll(GreenCreator.getInstance().createCards());
-        addAll(RedCreator.getInstance().createCards());
-        addAll(SoyCreator.getInstance().createCards());
-        addAll(StinkCreator.getInstance().createCards());
-        addAll(WaxCreator.getInstance().createCards());
+        getCards().addAll(BlackEyedCreator.getInstance().createCards());
+        getCards().addAll(BlueCreator.getInstance().createCards());
+        getCards().addAll(ChiliCreator.getInstance().createCards());
+        getCards().addAll(CocoaCreator.getInstance().createCards());
+        getCards().addAll(CoffeeCreator.getInstance().createCards());
+        getCards().addAll(GardenCreator.getInstance().createCards());
+        getCards().addAll(GreenCreator.getInstance().createCards());
+        getCards().addAll(RedCreator.getInstance().createCards());
+        getCards().addAll(SoyCreator.getInstance().createCards());
+        getCards().addAll(StinkCreator.getInstance().createCards());
+        getCards().addAll(WaxCreator.getInstance().createCards());
     }
 
-    public void discard(Collection<Bean> beans) {
-        getCards().addAll(beans);
+    public void discard(Bean bean) {
+        getCards().add(bean);
     }
 
     @Override

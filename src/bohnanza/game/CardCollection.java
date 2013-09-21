@@ -1,8 +1,10 @@
 package bohnanza.game;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-public abstract class CardCollection<ECard extends Card, ECollection extends Collection<ECard>> {
+public abstract class CardCollection<ECollection extends Collection<? extends Card<?>>> {
 
     private final ECollection cards;
 
@@ -15,19 +17,25 @@ public abstract class CardCollection<ECard extends Card, ECollection extends Col
         return cards;
     }
 
-    protected abstract void initializeCollection();
+    public Set<Bean> remove(Set<Integer> counterProposal) {
+        Set<Bean> set = new HashSet<Bean>();
 
-    protected void addAll(Collection<? extends ECard> cards) {
-        this.cards.addAll(cards);
+        for (int i : counterProposal) {
+            set.add(getCards().remove(i));
+        }
+
+        return set;
     }
+
+    protected abstract void initializeCollection();
 
     public boolean hasCards() {
         return cards.size() > 0;
     }
 
-    public Collection<ECard> empty() {
+    public ECollection empty() {
 
-        Collection<ECard> result = getCards();
+        ECollection result = getCards();
         getCards().clear();
         return result;
     }

@@ -20,7 +20,7 @@ public class Treasury extends Field {
         // treasury is initially empty
     }
 
-    public void makeProfit(Collection<Bean> profit) {
+    public void makeProfit(Bean profit) {
         addAll(profit);
     }
 

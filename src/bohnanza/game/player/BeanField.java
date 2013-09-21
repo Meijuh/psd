@@ -2,6 +2,7 @@ package bohnanza.game.player;
 
 import bohnanza.game.Bean;
 import bohnanza.game.Field;
+import bohnanza.game.Type;
 
 public class BeanField extends Field {
 
@@ -21,8 +22,8 @@ public class BeanField extends Field {
         // bean field is initially empty
     }
 
-    public Bean peek() {
-        return aCard;
+    public boolean isType(Type type) {
+        return aCard.getType().equals(type);
     }
 
     public void plant(Bean bean) {

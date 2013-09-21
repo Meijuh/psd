@@ -1,20 +1,16 @@
 package bohnanza.game;
 
-import java.util.LinkedList;
+import java.util.Queue;
 
-public class Deck<E extends Card> extends CardCollection<E, LinkedList<E>> {
+public abstract class Deck<ECard extends Card<?>, E extends Queue<ECard>>
+        extends CardCollection<E> {
 
-    protected Deck() {
-        super(new LinkedList<E>());
+    protected Deck(E collection) {
+        super(collection);
     }
 
-    public E draw() {
+    public ECard draw() {
         return getCards().remove();
-    }
-
-    @Override
-    public LinkedList<E> getCards() {
-        return super.getCards();
     }
 
     @Override

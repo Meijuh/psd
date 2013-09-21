@@ -4,31 +4,41 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import bohnanza.game.shared.SharedArea;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
 
 public class PlayerTest {
 
     @Mock
-    private final SharedArea sharedArea = mock(SharedArea.class);
+    private final Hand hand = mock(Hand.class);
 
     @Mock
-    private final Hand hand = mock(Hand.class);
+    private final DrawArea drawArea = mock(DrawArea.class);
+
+    @Mock
+    private final KeepArea keepArea = mock(KeepArea.class);
+
+    @Mock
+    private final BeanField firstBeanField = mock(BeanField.class);
+
+    @Mock
+    private final BeanField secondBeanField = mock(BeanField.class);
+
+    @Mock
+    private final DrawDeck drawDeck = mock(DrawDeck.class);
+
+    @Mock
+    private final DiscardPile discardPile = mock(DiscardPile.class);
 
     @InjectMocks
     private Player player;
-
-    @Before
-    public final void setUp() {
-        player = new Player(sharedArea);
-    }
 
     @Test
     public final void testPlayer() {
@@ -40,22 +50,18 @@ public class PlayerTest {
     @Test
     public final void testSetLeftPlayer() {
 
-        Player player = new Player(sharedArea);
+        player.setLeftPlayer(player);
 
-        this.player.setLeftPlayer(player);
-
-        assertEquals(this.player.getLeftPlayer(), player);
+        assertEquals(player.getLeftPlayer(), player);
 
     }
 
     @Test
     public final void testGetLeftPlayer() {
 
-        Player player = new Player(sharedArea);
+        player.setLeftPlayer(player);
 
-        this.player.setLeftPlayer(player);
-
-        assertEquals(this.player.getLeftPlayer(), player);
+        assertEquals(player.getLeftPlayer(), player);
     }
 
     @Test
@@ -86,24 +92,14 @@ public class PlayerTest {
 
     @Test
     public final void testPlantInt() throws FarmException {
+        
+        Bean bean = new 
 
-        player.drawThreeCards();
-
-        player.plant(Farm.FIRST);
-        assertEquals(2, player.getCardsFromHand().size());
-
-        player.plant(Farm.FIRST);
-        assertEquals(1, player.getCardsFromHand().size());
-
-        player.plant(Farm.FIRST);
-        assertEquals(0, player.getCardsFromHand().size());
-
-        when(hand.getCards()).
     }
 
     @Test
     public final void testPlantIntBean() {
-        pass();
+
     }
 
     @Test

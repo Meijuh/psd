@@ -5,10 +5,8 @@ import bohnanza.game.Beanometer;
 
 public class Chili extends Bean {
 
-    public static final String TYPE = "chili";
-
     Chili(Beanometer beanometer) {
-        super(TYPE, beanometer);
+        super(Type.CHILI, beanometer);
     }
 
 }
