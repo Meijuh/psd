@@ -192,7 +192,7 @@ public class TUIView extends View {
      * @see bohnanza.View#getOptionsFromType(java.util.Collection)
      */
     @Override
-    public Collection<Type> getOptionsFromType(Collection<Type> options) {
+    public Collection<Type> getOptionsFromType(Type[] options) {
         return getOptions(options, SELECT_TYPE);
     }
 

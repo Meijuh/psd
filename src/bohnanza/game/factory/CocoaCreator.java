@@ -2,7 +2,7 @@ package bohnanza.game.factory;
 
 import bohnanza.game.Beanometer;
 
-public class CocoaCreator extends BeanCreator<Cocoa> {
+public class CocoaCreator extends BeanCreator {
 
     private static CocoaCreator instance = null;
 

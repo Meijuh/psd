@@ -1,11 +1,11 @@
 package bohnanza.game.factory;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import bohnanza.game.Card;
 
-public abstract class CardCreator<E extends Card> {
+public abstract class CardCreator<E extends Card<?>> {
 
     private final int amount;
 
@@ -18,9 +18,9 @@ public abstract class CardCreator<E extends Card> {
 
     protected abstract E createCard();
 
-    public Collection<E> createCards() {
+    public List<E> createCards() {
 
-        Collection<E> cards = new HashSet<E>();
+        List<E> cards = new LinkedList<E>();
 
         if (!cardsCreated) {
 

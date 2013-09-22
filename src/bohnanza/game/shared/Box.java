@@ -1,25 +1,27 @@
 package bohnanza.game.shared;
 
-import bohnanza.game.Deck;
+import java.util.List;
+
+import bohnanza.game.CardList;
 import bohnanza.game.factory.ThirdBeanField;
 import bohnanza.game.factory.ThirdBeanFieldCreator;
 
-public class Box extends Deck<ThirdBeanField> {
+public class Box extends CardList<ThirdBeanField> {
 
     private static final String TO_STRING_MESSAGE = "3rd bean field cards: %d";
 
-    Box() {
-        super();
-    }
-
     @Override
     protected void initializeCollection() {
-        addAll(ThirdBeanFieldCreator.getInstance().createCards());
+
+        List<ThirdBeanField> cards = ThirdBeanFieldCreator.getInstance()
+                .createCards();
+
+        add(cards);
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MESSAGE, getCards().size());
+        return String.format(TO_STRING_MESSAGE, getSize());
     }
 
 }

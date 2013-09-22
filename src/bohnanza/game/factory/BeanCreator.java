@@ -3,7 +3,7 @@ package bohnanza.game.factory;
 import bohnanza.game.Bean;
 import bohnanza.game.Beanometer;
 
-public abstract class BeanCreator<E extends Bean> extends CardCreator<E> {
+public abstract class BeanCreator extends CardCreator<Bean> {
 
     private final Beanometer beanometer;
 

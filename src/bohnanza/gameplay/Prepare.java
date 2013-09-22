@@ -1,6 +1,5 @@
 package bohnanza.gameplay;
 
-import java.util.ArrayList;
 import java.util.Collections;
 
 import bohnanza.game.player.Player;
@@ -11,7 +10,7 @@ public class Prepare extends GameState {
 
     private static final String NAME = "prepare";
 
-    private static final int HAND_SIZE = 5;
+    public static final int HAND_SIZE = 5;
 
     private Prepare() {
         super(NAME);
@@ -28,10 +27,8 @@ public class Prepare extends GameState {
     @Override
     public void execute(GameContext context) {
 
-        ArrayList<Player> players = new ArrayList<Player>(context.getPlayers());
-
         int playerNumber = 1;
-        for (Player player : players) {
+        for (Player player : context.getPlayers()) {
 
             String name = context.getView().getName(playerNumber);
 
@@ -40,20 +37,25 @@ public class Prepare extends GameState {
             playerNumber++;
         }
 
-        Collections.shuffle(players);
+        Collections.shuffle(context.getPlayers());
+
+        context.setCurrentPlayer(context.getPlayers().get(0));
 
         playerNumber = 0;
-        for (Player player : players) {
+        for (Player player : context.getPlayers()) {
 
-            player.setLeftPlayer(players.get(playerNumber % players.size()));
+            player.setLeftPlayer(context.getPlayers().get(
+                    playerNumber % context.getPlayers().size()));
             player.setPlayerNumber(playerNumber + 1);
 
             playerNumber++;
         }
 
+        context.getCurrentPlayer().shuffle();
+
         for (Player player : context.getPlayers()) {
             for (int i = 0; i < HAND_SIZE; i++) {
-                player.drawFromSharedArea();
+                player.drawIntoHand();
             }
         }
 

@@ -1,20 +1,18 @@
 package bohnanza.game.player;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import bohnanza.game.Bean;
-import bohnanza.game.BeanMock;
-import bohnanza.game.factory.BlackEyed;
+import bohnanza.game.Type;
+import bohnanza.game.shared.DiscardPile;
 
 public class BeanFieldTest {
 
     private BeanField beanField;
-
-    public static final String TO_STRING_MESSAGE = "2->1, 4->2, 6->3, 8->4";
 
     @Before
     public final void setUp() {
@@ -23,60 +21,31 @@ public class BeanFieldTest {
 
     @Test
     public final void testInitializeCollection() {
-        assertNull(beanField.peek());
+        assertEquals(0, beanField.getSize());
     }
 
     @Test
     public final void testToString() {
 
-        BeanMock beanMock = new BeanMock();
+        DiscardPile discardPile = new DiscardPile();
 
-        beanField.plant(beanMock);
+        Bean bean = discardPile.peek();
 
-        assertEquals(BlackEyed.TYPE + Bean.SPACE + TO_STRING_MESSAGE,
+        beanField.add(bean);
+
+        assertEquals(BeanField.BAR + bean.toString() + BeanField.BAR,
                 beanField.toString());
     }
 
     @Test
     public final void testToStringNull() {
-        assertEquals(BeanField.EMPTY, beanField.toString());
+        assertEquals(BeanField.BAR + BeanField.EMPTY + BeanField.BAR,
+                beanField.toString());
     }
 
     @Test
-    public final void testBeanField() {
-        assertNull(beanField.peek());
-    }
-
-    @Test
-    public final void testPeekNull() {
-        assertNull(beanField.peek());
-    }
-
-    @Test
-    public final void testPeek() {
-
-        BeanMock beanMock = new BeanMock();
-
-        beanField.plant(beanMock);
-
-        assertEquals(beanMock, beanField.peek());
-    }
-
-    @Test
-    public final void testPlant() {
-        assertNull(beanField.peek());
-
-        BeanMock beanMock = new BeanMock();
-
-        beanField.plant(beanMock);
-
-        assertEquals(beanMock, beanField.peek());
-
-        beanMock = new BeanMock();
-
-        beanField.plant(beanMock);
-
-        assertEquals(beanMock, beanField.peek());
+    public final void testIsType() {
+        assertTrue(beanField.isType(Type.BLACK_EYED));
     }
 
 }

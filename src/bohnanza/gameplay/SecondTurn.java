@@ -1,6 +1,7 @@
 package bohnanza.gameplay;
 
 import java.util.Collection;
+import java.util.EnumSet;
 import java.util.HashSet;
 
 import bohnanza.game.Bean;
@@ -10,6 +11,10 @@ import bohnanza.game.player.Player;
 public class SecondTurn extends GameState {
 
     private static final String NAME = "second turn";
+
+    public static final int TWO_CARDS = 2;
+
+    public static final int ONE_CARD = 1;
 
     private static SecondTurn instance = null;
 
@@ -24,26 +29,28 @@ public class SecondTurn extends GameState {
         Collection<Bean> cardsFromDrawArea = new HashSet<Bean>();
         Collection<Type> proposal;
 
-        if (context.getCurrentPlayer().canDrawTwoCards()) {
-            context.getCurrentPlayer().drawTwoCards();
-        } else if (context.getCurrentPlayer().canDrawOneCard()) {
-            context.getCurrentPlayer().drawOneCard();
+        if (context.getDrawDeck().getSize() >= TWO_CARDS) {
+            context.getCurrentPlayer().drawIntoDrawArea();
+            context.getCurrentPlayer().drawIntoDrawArea();
+        } else if (context.getDrawDeck().getSize() >= ONE_CARD) {
+            context.getCurrentPlayer().drawIntoDrawArea();
         } else {
             context.increaseDrawDeckExhausted();
             context.getCurrentPlayer().shuffle();
         }
 
-        if (context.getCurrentPlayer().hasDrawAreaCards()) {
+        if (context.getCurrentPlayer().isDrawAreaNotEmpty()) {
             cardsFromDrawArea = context.getView().getOptionsFromDrawArea(
-                    context.getCurrentPlayer().getDrawAreaCards());
+                    context.getCurrentPlayer().getDrawArea());
         }
 
-        if (context.getCurrentPlayer().hasCardsInHand()) {
+        if (context.getCurrentPlayer().isHandNotEmpty()) {
             cardsFromHand = context.getView().getOptionsFromHand(
-                    context.getCurrentPlayer().getCardsFromHand());
+                    context.getCurrentPlayer().getHand());
         }
 
-        proposal = context.getView().getOptionsFromType(Type.getList());
+        proposal = context.getView().getOptionsFromType(
+                EnumSet.allOf(Type.class));
 
         while (cardsFromDrawArea.size() != 0 || cardsFromHand.size() != 0
                 || proposal.size() != 0) {
@@ -53,7 +60,7 @@ public class SecondTurn extends GameState {
                     context.getCurrentPlayer());
 
             Collection<Bean> counterProposal = context.getView()
-                    .getOptionsFromHand(tradepartner.getCardsFromHand());
+                    .getOptionsFromHand(tradepartner.getHand());
 
             if (counterProposal != null) {
                 boolean confirmTrade = context.getView().confirmTrade(
@@ -71,17 +78,18 @@ public class SecondTurn extends GameState {
 
             }
 
-            if (context.getCurrentPlayer().hasDrawAreaCards()) {
+            if (context.getCurrentPlayer().isDrawAreaNotEmpty()) {
                 cardsFromDrawArea = context.getView().getOptionsFromDrawArea(
-                        context.getCurrentPlayer().getDrawAreaCards());
+                        context.getCurrentPlayer().getDrawArea());
             }
 
-            if (context.getCurrentPlayer().hasCardsInHand()) {
+            if (context.getCurrentPlayer().isHandNotEmpty()) {
                 cardsFromHand = context.getView().getOptionsFromHand(
-                        context.getCurrentPlayer().getCardsFromHand());
+                        context.getCurrentPlayer().getHand());
             }
 
-            proposal = context.getView().getOptionsFromType(Type.getList());
+            proposal = context.getView().getOptionsFromType(
+                    EnumSet.allOf(Type.class));
         }
 
         context.changeState(ThirdTurn.getInstance());

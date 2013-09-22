@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class Stink extends Bean {
 
-    Stink(Beanometer beanometer) {
+    public Stink(Beanometer beanometer) {
         super(Type.STINK, beanometer);
     }
 

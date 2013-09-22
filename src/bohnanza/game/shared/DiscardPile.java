@@ -1,7 +1,7 @@
 package bohnanza.game.shared;
 
 import bohnanza.game.Bean;
-import bohnanza.game.Field;
+import bohnanza.game.CardList;
 import bohnanza.game.factory.BlackEyedCreator;
 import bohnanza.game.factory.BlueCreator;
 import bohnanza.game.factory.ChiliCreator;
@@ -14,32 +14,28 @@ import bohnanza.game.factory.SoyCreator;
 import bohnanza.game.factory.StinkCreator;
 import bohnanza.game.factory.WaxCreator;
 
-public class DiscardPile extends Field {
+public class DiscardPile extends CardList<Bean> {
 
     private static final String TO_STRING_MESSAGE = "discarded: %d";
 
     @Override
     protected void initializeCollection() {
-        getCards().addAll(BlackEyedCreator.getInstance().createCards());
-        getCards().addAll(BlueCreator.getInstance().createCards());
-        getCards().addAll(ChiliCreator.getInstance().createCards());
-        getCards().addAll(CocoaCreator.getInstance().createCards());
-        getCards().addAll(CoffeeCreator.getInstance().createCards());
-        getCards().addAll(GardenCreator.getInstance().createCards());
-        getCards().addAll(GreenCreator.getInstance().createCards());
-        getCards().addAll(RedCreator.getInstance().createCards());
-        getCards().addAll(SoyCreator.getInstance().createCards());
-        getCards().addAll(StinkCreator.getInstance().createCards());
-        getCards().addAll(WaxCreator.getInstance().createCards());
-    }
-
-    public void discard(Bean bean) {
-        getCards().add(bean);
+        add(BlackEyedCreator.getInstance().createCards());
+        add(BlueCreator.getInstance().createCards());
+        add(ChiliCreator.getInstance().createCards());
+        add(CocoaCreator.getInstance().createCards());
+        add(CoffeeCreator.getInstance().createCards());
+        add(GardenCreator.getInstance().createCards());
+        add(GreenCreator.getInstance().createCards());
+        add(RedCreator.getInstance().createCards());
+        add(SoyCreator.getInstance().createCards());
+        add(StinkCreator.getInstance().createCards());
+        add(WaxCreator.getInstance().createCards());
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MESSAGE, getCards().size());
+        return String.format(TO_STRING_MESSAGE, getSize());
     }
 
 }

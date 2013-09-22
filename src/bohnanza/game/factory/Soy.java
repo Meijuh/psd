@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class Soy extends Bean {
 
-    Soy(Beanometer beanometer) {
+    public Soy(Beanometer beanometer) {
         super(Type.SOY, beanometer);
     }
 

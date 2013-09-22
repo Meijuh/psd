@@ -6,7 +6,7 @@ public class ThirdBeanField extends Card<String> {
 
     public static final String TYPE = "3rd bean field";
 
-    ThirdBeanField() {
+    public ThirdBeanField() {
         super(TYPE);
     }
 

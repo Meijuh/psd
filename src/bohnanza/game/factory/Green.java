@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class Green extends Bean {
 
-    Green(Beanometer beanometer) {
+    public Green(Beanometer beanometer) {
         super(Type.GREEN, beanometer);
     }
 

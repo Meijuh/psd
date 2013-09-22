@@ -11,7 +11,18 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import bohnanza.game.player.BeanField;
+import bohnanza.game.player.DrawArea;
+import bohnanza.game.player.Hand;
+import bohnanza.game.player.KeepArea;
+import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
 import bohnanza.gameplay.GameContext;
+import bohnanza.view.TUIView;
+import bohnanza.view.View;
 
 public class Bohnanza {
 
@@ -69,7 +80,35 @@ public class Bohnanza {
                             String.format(PLAYER_RANGE, playerCount));
                 } else {
 
-                    GameContext gameContext = new GameContext(playerCount);
+                    View view = new TUIView();
+                    DiscardPile discardPile = new DiscardPile();
+                    Box box = new Box();
+                    DrawDeck drawDeck = new DrawDeck();
+
+                    GameContext gameContext = new GameContext(view,
+                            discardPile, drawDeck, box);
+
+                    Hand hand;
+                    DrawArea drawArea;
+                    KeepArea keepArea;
+                    Treasury treasury;
+                    BeanField firstBeanField;
+                    BeanField secondBeanField;
+
+                    for (int i = 0; i < playerCount; i++) {
+
+                        hand = new Hand();
+                        drawArea = new DrawArea();
+                        keepArea = new KeepArea();
+                        treasury = new Treasury();
+                        firstBeanField = new BeanField();
+                        secondBeanField = new BeanField();
+
+                        Player player = new Player(hand, drawArea, keepArea,
+                                treasury, firstBeanField, secondBeanField,
+                                drawDeck, discardPile, box);
+                        gameContext.setPlayer(player);
+                    }
 
                     while (gameContext.getState() != null) {
                         gameContext.execute();

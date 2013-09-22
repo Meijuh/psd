@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class Wax extends Bean {
 
-    Wax(Beanometer beanometer) {
+    public Wax(Beanometer beanometer) {
         super(Type.WAX, beanometer);
     }
 

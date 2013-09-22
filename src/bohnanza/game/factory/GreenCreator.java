@@ -2,7 +2,7 @@ package bohnanza.game.factory;
 
 import bohnanza.game.Beanometer;
 
-public class GreenCreator extends BeanCreator<Green> {
+public class GreenCreator extends BeanCreator {
 
     private static GreenCreator instance = null;
 

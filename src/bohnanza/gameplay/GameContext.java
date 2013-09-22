@@ -1,12 +1,14 @@
 package bohnanza.gameplay;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
-import java.util.Set;
 
 import bohnanza.game.player.Player;
-import bohnanza.game.shared.SharedArea;
-import bohnanza.view.TUIView;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
 import bohnanza.view.View;
 
 public class GameContext extends Observable {
@@ -15,7 +17,7 @@ public class GameContext extends Observable {
 
     private GameState current;
 
-    private final Set<Player> players;
+    private final List<Player> players;
 
     private final View view;
 
@@ -25,29 +27,57 @@ public class GameContext extends Observable {
 
     private int drawDeckExhaustedCount;
 
+    private final DiscardPile discardPile;
+
+    private final DrawDeck drawDeck;
+
+    private final Box box;
+
     private static final String TO_STRING_MESSAGE = "State: %s, players: %d, draw deck shuffled: %d times, current player: %s";
 
-    public GameContext(int playerCount) {
-        players = new HashSet<Player>(playerCount);
+    public GameContext(View view, DiscardPile discardPile, DrawDeck drawDeck,
+            Box box) {
+        players = new ArrayList<Player>();
         drawDeckExhaustedCount = 0;
 
-        view = new TUIView();
         addObserver(view);
+        this.view = view;
 
-        SharedArea sharedArea = new SharedArea();
-        sharedArea.addObserver(view);
+        discardPile.addObserver(view);
+        drawDeck.addObserver(view);
+        box.addObserver(view);
 
-        for (int i = 0; i < playerCount; i++) {
-            Player player = new Player(sharedArea);
+        this.discardPile = discardPile;
+        this.drawDeck = drawDeck;
+        this.box = box;
+
+        for (Player player : players) {
             player.addObserver(view);
-            players.add(player);
         }
+
         current = Prepare.getInstance();
+    }
+
+    public DrawDeck getDrawDeck() {
+        return drawDeck;
+    }
+
+    public DiscardPile getDiscardPile() {
+        return discardPile;
+    }
+
+    public Box getBox() {
+        return box;
     }
 
     public void changeState(GameState gameState) {
         current = gameState;
         notifyObservers();
+    }
+
+    public void setPlayer(Player... players) {
+
+        this.players.addAll(Arrays.asList(players));
     }
 
     public GameState getState() {
@@ -58,15 +88,11 @@ public class GameContext extends Observable {
         current.execute(this);
     }
 
-    public void addPlayer(Player player) {
-        players.add(player);
-    }
-
     public View getView() {
         return view;
     }
 
-    public Set<Player> getPlayers() {
+    public List<Player> getPlayers() {
         return players;
     }
 
@@ -99,7 +125,7 @@ public class GameContext extends Observable {
     @Override
     public String toString() {
         return String.format(TO_STRING_MESSAGE, current, players.size(),
-                drawDeckExhaustedCount, currentPlayer);
+                drawDeckExhaustedCount, currentPlayer.getName());
     }
 
 }

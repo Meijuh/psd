@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class BlackEyed extends Bean {
 
-    BlackEyed(Beanometer beanometer) {
+    public BlackEyed(Beanometer beanometer) {
         super(Type.BLACK_EYED, beanometer);
     }
 

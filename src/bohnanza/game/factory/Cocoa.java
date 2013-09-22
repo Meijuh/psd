@@ -6,7 +6,7 @@ import bohnanza.game.Type;
 
 public class Cocoa extends Bean {
 
-    Cocoa(Beanometer beanometer) {
+    public Cocoa(Beanometer beanometer) {
         super(Type.COCOA, beanometer);
     }
 

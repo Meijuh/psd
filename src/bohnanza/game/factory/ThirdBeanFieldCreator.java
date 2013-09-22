@@ -2,7 +2,7 @@ package bohnanza.game.factory;
 
 public class ThirdBeanFieldCreator extends CardCreator<ThirdBeanField> {
 
-    private static final int AMOUNT = 7;
+    public static final int AMOUNT = 7;
     private static ThirdBeanFieldCreator instance = null;
 
     private ThirdBeanFieldCreator() {

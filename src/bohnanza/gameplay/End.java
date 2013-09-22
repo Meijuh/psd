@@ -1,5 +1,7 @@
 package bohnanza.gameplay;
 
+import bohnanza.game.player.Player;
+
 public class End extends GameState {
 
     private static End instance = null;
@@ -12,8 +14,19 @@ public class End extends GameState {
 
     @Override
     public void execute(GameContext context) {
-        context.setExitStatus(0);
-        context.changeState(null);
+
+        try {
+
+            for (Player player : context.getPlayers()) {
+                player.harvestAndSellAll();
+            }
+
+            context.setExitStatus(0);
+            context.changeState(null);
+        } catch (Exception e) {
+            context.changeState(Fail.getInstance());
+            Fail.getInstance().setException(e);
+        }
 
     }
 

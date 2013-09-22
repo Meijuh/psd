@@ -1,6 +1,6 @@
 package bohnanza.gameplay;
 
-import bohnanza.game.player.FarmException;
+import bohnanza.game.player.BohnanzaException;
 
 public class FirstTurn extends GameState {
 
@@ -23,7 +23,7 @@ public class FirstTurn extends GameState {
     @Override
     public void execute(GameContext context) {
 
-        if (context.getCurrentPlayer().hasCardsInHand()) {
+        if (context.getCurrentPlayer().getHand().size() > 0) {
 
             int beanFieldNumber = context.getView().mustPlant(
                     context.getCurrentPlayer());
@@ -32,7 +32,7 @@ public class FirstTurn extends GameState {
 
                 context.getCurrentPlayer().plant(beanFieldNumber);
 
-                if (context.getCurrentPlayer().hasCardsInHand()) {
+                if (context.getCurrentPlayer().getHand().size() > 0) {
                     beanFieldNumber = context.getView().mayPlant(
                             context.getCurrentPlayer());
 
@@ -42,8 +42,9 @@ public class FirstTurn extends GameState {
 
                 context.changeState(SecondTurn.getInstance());
 
-            } catch (FarmException e) {
-                context.changeState(Fail.getInstance(e));
+            } catch (BohnanzaException e) {
+                context.changeState(Fail.getInstance());
+                Fail.getInstance().setException(e);
             }
         }
 

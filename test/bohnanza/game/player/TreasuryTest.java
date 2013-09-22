@@ -5,18 +5,17 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DrawAreaTest {
+public class TreasuryTest {
 
-    private DrawArea drawArea;
+    private Treasury treasury;
 
     @Before
     public final void setUp() {
-        drawArea = new DrawArea();
+        treasury = new Treasury();
     }
 
     @Test
     public final void testInitializeCollection() {
-        assertFalse(drawArea.hasCards());
+        assertFalse(treasury.hasCards());
     }
-
 }

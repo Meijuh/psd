@@ -1,14 +1,12 @@
 package bohnanza.game.player;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
-import java.util.Set;
 
 import bohnanza.game.Bean;
-import bohnanza.game.Type;
+import bohnanza.game.shared.Box;
 import bohnanza.game.shared.DiscardPile;
 import bohnanza.game.shared.DrawDeck;
 
@@ -28,7 +26,7 @@ public class Player extends Observable {
 
     private final BeanField secondBeanField;
 
-    private final BeanField thirdBeanField;
+    private BeanField thirdBeanField;
 
     private final DrawDeck drawDeck;
 
@@ -38,7 +36,9 @@ public class Player extends Observable {
 
     private final Treasury treasury;
 
-    private static final String TO_STRING_MESSAGE = "hand: %s, %s";
+    private final Box box;
+
+    private static final String TO_STRING_MESSAGE = "hand: %s, draw area: %s, keep area: %s, bean fields: %s %s %s";
 
     public static final int FIRST_BEAN_FIELD = 1;
 
@@ -46,10 +46,12 @@ public class Player extends Observable {
 
     public static final int THIRD_BEAN_FIELD = 3;
 
+    public static final int THIRD_BEAN_FIELD_COST = 3;
+
     public Player(Hand hand, DrawArea drawArea, KeepArea keepArea,
             Treasury treasury, BeanField firstBeanField,
             BeanField secondBeanField, DrawDeck drawDeck,
-            DiscardPile discardPile) {
+            DiscardPile discardPile, Box box) {
         this.hand = hand;
         this.drawArea = drawArea;
         this.keepArea = keepArea;
@@ -59,6 +61,7 @@ public class Player extends Observable {
         this.drawDeck = drawDeck;
         this.discardPile = discardPile;
         this.thirdBeanField = null;
+        this.box = box;
     }
 
     public void setLeftPlayer(Player player) {
@@ -86,33 +89,41 @@ public class Player extends Observable {
         return playerNumber;
     }
 
-    public void plant(int beanFieldNumber) throws FarmException {
-        plant(beanFieldNumber, hand.draw());
+    public void plant(int beanFieldNumber) throws BohnanzaException {
+        plant(beanFieldNumber, hand.remove());
     }
 
-    public void plant(int beanFieldNumber, Bean bean) throws FarmException {
+    public void plant(int beanFieldNumber, Bean bean) throws BohnanzaException {
 
         BeanField beanField = getBeanField(beanFieldNumber);
 
         if (!beanField.isType(bean.getType())) {
             harvestAndSell(beanField);
         }
-        beanField.plant(bean);
+        beanField.add(bean);
         notifyObservers();
+    }
+
+    public void harvestAndSellAll() throws BohnanzaException {
+        harvestAndSell(getBeanField(FIRST_BEAN_FIELD));
+        harvestAndSell(getBeanField(SECOND_BEAN_FIELD));
+        if (hasThirdBeanField()) {
+            harvestAndSell(getBeanField(THIRD_BEAN_FIELD));
+        }
     }
 
     private void harvestAndSell(BeanField beanField) {
 
         if (beanField.hasCards()) {
 
-            Collection<Bean> beans = beanField.empty();
+            List<Bean> beans = beanField.empty();
 
             int i = 0;
             for (Bean bean : beans) {
                 if (i < bean.getBeanometer().getWorth(beans.size())) {
-                    treasury.makeProfit(bean);
+                    treasury.add(bean);
                 } else {
-                    discardPile.discard(bean);
+                    discardPile.add(bean);
                 }
                 i++;
             }
@@ -124,33 +135,26 @@ public class Player extends Observable {
         return thirdBeanField != null;
     }
 
-    public void drawTwoCards() {
-        drawOneCard();
-        drawOneCard();
+    public void drawIntoDrawArea() {
+        drawArea.add(drawDeck.remove());
     }
 
-    public void drawOneCard() {
-        drawArea.showCard(drawDeck.draw());
+    public void drawIntoHand() {
+        hand.add(drawDeck.remove());
     }
 
-    public void drawThreeCards() {
-        hand.add(drawDeck.draw());
-        hand.add(drawDeck.draw());
-        hand.add(drawDeck.draw());
+    public List<Bean> getDrawArea() {
+        return drawArea.getCardsUnmodifiable();
     }
 
-    public Set<Type> getDrawAreaTypes() {
-        return drawArea.getTypes();
+    public boolean isDrawAreaNotEmpty() {
+        return drawArea.hasCards();
     }
 
-    public boolean hasDrawAreaTypes() {
-        return getDrawAreaTypes().size() > 0;
-    }
+    public void receiveFromHand(Collection<Bean> hand, Player player) {
 
-    public void receiveFromHand(Collection<Bean> counterProposal, Player player) {
-
-        keepArea.add(counterProposal);
-        player.removeFromHand(counterProposal);
+        keepArea.add(hand);
+        player.removeFromHand(hand);
 
     }
 
@@ -158,65 +162,65 @@ public class Player extends Observable {
         hand.remove(beans);
     }
 
-    public void receiveFromDrawArea(Collection<Bean> cardsFromDrawArea,
-            Player player) {
-        keepArea.add(cardsFromDrawArea);
-        player.removeFromDrawArea(cardsFromDrawArea);
+    public void receiveFromDrawArea(Collection<Bean> drawArea, Player player) {
+        keepArea.add(drawArea);
+        player.removeFromDrawArea(drawArea);
     }
 
     public void removeFromDrawArea(Collection<Bean> cardsFromDrawArea) {
-        playerArea.removeFromDrawArea(cardsFromDrawArea);
+        drawArea.remove(cardsFromDrawArea);
     }
 
-    public Collection<Bean> getKeepAreaCards() {
-        return playerArea.getKeepAreaCards();
+    public List<Bean> getKeepArea() {
+        return keepArea.getCardsUnmodifiable();
     }
 
-    public boolean hasKeepAreaCards() {
-        return getKeepAreaCards().size() > 0;
+    public boolean isKeepAreaNotEmpty() {
+        return keepArea.hasCards();
     }
 
-    public void buy() {
+    public void buy() throws BohnanzaException {
 
-        sharedArea.discard(playerArea.buy());
+        if (getTreasury() >= THIRD_BEAN_FIELD_COST) {
 
-        playerArea.setThirdBeanFieldCard(sharedArea.buy());
+            int i = 0;
+            while (i < getTreasury()) {
+
+                discardPile.add(treasury.remove());
+
+                i++;
+            }
+
+            thirdBeanField = new BeanField();
+
+            box.remove();
+        } else {
+            throw new BohnanzaException(BohnanzaException.NOT_ENOUGH_MONEY);
+        }
     }
 
-    public boolean hasCardsInHand() {
+    public int getTreasury() {
+        return treasury.getSize();
+    }
+
+    public boolean isHandNotEmpty() {
         return hand.hasCards();
     }
 
-    public Collection<Bean> getCardsFromHand() {
-        return hand.getCards();
-    }
-
-    public void drawFromSharedArea() {
-        sharedArea.draw();
-    }
-
-    public boolean canDrawThreeCards() {
-        return sharedArea.canDrawThreeCards();
-    }
-
-    public boolean canDrawTwoCards() {
-        return sharedArea.canDrawTwoCards();
-    }
-
-    public boolean canDrawOneCard() {
-        return sharedArea.canDrawOneCard();
+    public List<Bean> getHand() {
+        return hand.getCardsUnmodifiable();
     }
 
     public void shuffle() {
-        List<Bean> temp = new ArrayList<Bean>(drawDeck.empty());
+        List<Bean> temp = drawDeck.empty();
         temp.addAll(discardPile.empty());
 
         Collections.shuffle(temp);
 
-        drawDeck.addShuffledCards(temp);
+        drawDeck.add(temp);
     }
 
-    private BeanField getBeanField(int nr) throws FarmException {
+    private BeanField getBeanField(int nr) throws BohnanzaException {
         BeanField beanField = null;
         switch (nr) {
         case FIRST_BEAN_FIELD:
@@ -229,17 +233,19 @@ public class Player extends Observable {
             if (hasThirdBeanField()) {
                 beanField = thirdBeanField;
             } else {
-                throw new FarmException(FarmException.THIRD_FIELD);
+                throw new BohnanzaException(BohnanzaException.THIRD_FIELD);
             }
             break;
         default:
-            throw new FarmException(FarmException.NO_FIELD);
+            throw new BohnanzaException(BohnanzaException.NO_FIELD);
         }
         return beanField;
     }
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MESSAGE, hand, playerArea);
+        return String.format(TO_STRING_MESSAGE, hand, drawArea, keepArea,
+                firstBeanField, secondBeanField,
+                hasThirdBeanField() ? thirdBeanField : BeanField.EMPTY);
     }
 }

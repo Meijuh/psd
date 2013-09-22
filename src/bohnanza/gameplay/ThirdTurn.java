@@ -1,7 +1,7 @@
 package bohnanza.gameplay;
 
 import bohnanza.game.Bean;
-import bohnanza.game.player.FarmException;
+import bohnanza.game.player.BohnanzaException;
 import bohnanza.game.player.Player;
 
 public class ThirdTurn extends GameState {
@@ -45,7 +45,7 @@ public class ThirdTurn extends GameState {
 
             } while (!plantingPlayer.equals(context.getCurrentPlayer()));
 
-        } catch (FarmException e) {
+        } catch (BohnanzaException e) {
             context.changeState(Fail.getInstance(e));
         }
 

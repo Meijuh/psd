@@ -2,7 +2,7 @@ package bohnanza.game.factory;
 
 import bohnanza.game.Beanometer;
 
-public class ChiliCreator extends BeanCreator<Chili> {
+public class ChiliCreator extends BeanCreator {
 
     private static ChiliCreator instance = null;
 
