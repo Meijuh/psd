@@ -49,12 +49,12 @@ public class PrepareTest extends GamePlayTest {
                         .getPlayerNumber());
 
         assertEquals(getGameContext().getPlayers().get(FIRST_PLAYER).getName(),
-                getGameContext().getPlayers().get(FIRST_PLAYER).getLeftPlayer()
-                        .getName());
-        assertEquals(
-                getGameContext().getPlayers().get(SECOND_PLAYER).getName(),
                 getGameContext().getPlayers().get(SECOND_PLAYER)
                         .getLeftPlayer().getName());
+        assertEquals(
+                getGameContext().getPlayers().get(SECOND_PLAYER).getName(),
+                getGameContext().getPlayers().get(FIRST_PLAYER).getLeftPlayer()
+                        .getName());
 
         assertEquals(Prepare.HAND_SIZE,
                 getGameContext().getPlayers().get(FIRST_PLAYER).getHand()
@@ -62,6 +62,8 @@ public class PrepareTest extends GamePlayTest {
         assertEquals(Prepare.HAND_SIZE,
                 getGameContext().getPlayers().get(SECOND_PLAYER).getHand()
                         .size());
+
+        assertNotNull(getGameContext().getCurrentPlayer());
 
         assertEquals(FirstTurn.getInstance(), getGameContext().getState());
     }

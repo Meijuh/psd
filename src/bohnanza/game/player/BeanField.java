@@ -6,9 +6,15 @@ import bohnanza.game.Type;
 
 public class BeanField extends CardList<Bean> {
 
-    public static final String EMPTY = "x";
-
     public static final String BAR = "|";
+
+    public static final String LPAREN = "(";
+
+    public static final String RPAREN = ")";
+
+    public static final String EMPTY_STRING = "";
+
+    public static final String SPACE = " ";
 
     @Override
     protected void initializeCollection() {
@@ -22,6 +28,8 @@ public class BeanField extends CardList<Bean> {
 
     @Override
     public String toString() {
-        return BAR + (!hasCards() ? EMPTY : peek().toString()) + BAR;
+        return BAR
+                + (hasCards() ? peek().toString().concat(SPACE) : EMPTY_STRING)
+                + LPAREN + getSize() + RPAREN + BAR;
     }
 }

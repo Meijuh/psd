@@ -9,12 +9,10 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import bohnanza.game.player.Player;
-import bohnanza.view.TUIView;
-import bohnanza.view.View;
 
 public class GameContextTest extends GamePlayTest {
 
-    public static final String TO_STRING_MESSAGE = "State: prepare, players: 2, draw deck shuffled: 0 times, current player: test";
+    public static final String TO_STRING_MESSAGE = "State: prepare, players: test, name2 (2), draw deck shuffled: 0 times, current player: name: test\nhand: \ndraw area: \nkeep area: \nbean fields: |(0)| |(0)| x";
 
     @Test
     public final void testGameContext() throws Exception {
@@ -124,11 +122,6 @@ public class GameContextTest extends GamePlayTest {
         getGameContext().setCurrentPlayer(getGameContext().getPlayers().get(0));
         getGameContext().getPlayers().get(0).setName("test");
         assertEquals(TO_STRING_MESSAGE, getGameContext().toString());
-    }
-
-    @Override
-    protected View setView() {
-        return new TUIView();
     }
 
 }

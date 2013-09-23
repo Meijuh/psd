@@ -30,13 +30,13 @@ public class FirstTurn extends GameState {
 
             try {
 
-                context.getCurrentPlayer().plant(beanFieldNumber);
+                context.getCurrentPlayer().plantHand(beanFieldNumber);
 
                 if (context.getCurrentPlayer().getHand().size() > 0) {
                     beanFieldNumber = context.getView().mayPlant(
                             context.getCurrentPlayer());
 
-                    context.getCurrentPlayer().plant(beanFieldNumber);
+                    context.getCurrentPlayer().plantHand(beanFieldNumber);
 
                 }
 

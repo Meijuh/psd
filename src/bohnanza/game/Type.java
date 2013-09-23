@@ -7,7 +7,7 @@ public enum Type {
 
     BLACK_EYED("black-eyed"), BLUE("blue"), CHILI("chili"), COCOA("cocoa"), COFFEE(
             "coffee"), GARDEN("garden"), GREEN("green"), RED("red"), SOY("soy"), STINK(
-            "strink"), WAX("wax");
+            "stink"), WAX("wax");
 
     private final String name;
 

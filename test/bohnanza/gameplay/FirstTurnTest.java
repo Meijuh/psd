@@ -12,7 +12,7 @@ import org.junit.Test;
 import bohnanza.game.Bean;
 import bohnanza.game.player.Player;
 
-public class FirstTurnTest extends TurnTest {
+public class FirstTurnTest extends GamePlayTest {
 
     private FirstTurn firstTurn;
 

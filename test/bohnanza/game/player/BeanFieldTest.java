@@ -14,6 +14,10 @@ public class BeanFieldTest {
 
     private BeanField beanField;
 
+    public static final String TO_STRING_MESSAGE_NULL = "|(0)|";
+
+    public static final String TO_STRING_MESSAGE = "|%s (1)|";
+
     @Before
     public final void setUp() {
         beanField = new BeanField();
@@ -33,14 +37,13 @@ public class BeanFieldTest {
 
         beanField.add(bean);
 
-        assertEquals(BeanField.BAR + bean.toString() + BeanField.BAR,
+        assertEquals(String.format(TO_STRING_MESSAGE, bean.toString()),
                 beanField.toString());
     }
 
     @Test
     public final void testToStringNull() {
-        assertEquals(BeanField.BAR + BeanField.EMPTY + BeanField.BAR,
-                beanField.toString());
+        assertEquals(TO_STRING_MESSAGE_NULL, beanField.toString());
     }
 
     @Test

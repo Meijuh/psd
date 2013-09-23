@@ -1,6 +1,7 @@
 package bohnanza.view;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Observer;
 
 import bohnanza.game.Bean;
@@ -20,7 +21,7 @@ public abstract class View implements Observer {
     public abstract Collection<Bean> getOptionsFromDrawArea(
             Collection<Bean> options);
 
-    public abstract Bean getOptionFromKeepArea(Collection<Bean> options);
+    public abstract Bean getOptionFromKeepArea(List<Bean> options);
 
     public abstract Collection<Type> getOptionsFromType(Collection<Type> options);
 

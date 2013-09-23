@@ -38,7 +38,7 @@ public class Player extends Observable {
 
     private final Box box;
 
-    private static final String TO_STRING_MESSAGE = "hand: %s, draw area: %s, keep area: %s, bean fields: %s %s %s";
+    private static final String TO_STRING_MESSAGE = "name: %s\nhand: %s\ndraw area: %s\nkeep area: %s\nbean fields: %s %s %s";
 
     public static final int FIRST_BEAN_FIELD = 1;
 
@@ -47,6 +47,8 @@ public class Player extends Observable {
     public static final int THIRD_BEAN_FIELD = 3;
 
     public static final int THIRD_BEAN_FIELD_COST = 3;
+
+    public static final String EMPTY = "x";
 
     public Player(Hand hand, DrawArea drawArea, KeepArea keepArea,
             Treasury treasury, BeanField firstBeanField,
@@ -89,11 +91,17 @@ public class Player extends Observable {
         return playerNumber;
     }
 
-    public void plant(int beanFieldNumber) throws BohnanzaException {
+    public void plantHand(int beanFieldNumber) throws BohnanzaException {
         plant(beanFieldNumber, hand.remove());
     }
 
-    public void plant(int beanFieldNumber, Bean bean) throws BohnanzaException {
+    public void plantKeepArea(int beanFieldNumber, Bean bean)
+            throws BohnanzaException {
+        keepArea.remove(bean);
+        plant(beanFieldNumber, bean);
+    }
+
+    private void plant(int beanFieldNumber, Bean bean) throws BohnanzaException {
 
         BeanField beanField = getBeanField(beanFieldNumber);
 
@@ -101,7 +109,8 @@ public class Player extends Observable {
             harvestAndSell(beanField);
         }
         beanField.add(bean);
-        notifyObservers();
+        setChanged();
+        notifyObservers(this);
     }
 
     public void harvestAndSellAll() throws BohnanzaException {
@@ -184,7 +193,7 @@ public class Player extends Observable {
         if (getTreasury() >= THIRD_BEAN_FIELD_COST) {
 
             int i = 0;
-            while (i < getTreasury()) {
+            while (i < THIRD_BEAN_FIELD_COST) {
 
                 discardPile.add(treasury.remove());
 
@@ -244,8 +253,12 @@ public class Player extends Observable {
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MESSAGE, hand, drawArea, keepArea,
+        return String.format(TO_STRING_MESSAGE, name, hand, drawArea, keepArea,
                 firstBeanField, secondBeanField,
-                hasThirdBeanField() ? thirdBeanField : BeanField.EMPTY);
+                hasThirdBeanField() ? thirdBeanField : EMPTY);
+    }
+
+    public void keep() {
+        keepArea.add(drawArea.empty());
     }
 }

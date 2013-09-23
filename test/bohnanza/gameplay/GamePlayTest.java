@@ -1,5 +1,7 @@
 package bohnanza.gameplay;
 
+import static org.mockito.Mockito.mock;
+
 import org.junit.Before;
 
 import bohnanza.game.player.BeanField;
@@ -117,12 +119,10 @@ public abstract class GamePlayTest {
         return view;
     }
 
-    protected abstract View setView();
-
     @Before
     public void setUp() {
 
-        view = setView();
+        view = mock(View.class);
 
         gameContext = new GameContext(view, discardPile, drawDeck, box);
 
@@ -152,5 +152,25 @@ public abstract class GamePlayTest {
                 drawDeck, discardPile, box);
         gameContext.setPlayer(player);
 
+        getGameContext().getPlayers().get(FIRST_PLAYER).setName(NAME_ONE);
+        getGameContext().getPlayers().get(SECOND_PLAYER).setName(NAME_TWO);
+
+        getGameContext().getPlayers().get(FIRST_PLAYER)
+                .setPlayerNumber(FIRST_PLAYER + 1);
+        getGameContext().getPlayers().get(SECOND_PLAYER)
+                .setPlayerNumber(SECOND_PLAYER + 2);
+
+        getGameContext()
+                .getPlayers()
+                .get(FIRST_PLAYER)
+                .setLeftPlayer(getGameContext().getPlayers().get(SECOND_PLAYER));
+        getGameContext().getPlayers().get(SECOND_PLAYER)
+                .setLeftPlayer(getGameContext().getPlayers().get(FIRST_PLAYER));
+
+        getGameContext().setCurrentPlayer(
+                getGameContext().getPlayers().get(FIRST_PLAYER));
+
+        getGameContext().getCurrentPlayer().shuffle();
     }
+
 }

@@ -2,8 +2,10 @@ package bohnanza.gameplay;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 
 import bohnanza.game.player.Player;
 import bohnanza.game.shared.Box;
@@ -33,8 +35,6 @@ public class GameContext extends Observable {
 
     private final Box box;
 
-    private static final String TO_STRING_MESSAGE = "State: %s, players: %d, draw deck shuffled: %d times, current player: %s";
-
     public GameContext(View view, DiscardPile discardPile, DrawDeck drawDeck,
             Box box) {
         players = new ArrayList<Player>();
@@ -50,10 +50,6 @@ public class GameContext extends Observable {
         this.discardPile = discardPile;
         this.drawDeck = drawDeck;
         this.box = box;
-
-        for (Player player : players) {
-            player.addObserver(view);
-        }
 
         current = Prepare.getInstance();
     }
@@ -72,10 +68,15 @@ public class GameContext extends Observable {
 
     public void changeState(GameState gameState) {
         current = gameState;
-        notifyObservers();
+        this.setChanged();
+        notifyObservers(this);
     }
 
     public void setPlayer(Player... players) {
+
+        for (Player player : players) {
+            player.addObserver(view);
+        }
 
         this.players.addAll(Arrays.asList(players));
     }
@@ -98,7 +99,7 @@ public class GameContext extends Observable {
 
     public void setCurrentPlayer(Player player) {
         currentPlayer = player;
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public Player getCurrentPlayer() {
@@ -115,7 +116,7 @@ public class GameContext extends Observable {
 
     public void increaseDrawDeckExhausted() {
         drawDeckExhaustedCount++;
-        notifyObservers();
+        notifyObservers(this);
     }
 
     public boolean isDrawDeckExhaustedThreeTimes() {
@@ -124,8 +125,33 @@ public class GameContext extends Observable {
 
     @Override
     public String toString() {
-        return String.format(TO_STRING_MESSAGE, current, players.size(),
-                drawDeckExhaustedCount, currentPlayer.getName());
+
+        return current.getToString(this);
     }
 
+    public Set<Player> getWinners() {
+
+        HashSet<Player> winners = new HashSet<Player>();
+
+        int highest = -1;
+
+        for (Player player : players) {
+            if (player.getTreasury() > highest) {
+                highest = player.getTreasury();
+            }
+        }
+
+        for (Player player : players) {
+            if (player.getTreasury() == highest) {
+                winners.add(player);
+            }
+        }
+
+        return winners;
+
+    }
+
+    public int getDrawDeckExhaustedCount() {
+        return drawDeckExhaustedCount;
+    }
 }

@@ -15,7 +15,7 @@ public class BeanometerTest {
 
     private static final String TO_STRING = "2->1, 4->2, 6->3, 8->4";
 
-    private static final String TO_STRING_NO_ONE_COIN = "x,   4->2, 6->3, 8->4";
+    private static final String TO_STRING_NO_ONE_COIN = "4->2, 6->3, 8->4";
 
     @Before
     public void setUp() {

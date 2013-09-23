@@ -22,10 +22,6 @@ public class CardListTest {
 
     private final DiscardPile discardPile = new DiscardPile();
 
-    public static final String LEFT = "[";
-
-    public static final String RIGHT = "]";
-
     @Before
     public final void setUp() {
         cardList = new CardListMock();
@@ -114,7 +110,7 @@ public class CardListTest {
 
         cardList.add(bean);
 
-        assertEquals(LEFT + bean.toString() + RIGHT, cardList.toString());
+        assertEquals(bean.toString(), cardList.toString());
     }
 
 }

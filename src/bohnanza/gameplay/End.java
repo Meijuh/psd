@@ -8,6 +8,8 @@ public class End extends GameState {
 
     private static final String NAME = "end";
 
+    private static final String TO_STRING_MESSAGE = "Game ended, winner(s): %s.";
+
     private End() {
         super(NAME);
     }
@@ -38,4 +40,9 @@ public class End extends GameState {
         return instance;
     }
 
+    @Override
+    public String getToString(GameContext context) {
+        return String
+                .format(TO_STRING_MESSAGE, context.getWinners().toString());
+    }
 }

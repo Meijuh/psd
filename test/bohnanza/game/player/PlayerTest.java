@@ -35,7 +35,7 @@ public class PlayerTest {
     @Rule
     public final ExpectedException thrown = ExpectedException.none();
 
-    private static final String TO_STRING_MESSAGE = "hand: [], draw area: [], keep area: [], bean fields: |x| |x| x";
+    private static final String TO_STRING_MESSAGE = "name: blaat\nhand: \ndraw area: \nkeep area: \nbean fields: |(0)| |(0)| x";
 
     private final Hand hand = new Hand();
 
@@ -58,6 +58,8 @@ public class PlayerTest {
     private Player player;
 
     public static final int DECK_SIZE = 154;
+
+    public static final String BLAAT = "blaat";
 
     @Before
     public final void setUp() {
@@ -115,7 +117,7 @@ public class PlayerTest {
     }
 
     @Test
-    public final void testPlantInt() throws Exception {
+    public final void testPlantHandInt() throws Exception {
 
         Beanometer beanometer = new Beanometer();
         beanometer.setCardsForOneCoin(Beanometer.TWO_CARDS);
@@ -129,7 +131,7 @@ public class PlayerTest {
 
         player.drawIntoHand();
 
-        player.plant(Player.FIRST_BEAN_FIELD);
+        player.plantHand(Player.FIRST_BEAN_FIELD);
 
         assertFalse(player.getHand().contains(bean));
         assertEquals(oldDiscardPileSize, discardPile.getSize());
@@ -142,7 +144,7 @@ public class PlayerTest {
         when(drawDeck.remove()).thenReturn(otherBean);
 
         player.drawIntoHand();
-        player.plant(Player.FIRST_BEAN_FIELD);
+        player.plantHand(Player.FIRST_BEAN_FIELD);
 
         assertFalse(player.getHand().contains(otherBean));
         assertEquals(otherBean, firstBeanField.peek());
@@ -156,7 +158,7 @@ public class PlayerTest {
 
         when(drawDeck.remove()).thenReturn(otherOtherBean);
         player.drawIntoHand();
-        player.plant(Player.FIRST_BEAN_FIELD);
+        player.plantHand(Player.FIRST_BEAN_FIELD);
         assertEquals(2, firstBeanField.getSize());
         assertTrue(firstBeanField.getCardsUnmodifiable().contains(
                 otherOtherBean));
@@ -168,7 +170,7 @@ public class PlayerTest {
 
         when(drawDeck.remove()).thenReturn(soy);
         player.drawIntoHand();
-        player.plant(Player.FIRST_BEAN_FIELD);
+        player.plantHand(Player.FIRST_BEAN_FIELD);
 
         assertFalse(player.getHand().contains(soy));
         assertEquals(1, player.getTreasury());
@@ -321,13 +323,27 @@ public class PlayerTest {
         thrown.expect(BohnanzaException.class);
         player.buy();
 
+    }
+
+    @Test
+    public final void testBuyException() throws Exception {
+
+        when(drawDeck.remove()).thenReturn(new BlackEyed(new Beanometer()))
+                .thenReturn(new BlackEyed(new Beanometer()))
+                .thenReturn(new BlackEyed(new Beanometer()));
+        player.drawIntoHand();
+
         assertFalse(player.hasThirdBeanField());
 
         player.drawIntoHand();
         player.drawIntoHand();
+
+        treasury.add(player.getHand());
+
         player.buy();
 
         assertTrue(player.hasThirdBeanField());
+        assertEquals(0, player.getTreasury());
     }
 
     @Test
@@ -378,6 +394,8 @@ public class PlayerTest {
 
     @Test
     public final void testToString() throws Exception {
+
+        player.setName(BLAAT);
         assertEquals(TO_STRING_MESSAGE, player.toString());
     }
 

@@ -10,6 +10,12 @@ public abstract class CardList<E extends Card<?>> extends Observable {
 
     private final List<E> cards;
 
+    public static final int CARDS_PER_LINE = 4;
+
+    public static final String SEMICOLON = "; ";
+
+    public static final String NEWLINE = "\n";
+
     protected CardList() {
         cards = new LinkedList<E>();
         initializeCollection();
@@ -23,6 +29,10 @@ public abstract class CardList<E extends Card<?>> extends Observable {
 
     public void remove(Collection<E> cards) {
         this.cards.removeAll(cards);
+    }
+
+    public void remove(E card) {
+        cards.remove(card);
     }
 
     public boolean hasCards() {
@@ -62,7 +72,24 @@ public abstract class CardList<E extends Card<?>> extends Observable {
 
     @Override
     public String toString() {
-        return cards.toString();
+        String string = new String();
+
+        int i = 1;
+        for (Card<?> card : cards) {
+            string = string.concat(card.toString()).concat(SEMICOLON);
+
+            if (i % CARDS_PER_LINE == 0) {
+                string = string.concat(NEWLINE);
+            }
+
+            i++;
+
+        }
+        if (cards.size() > 0) {
+            string = string.substring(0, string.length() - 2);
+        }
+
+        return string;
     }
 
 }

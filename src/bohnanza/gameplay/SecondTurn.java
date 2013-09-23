@@ -62,27 +62,26 @@ public class SecondTurn extends GameState {
             Collection<Bean> counterProposal = context.getView()
                     .getOptionsFromHand(tradepartner.getHand());
 
-            if (counterProposal != null) {
-                boolean confirmTrade = context.getView().confirmTrade(
-                        cardsFromDrawArea, cardsFromHand, tradepartner,
-                        counterProposal);
+            boolean confirmTrade = context.getView().confirmTrade(
+                    cardsFromDrawArea, cardsFromHand, tradepartner,
+                    counterProposal);
 
-                if (confirmTrade) {
-                    context.getCurrentPlayer().receiveFromHand(counterProposal,
-                            tradepartner);
-                    tradepartner.receiveFromHand(cardsFromHand,
-                            context.getCurrentPlayer());
-                    tradepartner.receiveFromDrawArea(cardsFromDrawArea,
-                            context.getCurrentPlayer());
-                }
-
+            if (confirmTrade) {
+                context.getCurrentPlayer().receiveFromHand(counterProposal,
+                        tradepartner);
+                tradepartner.receiveFromHand(cardsFromHand,
+                        context.getCurrentPlayer());
+                tradepartner.receiveFromDrawArea(cardsFromDrawArea,
+                        context.getCurrentPlayer());
             }
 
+            cardsFromDrawArea = new HashSet<Bean>();
             if (context.getCurrentPlayer().isDrawAreaNotEmpty()) {
                 cardsFromDrawArea = context.getView().getOptionsFromDrawArea(
                         context.getCurrentPlayer().getDrawArea());
             }
 
+            cardsFromHand = new HashSet<Bean>();
             if (context.getCurrentPlayer().isHandNotEmpty()) {
                 cardsFromHand = context.getView().getOptionsFromHand(
                         context.getCurrentPlayer().getHand());
@@ -91,6 +90,8 @@ public class SecondTurn extends GameState {
             proposal = context.getView().getOptionsFromType(
                     EnumSet.allOf(Type.class));
         }
+
+        context.getCurrentPlayer().keep();
 
         context.changeState(ThirdTurn.getInstance());
 

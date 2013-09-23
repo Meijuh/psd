@@ -48,8 +48,6 @@ public class Beanometer {
 
     public static final int NO_ONE_COIN_SIZE = 3;
 
-    public static final String NO_ONE_COIN = "x,   ";
-
     public int getWorth(int cards) {
 
         Integer worth = null;
@@ -89,10 +87,6 @@ public class Beanometer {
     public String toString() {
 
         String string = new String();
-
-        if (map.size() == NO_ONE_COIN_SIZE) {
-            string += NO_ONE_COIN;
-        }
 
         Set<Entry<Integer, Integer>> entrySet = map.entrySet();
 

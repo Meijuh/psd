@@ -4,6 +4,8 @@ public class FourthTurn extends GameState {
 
     private static FourthTurn instance = null;
 
+    public static final int THREE_CARDS = 3;
+
     private static final String NAME = "fourth turn";
 
     private FourthTurn() {
@@ -13,7 +15,7 @@ public class FourthTurn extends GameState {
     @Override
     public void execute(GameContext context) {
 
-        if (!context.getCurrentPlayer().canDrawThreeCards()) {
+        if (context.getDrawDeck().getSize() < THREE_CARDS) {
             context.increaseDrawDeckExhausted();
 
             if (context.isDrawDeckExhaustedThreeTimes()) {
@@ -31,7 +33,9 @@ public class FourthTurn extends GameState {
 
     private void drawAndContinue(GameContext context) {
 
-        context.getCurrentPlayer().drawThreeCards();
+        context.getCurrentPlayer().drawIntoHand();
+        context.getCurrentPlayer().drawIntoHand();
+        context.getCurrentPlayer().drawIntoHand();
 
         context.setCurrentPlayer(context.getCurrentPlayer().getLeftPlayer());
 

@@ -22,9 +22,10 @@ public class ThirdTurn extends GameState {
             Player plantingPlayer = context.getCurrentPlayer();
             do {
 
-                while (plantingPlayer.hasKeepAreaCards()) {
+                while (plantingPlayer.isKeepAreaNotEmpty()) {
 
-                    if (plantingPlayer.hasThirdBeanField()) {
+                    if (!plantingPlayer.hasThirdBeanField()
+                            && plantingPlayer.getTreasury() >= Player.THIRD_BEAN_FIELD_COST) {
                         boolean wantsBuy = context.getView().confirmBuy();
 
                         if (wantsBuy) {
@@ -34,11 +35,11 @@ public class ThirdTurn extends GameState {
                     }
 
                     Bean bean = context.getView().getOptionFromKeepArea(
-                            plantingPlayer.getKeepAreaCards());
+                            plantingPlayer.getKeepArea());
 
                     int beanFieldNumber = context.getView().mustPlant(
                             plantingPlayer);
-                    plantingPlayer.plant(beanFieldNumber, bean);
+                    plantingPlayer.plantKeepArea(beanFieldNumber, bean);
                 }
 
                 plantingPlayer = plantingPlayer.getLeftPlayer();
@@ -46,7 +47,8 @@ public class ThirdTurn extends GameState {
             } while (!plantingPlayer.equals(context.getCurrentPlayer()));
 
         } catch (BohnanzaException e) {
-            context.changeState(Fail.getInstance(e));
+            context.changeState(Fail.getInstance());
+            Fail.getInstance().setException(e);
         }
 
         if (context.isDrawDeckExhaustedThreeTimes()) {

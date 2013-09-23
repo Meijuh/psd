@@ -2,6 +2,7 @@ package bohnanza.view;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Observable;
 import java.util.Scanner;
 
@@ -10,6 +11,8 @@ import bohnanza.game.Type;
 import bohnanza.game.player.Player;
 
 public class TUIView extends View {
+
+    private static final String NEWLINE = "\n";
 
     private static final String EMPTY_STRING = "";
 
@@ -29,15 +32,15 @@ public class TUIView extends View {
 
     private static final String SELECT_HAND = "Select the card numbers from your hand (seperate them by an enter, blank line ends selection, may select none):";
 
-    private static final String OFFER_PROPOSAL = "Player %s would like '%s' cards for '%s' cards from hand and '%s' cards from draw area, do you want to trade? (y/n):";
+    private static final String OFFER_PROPOSAL = "%s:\nplayer %s would like '%s' cards for '%s' cards from hand and '%s' cards from draw area, do you want to trade? (y/n):";
 
     private static final String ASK_TRADE = "Do you want to trade? (y/n):";
 
-    private static final String CONFIRM_TRADE = "Do you accept the cards '%s' from player %s for your '%s' cards in your hand and '%s' in your draw area? (y/n):";
+    private static final String CONFIRM_TRADE = "Do you accept the cards '%s' from player\n%s\nfor your '%s' cards in your hand and '%s' in your draw area? (y/n):";
 
     private static final String SELECT_TYPE = "Select the type of beans (seperate them by an enter, blank line ends selection, may select none):";
 
-    private static final String SELECT_KEEP_CARD = "Select the type of bean from your keep area (1..n):";
+    private static final String SELECT_KEEP_CARD = "Select the type of bean from your keep area (1..%d):";
 
     private static final String BUY = "Do you want to buy a third bean field? (y/n):";
 
@@ -54,9 +57,15 @@ public class TUIView extends View {
      */
     @Override
     public String getName(int player) {
-        System.out.println(String.format(NAME, player));
 
-        return scanner.nextLine();
+        String line = EMPTY_STRING;
+
+        while (line.equals(EMPTY_STRING)) {
+            System.out.println(String.format(NAME, player));
+            line = scanner.nextLine();
+        }
+
+        return line;
     }
 
     /*
@@ -122,7 +131,7 @@ public class TUIView extends View {
 
         }
 
-        return line == YES;
+        return line.equals(YES);
 
     }
 
@@ -152,30 +161,22 @@ public class TUIView extends View {
      * @see bohnanza.View#getOptionFromKeepArea(java.util.Collection)
      */
     @Override
-    public Bean getOptionFromKeepArea(Collection<Bean> options) {
+    public Bean getOptionFromKeepArea(List<Bean> options) {
         Bean result = null;
 
         while (result == null) {
-            System.out.println(SELECT_KEEP_CARD);
+            System.out.println(String.format(SELECT_KEEP_CARD, options.size()));
 
             showOptions(options);
 
             String line = scanner.nextLine();
 
             try {
-                int number = Integer.parseInt(line);
+                int number = Integer.parseInt(line) - 1;
 
-                if (0 < number && number < options.size()) {
+                if (0 <= number && number < options.size()) {
 
-                    int i = 1;
-                    while (options.iterator().hasNext()) {
-
-                        if (i == number) {
-                            result = options.iterator().next();
-                        }
-
-                        i++;
-                    }
+                    result = options.get(number);
                 }
 
             } catch (NumberFormatException e) {
@@ -192,7 +193,7 @@ public class TUIView extends View {
      * @see bohnanza.View#getOptionsFromType(java.util.Collection)
      */
     @Override
-    public Collection<Type> getOptionsFromType(Type[] options) {
+    public Collection<Type> getOptionsFromType(Collection<Type> options) {
         return getOptions(options, SELECT_TYPE);
     }
 
@@ -205,7 +206,7 @@ public class TUIView extends View {
 
         HashSet<Integer> numbers = new HashSet<Integer>();
 
-        while (!line.equals(EMPTY_STRING)) {
+        while (line == null || !line.equals(EMPTY_STRING)) {
             System.out.println(message);
 
             showOptions(options);
@@ -216,7 +217,7 @@ public class TUIView extends View {
 
                 int number = Integer.parseInt(line) - 1;
 
-                if (0 < number && number < options.size()) {
+                if (0 <= number && number < options.size()) {
                     numbers.add(number);
                 }
 
@@ -240,11 +241,17 @@ public class TUIView extends View {
 
     private void showOptions(Collection<? extends Object> options) {
 
+        String string = EMPTY_STRING;
+
         int i = 1;
         for (Object option : options) {
-            System.out.println(String.format(SHOW_OPTION, option, i));
+            string = string.concat(String.format(SHOW_OPTION, option, i));
             i++;
         }
+
+        string = string.substring(0, string.length() - 2);
+
+        System.out.println(string);
 
     }
 
@@ -266,7 +273,8 @@ public class TUIView extends View {
         while (tradepartner == null && !askPlayer.equals(currentPlayer)) {
 
             boolean wantsTrade = confirm(String.format(OFFER_PROPOSAL,
-                    currentPlayer, proposal, cardsFromHand, cardsFromDrawArea));
+                    askPlayer, currentPlayer.getName(), proposal,
+                    cardsFromHand, cardsFromDrawArea));
 
             if (wantsTrade) {
                 tradepartner = askPlayer;
@@ -319,7 +327,7 @@ public class TUIView extends View {
     @Override
     public void update(Observable o, Object arg) {
 
-        System.out.println(o);
+        System.out.println(NEWLINE.concat(o.toString()));
 
     }
 }
