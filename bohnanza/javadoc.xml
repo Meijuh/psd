@@ -2,19 +2,44 @@
 <project default="javadoc">
     <target name="javadoc">
         <javadoc 
-        	access="public" 
-        	additionalparam="
-        	     -output graph.dot
-        	     -d doc/umlgraph
-        	     -horizontal 
-        	     -all
-				 -hide java.lang.*
-				 -inferrel
-				 -collpackages java.util.* bohnanza
+        	access="public"
+            additionalparam="
+        	     -views CardGraph.java CreatorGraph.java PlayerGraph.java StateGraph.java ModuleGraph.java
+                 -output graph.dot
+                 -d doc/umlgraph
+                 -horizontal 
+                 -hide java.lang.*
+                 -inferrel
+                 -collpackages java.util.* bohnanza
                  -outputencoding utf8" 
-        	classpath="lib/commons-lang3-3.1/commons-lang3-3.1.jar:/usr/share/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar:lib/commons-cli-1.2/commons-cli-1.2.jar:/usr/share/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar:lib/mockito-1.9.5/mockito-all-1.9.5.jar" 
-        	packagenames="bohnanza.game.player,bohnanza.view,bohnanza.game,bohnanza.game.shared,bohnanza.gameplay,bohnanza.game.factory" 
-        	sourcefiles="src/bohnanza/Bohnanza.java" sourcepath="src">
+        	classpath="lib/guice-4.0-beta/guice-jndi-4.0-beta.jar:lib/guice-4.0-beta/guice-assistedinject-4.0-beta.jar:lib/guice-4.0-beta/guice-spring-4.0-beta.jar:lib/commons-cli-1.2/commons-cli-1.2.jar:/usr/share/eclipse/plugins/org.junit_4.11.0.v201303080030/junit.jar:lib/guice-4.0-beta/guice-servlet-4.0-beta.jar:lib/guice-4.0-beta/guice-throwingproviders-4.0-beta.jar:lib/guice-4.0-beta/guice-multibindings-4.0-beta.jar:lib/guice-4.0-beta/guice-persist-4.0-beta.jar:lib/guice-4.0-beta/guice-grapher-4.0-beta.jar:lib/guice-4.0-beta/guice-jmx-4.0-beta.jar:lib/guice-4.0-beta/guice-struts2-plugin-4.0-beta.jar:/usr/share/eclipse/plugins/org.hamcrest.core_1.3.0.v201303031735.jar:lib/mockito-1.9.5/mockito-all-1.9.5.jar:lib/commons-lang3-3.1/commons-lang3-3.1.jar:lib/guice-4.0-beta/guice-4.0-beta.jar:lib/guice-4.0-beta/javax.inject.jar:lib/guice-4.0-beta/aopalliance.jar"
+        	packagenames="bohnanza.gameplay,bohnanza.view,bohnanza.game.factory" 
+        	sourcefiles="
+        	src/bohnanza/umlgraph/ModuleGraph.java,
+            src/bohnanza/umlgraph/CardGraph.java,
+            src/bohnanza/umlgraph/CreatorGraph.java,
+            src/bohnanza/umlgraph/PlayerGraph.java,
+            src/bohnanza/umlgraph/StateGraph.java,
+            src/bohnanza/umlgraph/Graph.java,
+        	src/bohnanza/Bohnanza.java,
+			src/bohnanza/game/Bean.java,
+			src/bohnanza/game/player/Hand.java,
+			src/bohnanza/game/player/Player.java,
+			src/bohnanza/game/Card.java,
+			src/bohnanza/game/player/BohnanzaException.java,
+			src/bohnanza/module/PlayerProvider.java,
+			src/bohnanza/game/CardList.java,
+			src/bohnanza/game/shared/DiscardPile.java,
+			src/bohnanza/game/shared/Box.java,
+			src/bohnanza/game/shared/DrawDeck.java,
+			src/bohnanza/game/Beanometer.java,
+			src/bohnanza/module/BohnanzaModule.java,
+			src/bohnanza/game/player/Treasury.java,
+			src/bohnanza/game/player/KeepArea.java,
+			src/bohnanza/game/Type.java,
+			src/bohnanza/game/player/DrawArea.java,
+			src/bohnanza/game/player/BeanField.java"
+        	sourcepath="src">
             <doclet name="org.umlgraph.doclet.UmlGraph" path="/usr/share/java/umlgraph/UmlGraph.jar"/>
         </javadoc>
     </target>

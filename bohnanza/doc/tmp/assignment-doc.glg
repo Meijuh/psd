@@ -1,0 +1,7 @@
+This is makeindex, version 2.15 [TeX Live 2013] (kpathsea + Thai support).
+Scanning style file ./assignment-doc.ist.............................done (29 attributes redefined, 0 ignored).
+Scanning input file assignment-doc.glo....done (54 entries accepted, 0 rejected).
+Sorting entries....done (339 comparisons).
+Generating output file assignment-doc.gls....done (126 lines written, 0 warnings).
+Output written in assignment-doc.gls.
+Transcript written in assignment-doc.glg.

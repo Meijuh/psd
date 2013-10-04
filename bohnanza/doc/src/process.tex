@@ -1,7 +1,28 @@
 \section{development process}
 \subsection{Refactor}
 \begin{itemize}
-    \item can not overwrite non abstract methods because they should by made final by checkstyle.
-    \item abstract method for next state, depending on extension
-    \item 
+    \item First we drew a class diagram using Software Ideas
+    Modeler\footnote{http://www.softwareideas.net/} including methods and attributes.
+    \item Using this diagram we generated Java class skeletons.
+    \item Then we tried to use a test driven development approach to test first and implement later.
+    But in practice it resulted in doing both simultaneously.
+    \item Soon we came to the conclusion that many parts of our application could not be tested
+    well, because we tried to protect it from incorrect behaviour to much. This involved creating
+    specific instances of classes in constructors and hiding away to much by creating wrapper
+    classes. One example of such a wrapper class is a \texttt{PlayerArea} which contains the
+    beanfields, hand, etc, but not the discard pile. The idea is that we could use such a wrapper
+    class to make sure some operations could not be done. Such as moving a card from a hand to the
+    discard pile. We did not use this approach because it was not testable. We removed the wrapper
+    classes and used a dependency injection framework instead.
+    \item After standard bohnanza was implemented we began working on high bohn. We decided we could
+    use the dependency injection framework to create the three modules. At this moment in time we
+    saw that in order to have both the \gls{std} and \gls{hb} implementation we needed three instead
+    of two modules. The main reason is that you should design for extension as suggested by
+    Checkstyle\footnote{http://checkstyle.sourceforge.net/}. This means one should explicitly make
+    some methods abstract which should be implemented by a more concrete class. Our first intention
+    was to just override some methods which needed different behaviour in high bohn than that in
+    standard bohnanza.
+    \item After we were done with the implementations we used
+    UmlGraph\footnote{http://www.umlgraph.org/doc/indexw.html} to generate neccesary class diagrams.
+    \item Lastly we wrote this report. 
 \end{itemize}

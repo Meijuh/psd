@@ -5,9 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -49,11 +51,11 @@ public class PlayerTest {
 
     private final DrawDeck drawDeck = mock(DrawDeck.class);
 
-    private final DiscardPile discardPile = new DiscardPile();
+    private final DiscardPile discardPile = mock(DiscardPile.class);
 
-    private final Treasury treasury = new Treasury();
+    private final Treasury treasury = mock(Treasury.class);
 
-    private final Box box = new Box();
+    private final Box box = mock(Box.class);
 
     private Player player;
 
@@ -148,10 +150,12 @@ public class PlayerTest {
 
         assertFalse(player.getHand().contains(otherBean));
         assertEquals(otherBean, firstBeanField.peek());
-        assertEquals(
-                bean,
-                discardPile.getCardsUnmodifiable().get(
-                        discardPile.getSize() - 1));
+
+        ArgumentCaptor<Bean> captor = ArgumentCaptor.forClass(Bean.class);
+
+        verify(discardPile).add(captor.capture());
+
+        assertEquals(bean, captor.getValue());
 
         // Test that a second Bean is moved from the hand to the bean field.
         Bean otherOtherBean = new Red(beanometer);
@@ -172,10 +176,14 @@ public class PlayerTest {
         player.drawIntoHand();
         player.plantHand(Player.FIRST_BEAN_FIELD);
 
+        verify(treasury).add(captor.capture());
+
         assertFalse(player.getHand().contains(soy));
-        assertEquals(1, player.getTreasury());
+        assertEquals(otherBean, captor.getValue());
         assertEquals(1, firstBeanField.getSize());
-        assertTrue(discardPile.getCardsUnmodifiable().contains(otherOtherBean));
+
+        verify(discardPile, times(2)).add(captor.capture());
+        assertEquals(otherOtherBean, captor.getValue());
         assertTrue(firstBeanField.getCardsUnmodifiable().contains(soy));
 
     }
@@ -340,6 +348,12 @@ public class PlayerTest {
 
         treasury.add(player.getHand());
 
+        when(treasury.remove()).thenReturn(new BlackEyed(new Beanometer()))
+                .thenReturn(new BlackEyed(new Beanometer()))
+                .thenReturn(new BlackEyed(new Beanometer()));
+
+        when(treasury.getSize()).thenReturn(3).thenReturn(0);
+
         player.buy();
 
         assertTrue(player.hasThirdBeanField());
@@ -377,18 +391,16 @@ public class PlayerTest {
     @Test
     public final void testShuffle() throws Exception {
 
-        List<Bean> list = new LinkedList<Bean>(
-                discardPile.getCardsUnmodifiable());
+        List<Bean> list = new ArrayList<Bean>();
+        list.add(new Red(new Beanometer()));
 
+        when(discardPile.empty()).thenReturn(list);
         player.shuffle();
 
         verify(drawDeck).add(shuffleCaptor.capture());
 
         assertTrue(shuffleCaptor.getValue().containsAll(list));
-        assertEquals(DECK_SIZE, list.size());
         assertEquals(list.size(), shuffleCaptor.getValue().size());
-
-        assertEquals(0, discardPile.getSize());
 
     }
 

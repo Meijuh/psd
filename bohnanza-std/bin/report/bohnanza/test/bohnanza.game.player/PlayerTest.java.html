@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PlayerTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">bohnanza.game.player</a> &gt; <span class="el_source">PlayerTest.java</span></div><h1>PlayerTest.java</h1><pre class="source lang-java linenums">package bohnanza.game.player;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.runners.MockitoJUnitRunner;
+
+import bohnanza.game.Bean;
+import bohnanza.game.Beanometer;
+import bohnanza.game.factory.BlackEyed;
+import bohnanza.game.factory.Red;
+import bohnanza.game.factory.Soy;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
+
+@RunWith(MockitoJUnitRunner.class)
+<span class="nc" id="L35">public class PlayerTest {</span>
+
+    @Rule
+<span class="nc" id="L38">    public final ExpectedException thrown = ExpectedException.none();</span>
+
+    private static final String TO_STRING_MESSAGE = &quot;name: blaat\nhand: \ndraw area: \nkeep area: \nbean fields: |(0)| |(0)| x&quot;;
+
+<span class="nc" id="L42">    private final Hand hand = new Hand();</span>
+
+<span class="nc" id="L44">    private final DrawArea drawArea = new DrawArea();</span>
+
+<span class="nc" id="L46">    private final KeepArea keepArea = new KeepArea();</span>
+
+<span class="nc" id="L48">    private final BeanField firstBeanField = new BeanField();</span>
+
+<span class="nc" id="L50">    private final BeanField secondBeanField = new BeanField();</span>
+
+<span class="nc" id="L52">    private final DrawDeck drawDeck = mock(DrawDeck.class);</span>
+
+<span class="nc" id="L54">    private final DiscardPile discardPile = mock(DiscardPile.class);</span>
+
+<span class="nc" id="L56">    private final Treasury treasury = mock(Treasury.class);</span>
+
+<span class="nc" id="L58">    private final Box box = mock(Box.class);</span>
+
+    private Player player;
+
+    public static final int DECK_SIZE = 154;
+
+    public static final String BLAAT = &quot;blaat&quot;;
+
+    @Before
+    public final void setUp() {
+<span class="nc" id="L68">        player = new Player(hand, drawArea, keepArea, treasury, firstBeanField,</span>
+<span class="nc" id="L69">                secondBeanField, drawDeck, discardPile, box);</span>
+<span class="nc" id="L70">    }</span>
+
+    @Test
+    public final void testPlayer() throws Exception {
+
+<span class="nc" id="L75">        assertEquals(0, player.getHand().size());</span>
+<span class="nc" id="L76">        assertEquals(0, player.getDrawArea().size());</span>
+<span class="nc" id="L77">    }</span>
+
+    @Test
+    public final void testSetLeftPlayer() throws Exception {
+
+<span class="nc" id="L82">        player.setLeftPlayer(player);</span>
+
+<span class="nc" id="L84">        assertEquals(player.getLeftPlayer(), player);</span>
+<span class="nc" id="L85">    }</span>
+
+    @Test
+    public final void testGetLeftPlayer() throws Exception {
+
+<span class="nc" id="L90">        player.setLeftPlayer(player);</span>
+
+<span class="nc" id="L92">        assertEquals(player.getLeftPlayer(), player);</span>
+<span class="nc" id="L93">    }</span>
+
+    @Test
+    public final void testSetName() throws Exception {
+<span class="nc" id="L97">        player.setName(null);</span>
+
+<span class="nc" id="L99">        assertNull(player.getName());</span>
+<span class="nc" id="L100">    }</span>
+
+    @Test
+    public final void testGetName() throws Exception {
+<span class="nc" id="L104">        player.setName(null);</span>
+
+<span class="nc" id="L106">        assertNull(player.getName());</span>
+<span class="nc" id="L107">    }</span>
+
+    @Test
+    public final void testSetPlayerNumber() throws Exception {
+<span class="nc" id="L111">        player.setPlayerNumber(0);</span>
+<span class="nc" id="L112">        assertEquals(0, player.getPlayerNumber());</span>
+<span class="nc" id="L113">    }</span>
+
+    @Test
+    public final void testGetPlayerNumber() throws Exception {
+<span class="nc" id="L117">        player.setPlayerNumber(0);</span>
+<span class="nc" id="L118">        assertEquals(0, player.getPlayerNumber());</span>
+<span class="nc" id="L119">    }</span>
+
+    @Test
+    public final void testPlantHandInt() throws Exception {
+
+<span class="nc" id="L124">        Beanometer beanometer = new Beanometer();</span>
+<span class="nc" id="L125">        beanometer.setCardsForOneCoin(Beanometer.TWO_CARDS);</span>
+
+        // Test that a Bean is moved from the hand to the bean field.
+<span class="nc" id="L128">        Bean bean = new BlackEyed(beanometer);</span>
+
+<span class="nc" id="L130">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L132">        int oldDiscardPileSize = discardPile.getSize();</span>
+
+<span class="nc" id="L134">        player.drawIntoHand();</span>
+
+<span class="nc" id="L136">        player.plantHand(Player.FIRST_BEAN_FIELD);</span>
+
+<span class="nc" id="L138">        assertFalse(player.getHand().contains(bean));</span>
+<span class="nc" id="L139">        assertEquals(oldDiscardPileSize, discardPile.getSize());</span>
+<span class="nc" id="L140">        assertEquals(bean, firstBeanField.peek());</span>
+
+        // Test that the Bean is moved from the hand to the bean field. Also
+        // tests if the bean field is emptied.
+<span class="nc" id="L144">        Bean otherBean = new Red(beanometer);</span>
+
+<span class="nc" id="L146">        when(drawDeck.remove()).thenReturn(otherBean);</span>
+
+<span class="nc" id="L148">        player.drawIntoHand();</span>
+<span class="nc" id="L149">        player.plantHand(Player.FIRST_BEAN_FIELD);</span>
+
+<span class="nc" id="L151">        assertFalse(player.getHand().contains(otherBean));</span>
+<span class="nc" id="L152">        assertEquals(otherBean, firstBeanField.peek());</span>
+
+<span class="nc" id="L154">        ArgumentCaptor&lt;Bean&gt; captor = ArgumentCaptor.forClass(Bean.class);</span>
+
+<span class="nc" id="L156">        verify(discardPile).add(captor.capture());</span>
+
+<span class="nc" id="L158">        assertEquals(bean, captor.getValue());</span>
+
+        // Test that a second Bean is moved from the hand to the bean field.
+<span class="nc" id="L161">        Bean otherOtherBean = new Red(beanometer);</span>
+
+<span class="nc" id="L163">        when(drawDeck.remove()).thenReturn(otherOtherBean);</span>
+<span class="nc" id="L164">        player.drawIntoHand();</span>
+<span class="nc" id="L165">        player.plantHand(Player.FIRST_BEAN_FIELD);</span>
+<span class="nc" id="L166">        assertEquals(2, firstBeanField.getSize());</span>
+<span class="nc" id="L167">        assertTrue(firstBeanField.getCardsUnmodifiable().contains(</span>
+<span class="nc" id="L168">                otherOtherBean));</span>
+<span class="nc" id="L169">        assertFalse(player.getHand().contains(otherOtherBean));</span>
+
+        // Test if the treasury is increased, since the Red beans are harvested
+        // and sold.
+<span class="nc" id="L173">        Bean soy = new Soy(beanometer);</span>
+
+<span class="nc" id="L175">        when(drawDeck.remove()).thenReturn(soy);</span>
+<span class="nc" id="L176">        player.drawIntoHand();</span>
+<span class="nc" id="L177">        player.plantHand(Player.FIRST_BEAN_FIELD);</span>
+
+<span class="nc" id="L179">        verify(treasury).add(captor.capture());</span>
+
+<span class="nc" id="L181">        assertFalse(player.getHand().contains(soy));</span>
+<span class="nc" id="L182">        assertEquals(otherBean, captor.getValue());</span>
+<span class="nc" id="L183">        assertEquals(1, firstBeanField.getSize());</span>
+
+<span class="nc" id="L185">        verify(discardPile, times(2)).add(captor.capture());</span>
+<span class="nc" id="L186">        assertEquals(otherOtherBean, captor.getValue());</span>
+<span class="nc" id="L187">        assertTrue(firstBeanField.getCardsUnmodifiable().contains(soy));</span>
+
+<span class="nc" id="L189">    }</span>
+
+    @Test
+    public final void testHarvestAndSellAll() throws Exception {
+<span class="nc" id="L193">    }</span>
+
+    @Test
+    public final void testHasThirdBeanField() throws Exception {
+
+<span class="nc" id="L198">        assertFalse(player.hasThirdBeanField());</span>
+
+<span class="nc" id="L200">    }</span>
+
+    @Test
+    public final void testDrawIntoDrawArea() throws Exception {
+
+<span class="nc" id="L205">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L207">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L209">        player.drawIntoDrawArea();</span>
+
+<span class="nc" id="L211">        assertEquals(bean, player.getDrawArea().get(0));</span>
+
+<span class="nc" id="L213">    }</span>
+
+    @Test
+    public final void testDrawIntoHand() throws Exception {
+
+<span class="nc" id="L218">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L220">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L222">        player.drawIntoHand();</span>
+
+<span class="nc" id="L224">        assertEquals(bean, player.getHand().get(0));</span>
+<span class="nc" id="L225">    }</span>
+
+    @Test
+    public final void testGetDrawArea() throws Exception {
+
+<span class="nc" id="L230">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L232">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L234">        player.drawIntoHand();</span>
+
+<span class="nc" id="L236">        assertEquals(drawArea.getCardsUnmodifiable(), player.getDrawArea());</span>
+
+<span class="nc" id="L238">        thrown.expect(UnsupportedOperationException.class);</span>
+<span class="nc" id="L239">        player.getDrawArea().add(hand.peek());</span>
+<span class="nc" id="L240">    }</span>
+
+    @Test
+    public final void testIsDrawAreaNotEmpty() throws Exception {
+<span class="nc" id="L244">        assertEquals(drawArea.hasCards(), player.isDrawAreaNotEmpty());</span>
+<span class="nc" id="L245">    }</span>
+
+    @Test
+    public final void testReceiveFromHand() throws Exception {
+
+<span class="nc" id="L250">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L252">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L254">        player.drawIntoHand();</span>
+
+<span class="nc" id="L256">        List&lt;Bean&gt; hand = new LinkedList&lt;Bean&gt;(player.getHand());</span>
+
+<span class="nc" id="L258">        player.receiveFromHand(player.getHand(), player);</span>
+
+<span class="nc" id="L260">        assertEquals(hand, player.getKeepArea());</span>
+
+<span class="nc" id="L262">        assertFalse(player.isHandNotEmpty());</span>
+<span class="nc" id="L263">    }</span>
+
+    @Test
+    public final void testReceiveFromDrawArea() throws Exception {
+
+<span class="nc" id="L268">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L270">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L272">        player.drawIntoDrawArea();</span>
+
+<span class="nc" id="L274">        List&lt;Bean&gt; drawArea = new LinkedList&lt;Bean&gt;(player.getDrawArea());</span>
+
+<span class="nc" id="L276">        player.receiveFromDrawArea(drawArea, player);</span>
+
+<span class="nc" id="L278">        assertEquals(drawArea, player.getKeepArea());</span>
+
+<span class="nc" id="L280">        assertFalse(player.isDrawAreaNotEmpty());</span>
+<span class="nc" id="L281">    }</span>
+
+    @Test
+    public final void testRemoveFromDrawArea() throws Exception {
+
+<span class="nc" id="L286">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L288">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L290">        player.drawIntoDrawArea();</span>
+
+<span class="nc" id="L292">        List&lt;Bean&gt; drawArea = new LinkedList&lt;Bean&gt;(player.getDrawArea());</span>
+
+<span class="nc" id="L294">        assertEquals(1, drawArea.size());</span>
+
+<span class="nc" id="L296">        player.removeFromDrawArea(player.getDrawArea());</span>
+
+<span class="nc" id="L298">        assertFalse(player.getDrawArea().containsAll(drawArea));</span>
+<span class="nc" id="L299">    }</span>
+
+    @Test
+    public final void testGetKeepArea() throws Exception {
+
+<span class="nc" id="L304">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L306">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L308">        player.drawIntoHand();</span>
+
+<span class="nc" id="L310">        assertEquals(keepArea.getCardsUnmodifiable(), player.getKeepArea());</span>
+
+<span class="nc" id="L312">        thrown.expect(UnsupportedOperationException.class);</span>
+<span class="nc" id="L313">        player.getKeepArea().add(hand.peek());</span>
+<span class="nc" id="L314">    }</span>
+
+    @Test
+    public final void testIsKeepAreaNotEmpty() throws Exception {
+<span class="nc" id="L318">        assertEquals(keepArea.hasCards(), player.isKeepAreaNotEmpty());</span>
+<span class="nc" id="L319">    }</span>
+
+    @Test
+    public final void testBuy() throws Exception {
+
+<span class="nc" id="L324">        when(drawDeck.remove()).thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L325">                .thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L326">                .thenReturn(new BlackEyed(new Beanometer()));</span>
+<span class="nc" id="L327">        player.drawIntoHand();</span>
+
+<span class="nc" id="L329">        treasury.add(player.getHand());</span>
+
+<span class="nc" id="L331">        thrown.expect(BohnanzaException.class);</span>
+<span class="nc" id="L332">        player.buy();</span>
+
+<span class="nc" id="L334">    }</span>
+
+    @Test
+    public final void testBuyException() throws Exception {
+
+<span class="nc" id="L339">        when(drawDeck.remove()).thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L340">                .thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L341">                .thenReturn(new BlackEyed(new Beanometer()));</span>
+<span class="nc" id="L342">        player.drawIntoHand();</span>
+
+<span class="nc" id="L344">        assertFalse(player.hasThirdBeanField());</span>
+
+<span class="nc" id="L346">        player.drawIntoHand();</span>
+<span class="nc" id="L347">        player.drawIntoHand();</span>
+
+<span class="nc" id="L349">        treasury.add(player.getHand());</span>
+
+<span class="nc" id="L351">        when(treasury.remove()).thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L352">                .thenReturn(new BlackEyed(new Beanometer()))</span>
+<span class="nc" id="L353">                .thenReturn(new BlackEyed(new Beanometer()));</span>
+
+<span class="nc" id="L355">        when(treasury.getSize()).thenReturn(3).thenReturn(0);</span>
+
+<span class="nc" id="L357">        player.buy();</span>
+
+<span class="nc" id="L359">        assertTrue(player.hasThirdBeanField());</span>
+<span class="nc" id="L360">        assertEquals(0, player.getTreasury());</span>
+<span class="nc" id="L361">    }</span>
+
+    @Test
+    public final void testGetTreasury() throws Exception {
+<span class="nc" id="L365">        assertEquals(treasury.getSize(), player.getTreasury());</span>
+<span class="nc" id="L366">    }</span>
+
+    @Test
+    public final void testIsHandNotEmpty() throws Exception {
+<span class="nc" id="L370">        assertEquals(hand.hasCards(), player.isHandNotEmpty());</span>
+<span class="nc" id="L371">    }</span>
+
+    @Test
+    public final void testGetHand() throws Exception {
+
+<span class="nc" id="L376">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="nc" id="L378">        when(drawDeck.remove()).thenReturn(bean);</span>
+
+<span class="nc" id="L380">        player.drawIntoHand();</span>
+
+<span class="nc" id="L382">        assertEquals(hand.getCardsUnmodifiable(), player.getHand());</span>
+
+<span class="nc" id="L384">        thrown.expect(UnsupportedOperationException.class);</span>
+<span class="nc" id="L385">        player.getHand().add(hand.peek());</span>
+<span class="nc" id="L386">    }</span>
+
+    @Captor
+    private ArgumentCaptor&lt;List&lt;Bean&gt;&gt; shuffleCaptor;
+
+    @Test
+    public final void testShuffle() throws Exception {
+
+<span class="nc" id="L394">        List&lt;Bean&gt; list = new ArrayList&lt;Bean&gt;();</span>
+<span class="nc" id="L395">        list.add(new Red(new Beanometer()));</span>
+
+<span class="nc" id="L397">        when(discardPile.empty()).thenReturn(list);</span>
+<span class="nc" id="L398">        player.shuffle();</span>
+
+<span class="nc" id="L400">        verify(drawDeck).add(shuffleCaptor.capture());</span>
+
+<span class="nc" id="L402">        assertTrue(shuffleCaptor.getValue().containsAll(list));</span>
+<span class="nc" id="L403">        assertEquals(list.size(), shuffleCaptor.getValue().size());</span>
+
+<span class="nc" id="L405">    }</span>
+
+    @Test
+    public final void testToString() throws Exception {
+
+<span class="nc" id="L410">        player.setName(BLAAT);</span>
+<span class="nc" id="L411">        assertEquals(TO_STRING_MESSAGE, player.toString());</span>
+<span class="nc" id="L412">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>PlayerProvider.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.module</a> &gt; <span class="el_source">PlayerProvider.java</span></div><h1>PlayerProvider.java</h1><pre class="source lang-java linenums">package bohnanza.module;
+
+import bohnanza.game.player.Player;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
+
+import com.google.inject.Provider;
+
+public abstract class PlayerProvider implements Provider&lt;Player&gt; {
+
+    private final DrawDeck drawDeck;
+
+    private final DiscardPile discardPile;
+
+    private final Box box;
+
+<span class="nc" id="L18">    public PlayerProvider(DrawDeck drawDeck, DiscardPile discardPile, Box box) {</span>
+<span class="nc" id="L19">        this.drawDeck = drawDeck;</span>
+<span class="nc" id="L20">        this.discardPile = discardPile;</span>
+<span class="nc" id="L21">        this.box = box;</span>
+<span class="nc" id="L22">    }</span>
+
+    protected DrawDeck getDrawDeck() {
+<span class="nc" id="L25">        return drawDeck;</span>
+    }
+
+    protected DiscardPile getDiscardPile() {
+<span class="nc" id="L29">        return discardPile;</span>
+    }
+
+    protected Box getBox() {
+<span class="nc" id="L33">        return box;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

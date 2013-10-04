@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>TUIView.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.view</a> &gt; <span class="el_source">TUIView.java</span></div><h1>TUIView.java</h1><pre class="source lang-java linenums">package bohnanza.view;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Observable;
+import java.util.Scanner;
+
+import bohnanza.game.Bean;
+import bohnanza.game.Type;
+import bohnanza.game.player.Player;
+
+public class TUIView extends View {
+
+    private static final String NEWLINE = &quot;\n&quot;;
+
+    private static final String EMPTY_STRING = &quot;&quot;;
+
+    private static final String YES = &quot;y&quot;;
+
+    private static final String NO = &quot;n&quot;;
+
+    private static final String NAME = &quot;Enter player name %d:&quot;;
+
+    private static final String MUST_PLANT = &quot;You must plant your first card. Type the bean field number (1..%d) to plant in. Non empty bean fields will be harvested and sold.&quot;;
+
+    private static final String MAY_PLANT = &quot;You may plant your next first card. Type the bean field number (1..%d) to plant in. Non empty bean fields will be harvested and sold. Press enter to skip.&quot;;
+
+    private static final String SELECT_DRAW_AREA = &quot;Select the type of beans from your draw area (seperate them by an enter, blank line ends selection, may select none):&quot;;
+
+    private static final String SHOW_OPTION = &quot;%s = %d, &quot;;
+
+    private static final String SELECT_HAND = &quot;Select the card numbers from your hand (seperate them by an enter, blank line ends selection, may select none):&quot;;
+
+    private static final String OFFER_PROPOSAL = &quot;%s:\nplayer %s would like '%s' cards for '%s' cards from hand and '%s' cards from draw area, do you want to trade? (y/n):&quot;;
+
+    private static final String ASK_TRADE = &quot;Do you want to trade? (y/n):&quot;;
+
+    private static final String CONFIRM_TRADE = &quot;Do you accept the cards '%s' from player\n%s\nfor your '%s' cards in your hand and '%s' in your draw area? (y/n):&quot;;
+
+    private static final String SELECT_TYPE = &quot;Select the type of beans (seperate them by an enter, blank line ends selection, may select none):&quot;;
+
+    private static final String SELECT_KEEP_CARD = &quot;Select the type of bean from your keep area (1..%d):&quot;;
+
+    private static final String BUY = &quot;Do you want to buy a third bean field? (y/n):&quot;;
+
+    private final Scanner scanner;
+
+<span class="nc" id="L49">    public TUIView() {</span>
+<span class="nc" id="L50">        scanner = new Scanner(System.in);</span>
+<span class="nc" id="L51">    }</span>
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getName(int)
+     */
+    @Override
+    public String getName(int player) {
+
+<span class="nc" id="L61">        String line = EMPTY_STRING;</span>
+
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        while (line.equals(EMPTY_STRING)) {</span>
+<span class="nc" id="L64">            System.out.println(String.format(NAME, player));</span>
+<span class="nc" id="L65">            line = scanner.nextLine();</span>
+        }
+
+<span class="nc" id="L68">        return line;</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#mustPlant(bohnanza.game.player.Player)
+     */
+    @Override
+    public int mustPlant(Player player) {
+
+<span class="nc" id="L79">        int beanField = -1;</span>
+
+<span class="nc bnc" id="L81" title="All 2 branches missed.">        while (beanField == -1) {</span>
+<span class="nc" id="L82">            System.out.println(String.format(MUST_PLANT,</span>
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                    player.hasThirdBeanField() ? 3 : 2));</span>
+
+            try {
+<span class="nc" id="L86">                beanField = Integer.parseInt(scanner.nextLine());</span>
+<span class="nc" id="L87">            } catch (NumberFormatException e) {</span>
+                // ask again
+            }
+        }
+
+<span class="nc" id="L92">        return beanField;</span>
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#mayPlant(bohnanza.game.player.Player)
+     */
+    @Override
+    public int mayPlant(Player player) {
+
+<span class="nc" id="L104">        int beanField = -1;</span>
+
+<span class="nc" id="L106">        boolean validInput = false;</span>
+
+<span class="nc bnc" id="L108" title="All 2 branches missed.">        while (!validInput) {</span>
+<span class="nc" id="L109">            System.out.println(String.format(MAY_PLANT,</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">                    player.hasThirdBeanField() ? 3 : 2));</span>
+
+            try {
+<span class="nc" id="L113">                beanField = Integer.parseInt(scanner.nextLine());</span>
+<span class="nc" id="L114">                validInput = true;</span>
+<span class="nc" id="L115">            } catch (NumberFormatException e) {</span>
+                // ask again
+            }
+        }
+
+<span class="nc" id="L120">        return beanField;</span>
+
+    }
+
+    private boolean confirm(String message) {
+<span class="nc" id="L125">        String line = null;</span>
+
+<span class="nc bnc" id="L127" title="All 6 branches missed.">        while (line == null || (!line.equals(YES) &amp;&amp; !line.equals(NO))) {</span>
+<span class="nc" id="L128">            System.out.println(message);</span>
+
+<span class="nc" id="L130">            line = scanner.nextLine();</span>
+
+        }
+
+<span class="nc" id="L134">        return line.equals(YES);</span>
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromHand(java.util.Collection)
+     */
+    @Override
+    public Collection&lt;Bean&gt; getOptionsFromHand(Collection&lt;Bean&gt; options) {
+<span class="nc" id="L145">        return getOptions(options, SELECT_HAND);</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromDrawArea(java.util.Collection)
+     */
+    @Override
+    public Collection&lt;Bean&gt; getOptionsFromDrawArea(Collection&lt;Bean&gt; options) {
+<span class="nc" id="L155">        return getOptions(options, SELECT_DRAW_AREA);</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionFromKeepArea(java.util.Collection)
+     */
+    @Override
+    public Bean getOptionFromKeepArea(List&lt;Bean&gt; options) {
+<span class="nc" id="L165">        Bean result = null;</span>
+
+<span class="nc bnc" id="L167" title="All 2 branches missed.">        while (result == null) {</span>
+<span class="nc" id="L168">            System.out.println(String.format(SELECT_KEEP_CARD, options.size()));</span>
+
+<span class="nc" id="L170">            showOptions(options);</span>
+
+<span class="nc" id="L172">            String line = scanner.nextLine();</span>
+
+            try {
+<span class="nc" id="L175">                int number = Integer.parseInt(line) - 1;</span>
+
+<span class="nc bnc" id="L177" title="All 4 branches missed.">                if (0 &lt;= number &amp;&amp; number &lt; options.size()) {</span>
+
+<span class="nc" id="L179">                    result = options.get(number);</span>
+                }
+
+<span class="nc" id="L182">            } catch (NumberFormatException e) {</span>
+                // try again
+            }
+        }
+
+<span class="nc" id="L187">        return result;</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getOptionsFromType(java.util.Collection)
+     */
+    @Override
+    public Collection&lt;Type&gt; getOptionsFromType(Collection&lt;Type&gt; options) {
+<span class="nc" id="L197">        return getOptions(options, SELECT_TYPE);</span>
+    }
+
+    private &lt;E extends Object&gt; Collection&lt;E&gt; getOptions(Collection&lt;E&gt; options,
+            String message) {
+
+<span class="nc" id="L203">        String line = null;</span>
+
+<span class="nc" id="L205">        HashSet&lt;E&gt; result = new HashSet&lt;E&gt;();</span>
+
+<span class="nc" id="L207">        HashSet&lt;Integer&gt; numbers = new HashSet&lt;Integer&gt;();</span>
+
+<span class="nc bnc" id="L209" title="All 4 branches missed.">        while (line == null || !line.equals(EMPTY_STRING)) {</span>
+<span class="nc" id="L210">            System.out.println(message);</span>
+
+<span class="nc" id="L212">            showOptions(options);</span>
+
+<span class="nc" id="L214">            line = scanner.nextLine();</span>
+
+            try {
+
+<span class="nc" id="L218">                int number = Integer.parseInt(line) - 1;</span>
+
+<span class="nc bnc" id="L220" title="All 4 branches missed.">                if (0 &lt;= number &amp;&amp; number &lt; options.size()) {</span>
+<span class="nc" id="L221">                    numbers.add(number);</span>
+                }
+
+<span class="nc" id="L224">            } catch (NumberFormatException e) {</span>
+                // try again
+            }
+        }
+
+<span class="nc" id="L229">        int i = 0;</span>
+<span class="nc bnc" id="L230" title="All 2 branches missed.">        for (E option : options) {</span>
+
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            if (numbers.contains(i)) {</span>
+<span class="nc" id="L233">                result.add(option);</span>
+            }
+
+<span class="nc" id="L236">            i++;</span>
+        }
+
+<span class="nc" id="L239">        return result;</span>
+    }
+
+    private void showOptions(Collection&lt;? extends Object&gt; options) {
+
+<span class="nc" id="L244">        String string = EMPTY_STRING;</span>
+
+<span class="nc" id="L246">        int i = 1;</span>
+<span class="nc bnc" id="L247" title="All 2 branches missed.">        for (Object option : options) {</span>
+<span class="nc" id="L248">            string = string.concat(String.format(SHOW_OPTION, option, i));</span>
+<span class="nc" id="L249">            i++;</span>
+        }
+
+<span class="nc" id="L252">        string = string.substring(0, string.length() - 2);</span>
+
+<span class="nc" id="L254">        System.out.println(string);</span>
+
+<span class="nc" id="L256">    }</span>
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#getTradePartner(java.util.Collection,
+     * java.util.Collection, java.util.Collection, bohnanza.game.player.Player)
+     */
+    @Override
+    public Player getTradePartner(Collection&lt;Type&gt; proposal,
+            Collection&lt;Bean&gt; cardsFromDrawArea, Collection&lt;Bean&gt; cardsFromHand,
+            Player currentPlayer) {
+
+<span class="nc" id="L269">        Player tradepartner = null;</span>
+
+<span class="nc" id="L271">        Player askPlayer = currentPlayer.getLeftPlayer();</span>
+
+<span class="nc bnc" id="L273" title="All 4 branches missed.">        while (tradepartner == null &amp;&amp; !askPlayer.equals(currentPlayer)) {</span>
+
+<span class="nc" id="L275">            boolean wantsTrade = confirm(String.format(OFFER_PROPOSAL,</span>
+<span class="nc" id="L276">                    askPlayer, currentPlayer.getName(), proposal,</span>
+<span class="nc" id="L277">                    cardsFromHand, cardsFromDrawArea));</span>
+
+<span class="nc bnc" id="L279" title="All 2 branches missed.">            if (wantsTrade) {</span>
+<span class="nc" id="L280">                tradepartner = askPlayer;</span>
+<span class="nc" id="L281">            } else {</span>
+<span class="nc" id="L282">                askPlayer = askPlayer.getLeftPlayer();</span>
+            }
+
+        }
+
+<span class="nc" id="L287">        return tradepartner;</span>
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#askTrade()
+     */
+    @Override
+    public boolean askTrade() {
+<span class="nc" id="L298">        return confirm(ASK_TRADE);</span>
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#confirmTrade(java.util.Collection,
+     * java.util.Collection, bohnanza.game.player.Player, java.util.Collection)
+     */
+    @Override
+    public boolean confirmTrade(Collection&lt;Bean&gt; cardsFromDrawArea,
+            Collection&lt;Bean&gt; cardsFromHand, Player acceptingPlayer,
+            Collection&lt;Bean&gt; counterProposal) {
+
+<span class="nc" id="L312">        return confirm(String.format(CONFIRM_TRADE, counterProposal,</span>
+<span class="nc" id="L313">                acceptingPlayer, cardsFromHand, cardsFromDrawArea));</span>
+
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see bohnanza.View#confirmBuy()
+     */
+    @Override
+    public boolean confirmBuy() {
+<span class="nc" id="L324">        return confirm(BUY);</span>
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
+<span class="nc" id="L330">        System.out.println(NEWLINE.concat(o.toString()));</span>
+
+<span class="nc" id="L332">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

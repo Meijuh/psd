@@ -2,6 +2,7 @@ package bohnanza.module;
 
 import bohnanza.Bohnanza;
 import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
 import bohnanza.game.shared.Box;
 import bohnanza.game.shared.DiscardPile;
 import bohnanza.game.shared.DrawDeck;
@@ -21,12 +22,14 @@ public abstract class BohnanzaModule extends AbstractModule {
         bind(View.class).to(getViewClass());
         bind(GameContext.class).to(getGameContextClass());
         bind(DiscardPile.class).to(getDiscardPileClass()).in(Singleton.class);
-        bind(DrawDeck.class).to(getDrawDeckClass()).in(Singleton.class);
+        bind(DrawDeck.class).in(Singleton.class);
         bind(Box.class).to(getBoxClass()).in(Singleton.class);
         bind(End.class).to(getEndClass());
         bind(Player.class).toProvider(getPlayerProviderClass());
 
     }
+
+    protected abstract Class<? extends Treasury> getTreasuryClass();
 
     protected abstract Class<? extends Provider<? extends Player>> getPlayerProviderClass();
 

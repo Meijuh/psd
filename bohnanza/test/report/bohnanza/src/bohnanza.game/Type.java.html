@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Type.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.game</a> &gt; <span class="el_source">Type.java</span></div><h1>Type.java</h1><pre class="source lang-java linenums"><span class="nc" id="L1">package bohnanza.game;</span>
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+<span class="fc" id="L6">public enum Type {</span>
+
+<span class="fc" id="L8">    BLACK_EYED(&quot;black-eyed&quot;), BLUE(&quot;blue&quot;), CHILI(&quot;chili&quot;), COCOA(&quot;cocoa&quot;), COFFEE(</span>
+<span class="fc" id="L9">            &quot;coffee&quot;), GARDEN(&quot;garden&quot;), GREEN(&quot;green&quot;), RED(&quot;red&quot;), SOY(&quot;soy&quot;), STINK(</span>
+<span class="fc" id="L10">            &quot;stink&quot;), WAX(&quot;wax&quot;);</span>
+
+    private final String name;
+
+<span class="fc" id="L14">    private Type(String name) {</span>
+<span class="fc" id="L15">        this.name = name;</span>
+<span class="fc" id="L16">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L20">        return name;</span>
+    }
+
+    public static ArrayList&lt;Type&gt; getArrayList(Collection&lt;Bean&gt; collection) {
+<span class="nc" id="L24">        ArrayList&lt;Type&gt; types = new ArrayList&lt;Type&gt;();</span>
+
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        for (Bean bean : collection) {</span>
+<span class="nc" id="L27">            types.add(bean.getType());</span>
+        }
+
+<span class="nc" id="L30">        return types;</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

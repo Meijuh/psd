@@ -18,15 +18,16 @@ public class BohnanzaStd extends Bohnanza {
     private static final String RUN = "java bohnanza.BohnanzaStd";
 
     @Inject
-    protected BohnanzaStd(String[] args, GameContext gameContext,
+    protected BohnanzaStd(GameContext gameContext,
             Provider<Player> playerProvider) {
-        super(args, gameContext, playerProvider);
+        super(gameContext, playerProvider);
     }
 
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(new BohnanzaStdModule());
         injector.injectMembers(args);
-        injector.getInstance(Bohnanza.class);
+        Bohnanza bohnanza = injector.getInstance(Bohnanza.class);
+        bohnanza.run(args);
     }
 
     @Override

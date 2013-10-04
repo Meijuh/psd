@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>CardCreator.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.game.factory</a> &gt; <span class="el_source">CardCreator.java</span></div><h1>CardCreator.java</h1><pre class="source lang-java linenums">package bohnanza.game.factory;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import bohnanza.game.Card;
+
+public abstract class CardCreator&lt;E extends Card&lt;?&gt;&gt; {
+
+    private final int amount;
+
+    private final boolean cardsCreated;
+
+<span class="fc" id="L14">    protected CardCreator(int amount) {</span>
+<span class="fc" id="L15">        this.amount = amount;</span>
+<span class="fc" id="L16">        cardsCreated = false;</span>
+<span class="fc" id="L17">    }</span>
+
+    protected abstract E createCard();
+
+    public List&lt;E&gt; createCards() {
+
+<span class="fc" id="L23">        List&lt;E&gt; cards = new LinkedList&lt;E&gt;();</span>
+
+<span class="pc bpc" id="L25" title="1 of 2 branches missed.">        if (!cardsCreated) {</span>
+
+<span class="fc bfc" id="L27" title="All 2 branches covered.">            for (int i = 0; i &lt; amount; i++) {</span>
+<span class="fc" id="L28">                cards.add(createCard());</span>
+            }
+        }
+
+<span class="fc" id="L32">        return cards;</span>
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

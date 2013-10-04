@@ -7,7 +7,38 @@ and is us used among many people. We identify the most important quality criteri
 environment as \emph{extensibility} and \emph{reusability}. The most affected stakeholders are the
 \emph{developers}, \emph{maintainers}, \emph{testers} and \emph{users}.
 
-Extensibility is an external criteria; it is most important for the user. Reusability are more
+Extensibility is an external criteria; it is most important for the user. Reusability is more
 important for developers etc. Both criteria are also covered under the term modularity. Modularity
 allow the user to easily use one of the many extensions, such as High Bohn or spin-offs, such as Al
 Cabohne. It should be easy to implement such extensions for developers etc.
+
+There is one major design decisions that contribute to modularity. First we have three modules
+which can be considered separate projects. One module contains basic objects and method related to
+bohnanza, such as shuffling the discard pile into the draw deck. Another module implements \gls{std} 
+bohnanza without extensions. The last module implements the \gls{hb} extension. All projects can
+of course be tested and compiled individually. The \gls{std} and \gls{hb} extension inherit from the
+base module. The base module provides an abstract class that resolves dependency resolution between
+modules. Both the \gls{std} and the \gls{hb} module implement this class. Making it possible to hide
+some information in modules and should result in understandable modules. 
+
+\begin{itemize}
+    \item Reusability
+    \item Extensibility
+    \item remove inadequacies
+    \item adapt to changing needs
+    \item extend functionality quickly
+    \item integrate with other systems
+    \item use components in other projects
+    \item Modularity
+    \item decomposability
+    \item composability
+    \item understandability
+    \item continuity
+    \item protection
+    \item direct mapping
+    \item few interfaces
+    \item small interfaces
+    \item explicit interfaces
+    \item information hiding
+    \item 
+\end{itemize}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="graph">
+	<target name="graph">
+		<apply executable="/usr/bin/dot" dest="." parallel="false">
+			<arg value="-Tpdf" />
+			<arg value="-o" />
+			<targetfile />
+			<srcfile />
+			<fileset dir="./doc/umlgraph/" includes="*.dot" />
+			<mapper type="glob" from="*.dot" to="./doc/umlgraph/*.pdf" />
+		</apply>
+	</target>
+</project>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Prepare.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.gameplay</a> &gt; <span class="el_source">Prepare.java</span></div><h1>Prepare.java</h1><pre class="source lang-java linenums">package bohnanza.gameplay;
+
+import java.util.Collections;
+
+import bohnanza.game.player.Player;
+
+public class Prepare extends GameState {
+
+<span class="fc" id="L9">    private static Prepare instance = null;</span>
+
+    private static final String NAME = &quot;prepare&quot;;
+
+<span class="fc" id="L13">    public static final int HAND_SIZE = 5;</span>
+
+    private Prepare() {
+<span class="fc" id="L16">        super(NAME);</span>
+<span class="fc" id="L17">    }</span>
+
+    public static Prepare getInstance() {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">        if (instance == null) {</span>
+<span class="fc" id="L21">            instance = new Prepare();</span>
+        }
+
+<span class="fc" id="L24">        return instance;</span>
+    }
+
+    @Override
+    public void execute(GameContext context) {
+
+<span class="fc" id="L30">        int playerNumber = 1;</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        for (Player player : context.getPlayers()) {</span>
+
+<span class="fc" id="L33">            String name = context.getView().getName(playerNumber);</span>
+
+<span class="fc" id="L35">            player.setName(name);</span>
+
+<span class="fc" id="L37">            playerNumber++;</span>
+        }
+
+<span class="fc" id="L40">        Collections.shuffle(context.getPlayers());</span>
+
+<span class="fc" id="L42">        context.setCurrentPlayer(context.getPlayers().get(0));</span>
+
+<span class="fc" id="L44">        playerNumber = 0;</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        for (Player player : context.getPlayers()) {</span>
+
+<span class="fc" id="L47">            player.setLeftPlayer(context.getPlayers().get(</span>
+<span class="fc" id="L48">                    (playerNumber + 1) % context.getPlayers().size()));</span>
+<span class="fc" id="L49">            player.setPlayerNumber(playerNumber + 1);</span>
+
+<span class="fc" id="L51">            playerNumber++;</span>
+        }
+
+<span class="fc" id="L54">        context.getCurrentPlayer().shuffle();</span>
+
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (Player player : context.getPlayers()) {</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">            for (int i = 0; i &lt; HAND_SIZE; i++) {</span>
+<span class="fc" id="L58">                player.drawIntoHand();</span>
+            }
+        }
+
+<span class="fc" id="L62">        context.changeState(FirstTurn.getInstance());</span>
+
+<span class="fc" id="L64">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

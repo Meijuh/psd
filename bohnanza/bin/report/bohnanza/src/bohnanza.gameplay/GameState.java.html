@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GameState.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.gameplay</a> &gt; <span class="el_source">GameState.java</span></div><h1>GameState.java</h1><pre class="source lang-java linenums">package bohnanza.gameplay;
+
+import bohnanza.game.player.Player;
+
+public abstract class GameState {
+
+    private final String name;
+
+    private static final String TO_STRING_MESSAGE = &quot;State: %s, players: %s (%d), draw deck shuffled: %d times, current player: %s&quot;;
+
+    private static final String PLAYER_SEPERATOR = &quot;, &quot;;
+
+<span class="nc" id="L13">    protected GameState(String name) {</span>
+<span class="nc" id="L14">        this.name = name;</span>
+<span class="nc" id="L15">    }</span>
+
+    public abstract void execute(GameContext context);
+
+    @Override
+    public String toString() {
+<span class="nc" id="L21">        return name;</span>
+    }
+
+    public String getToString(GameContext context) {
+
+<span class="nc" id="L26">        String names = new String();</span>
+
+<span class="nc" id="L28">        Player currentPlayer = context.getCurrentPlayer();</span>
+        do {
+
+<span class="nc" id="L31">            names = names.concat(currentPlayer.getName()).concat(</span>
+<span class="nc" id="L32">                    PLAYER_SEPERATOR);</span>
+
+<span class="nc" id="L34">            currentPlayer = currentPlayer.getLeftPlayer();</span>
+
+<span class="nc bnc" id="L36" title="All 2 branches missed.">        } while (!currentPlayer.equals(context.getCurrentPlayer()));</span>
+
+<span class="nc" id="L38">        names = names.substring(0, names.length() - 2);</span>
+
+<span class="nc" id="L40">        return String</span>
+<span class="nc" id="L41">                .format(TO_STRING_MESSAGE, context.getState(), names, context</span>
+<span class="nc" id="L42">                        .getPlayers().size(), context</span>
+<span class="nc" id="L43">                        .getDrawDeckExhaustedCount(), context</span>
+<span class="nc" id="L44">                        .getCurrentPlayer());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

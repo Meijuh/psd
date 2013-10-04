@@ -14,6 +14,7 @@ import org.apache.commons.cli.ParseException;
 import bohnanza.game.player.Player;
 import bohnanza.gameplay.GameContext;
 
+import com.google.inject.Inject;
 import com.google.inject.Provider;
 
 public abstract class Bohnanza {
@@ -34,8 +35,18 @@ public abstract class Bohnanza {
             .getName());
     private static final String PLAYER_RANGE = "Amount of players should be between %d and %d, %d players given.";
 
-    protected Bohnanza(String[] args, GameContext gameContext,
-            Provider<Player> playerProvider) {
+    private final GameContext gameContext;
+
+    private final Provider<Player> playerProvider;
+
+    @Inject
+    protected Bohnanza(GameContext gameContext, Provider<Player> playerProvider) {
+
+        this.gameContext = gameContext;
+        this.playerProvider = playerProvider;
+    }
+
+    protected void run(String[] args) {
 
         Options options = new Options();
 

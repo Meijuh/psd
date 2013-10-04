@@ -7,8 +7,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import bohnanza.game.Bean;
+import bohnanza.game.Beanometer;
 import bohnanza.game.Type;
-import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.factory.BlackEyed;
 
 public class BeanFieldTest {
 
@@ -31,9 +32,10 @@ public class BeanFieldTest {
     @Test
     public final void testToString() {
 
-        DiscardPile discardPile = new DiscardPile();
+        Beanometer beanometer = new Beanometer();
+        beanometer.setCardsForFourCoins(0);
 
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(beanometer);
 
         beanField.add(bean);
 

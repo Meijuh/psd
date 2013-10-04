@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GameContextTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza-std</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">bohnanza.gameplay</a> &gt; <span class="el_source">GameContextTest.java</span></div><h1>GameContextTest.java</h1><pre class="source lang-java linenums">package bohnanza.gameplay;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+
+import org.junit.Test;
+import org.mockito.Mockito;
+
+import bohnanza.game.player.Player;
+
+<span class="fc" id="L13">public class GameContextTest extends GamePlayTest {</span>
+
+    public static final String TO_STRING_MESSAGE = &quot;State: prepare, players: test, name2 (2), draw deck shuffled: 0 times, current player: name: test\nhand: \ndraw area: \nkeep area: \nbean fields: |(0)| |(0)| x&quot;;
+
+    @Test
+    public final void testGameContext() throws Exception {
+<span class="fc" id="L19">        assertEquals(PLAYERS, getGameContext().getPlayers().size());</span>
+<span class="fc" id="L20">        assertFalse(getGameContext().isDrawDeckMaxExhausted());</span>
+<span class="fc" id="L21">        assertEquals(1, getGameContext().countObservers());</span>
+<span class="fc" id="L22">        assertEquals(1, getDiscardPile().countObservers());</span>
+<span class="fc" id="L23">        assertEquals(1, getBox().countObservers());</span>
+<span class="fc" id="L24">        assertEquals(1, getDrawDeck().countObservers());</span>
+
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        for (Player player : getGameContext().getPlayers()) {</span>
+<span class="fc" id="L27">            assertEquals(1, player.countObservers());</span>
+<span class="fc" id="L28">            assertEquals(0, player.getHand().size());</span>
+<span class="fc" id="L29">            assertEquals(0, player.getDrawArea().size());</span>
+<span class="fc" id="L30">            assertEquals(0, player.getKeepArea().size());</span>
+<span class="fc" id="L31">            assertEquals(0, player.getTreasury());</span>
+
+        }
+
+<span class="fc" id="L35">        assertEquals(Prepare.getInstance(), getGameContext().getState());</span>
+
+<span class="fc" id="L37">    }</span>
+
+    @Test
+    public final void testChangeState() throws Exception {
+<span class="fc" id="L41">        getGameContext().changeState(Prepare.getInstance());</span>
+<span class="fc" id="L42">        assertEquals(Prepare.getInstance(), getGameContext().getState());</span>
+<span class="fc" id="L43">    }</span>
+
+    @Test
+    public final void testGetState() throws Exception {
+<span class="fc" id="L47">        getGameContext().changeState(Prepare.getInstance());</span>
+<span class="fc" id="L48">        assertEquals(Prepare.getInstance(), getGameContext().getState());</span>
+<span class="fc" id="L49">    }</span>
+
+    @Test
+    public final void testExecute() throws Exception {
+<span class="fc" id="L53">        GameState mock = mock(GameState.class);</span>
+
+<span class="fc" id="L55">        Mockito.doNothing().when(mock).execute(getGameContext());</span>
+
+<span class="fc" id="L57">    }</span>
+
+    @Test
+    public final void testGetView() throws Exception {
+<span class="fc" id="L61">        assertEquals(getView(), getGameContext().getView());</span>
+<span class="fc" id="L62">    }</span>
+
+    @Test
+    public final void testGetPlayers() throws Exception {
+<span class="fc" id="L66">        assertEquals(PLAYERS, getGameContext().getPlayers().size());</span>
+<span class="fc" id="L67">    }</span>
+
+    @Test
+    public final void testSetCurrentPlayer() throws Exception {
+<span class="fc" id="L71">        Player player = getGameContext().getPlayers().get(0);</span>
+
+<span class="fc" id="L73">        getGameContext().setCurrentPlayer(player);</span>
+
+<span class="fc" id="L75">        assertEquals(player, getGameContext().getCurrentPlayer());</span>
+<span class="fc" id="L76">    }</span>
+
+    @Test
+    public final void testGetCurrentPlayer() throws Exception {
+<span class="fc" id="L80">        Player player = getGameContext().getPlayers().get(0);</span>
+
+<span class="fc" id="L82">        getGameContext().setCurrentPlayer(player);</span>
+
+<span class="fc" id="L84">        assertEquals(player, getGameContext().getCurrentPlayer());</span>
+<span class="fc" id="L85">    }</span>
+
+    @Test
+    public final void testSetExitStatus() throws Exception {
+<span class="fc" id="L89">        getGameContext().setExitStatus(0);</span>
+<span class="fc" id="L90">        assertEquals(0, getGameContext().getExitStatus());</span>
+<span class="fc" id="L91">    }</span>
+
+    @Test
+    public final void testGetExitStatus() throws Exception {
+<span class="fc" id="L95">        getGameContext().setExitStatus(0);</span>
+<span class="fc" id="L96">        assertEquals(0, getGameContext().getExitStatus());</span>
+<span class="fc" id="L97">    }</span>
+
+    @Test
+    public final void testIncreaseDrawDeckExhausted() throws Exception {
+<span class="fc" id="L101">        getGameContext().increaseDrawDeckExhausted();</span>
+<span class="fc" id="L102">        getGameContext().increaseDrawDeckExhausted();</span>
+<span class="fc" id="L103">        getGameContext().increaseDrawDeckExhausted();</span>
+
+<span class="fc" id="L105">        assertTrue(getGameContext().isDrawDeckMaxExhausted());</span>
+<span class="fc" id="L106">    }</span>
+
+    @Test
+        public final void testIsDrawDeckMaxExhausted() throws Exception {
+    
+<span class="fc" id="L111">            assertFalse(getGameContext().isDrawDeckMaxExhausted());</span>
+    
+<span class="fc" id="L113">            getGameContext().increaseDrawDeckExhausted();</span>
+<span class="fc" id="L114">            getGameContext().increaseDrawDeckExhausted();</span>
+<span class="fc" id="L115">            getGameContext().increaseDrawDeckExhausted();</span>
+    
+<span class="fc" id="L117">            assertTrue(getGameContext().isDrawDeckMaxExhausted());</span>
+<span class="fc" id="L118">        }</span>
+
+    @Test
+    public final void testToString() throws Exception {
+<span class="fc" id="L122">        getGameContext().setCurrentPlayer(getGameContext().getPlayers().get(0));</span>
+<span class="fc" id="L123">        getGameContext().getPlayers().get(0).setName(&quot;test&quot;);</span>
+<span class="fc" id="L124">        assertEquals(TO_STRING_MESSAGE, getGameContext().toString());</span>
+<span class="fc" id="L125">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

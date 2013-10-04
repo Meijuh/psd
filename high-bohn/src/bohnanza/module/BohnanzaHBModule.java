@@ -2,6 +2,7 @@ package bohnanza.module;
 
 import bohnanza.Bohnanza;
 import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
 import bohnanza.game.shared.Box;
 import bohnanza.game.shared.DiscardPile;
 import bohnanza.game.shared.DrawDeck;
@@ -57,6 +58,12 @@ public class BohnanzaHBModule extends BohnanzaModule {
 
     @Override
     protected Class<? extends End> getEndClass() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    protected Class<? extends Treasury> getTreasuryClass() {
         // TODO Auto-generated method stub
         return null;
     }

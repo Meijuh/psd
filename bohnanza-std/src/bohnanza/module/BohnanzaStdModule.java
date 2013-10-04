@@ -3,6 +3,8 @@ package bohnanza.module;
 import bohnanza.Bohnanza;
 import bohnanza.BohnanzaStd;
 import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
+import bohnanza.game.player.TreasuryStd;
 import bohnanza.game.shared.Box;
 import bohnanza.game.shared.BoxStd;
 import bohnanza.game.shared.DiscardPile;
@@ -57,5 +59,10 @@ public class BohnanzaStdModule extends BohnanzaModule {
     @Override
     protected Class<? extends End> getEndClass() {
         return EndStd.class;
+    }
+
+    @Override
+    protected Class<? extends Treasury> getTreasuryClass() {
+        return TreasuryStd.class;
     }
 }

@@ -11,7 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.factory.BlackEyed;
 
 public class CardListTest {
 
@@ -19,8 +19,6 @@ public class CardListTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private CardList<Bean> cardList;
-
-    private final DiscardPile discardPile = new DiscardPile();
 
     @Before
     public final void setUp() {
@@ -41,7 +39,7 @@ public class CardListTest {
     public final void testGetCardsUnmodifiable() throws Exception {
 
         thrown.expect(UnsupportedOperationException.class);
-        cardList.getCardsUnmodifiable().add(discardPile.peek());
+        cardList.getCardsUnmodifiable().add(new BlackEyed(new Beanometer()));
     }
 
     @Test
@@ -51,7 +49,7 @@ public class CardListTest {
 
     @Test
     public final void testEmpty() throws Exception {
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(new Beanometer());
         cardList.add(bean);
 
         List<Bean> beans = new LinkedList<Bean>();
@@ -63,7 +61,7 @@ public class CardListTest {
 
     @Test
     public final void testIsType() throws Exception {
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(new Beanometer());
 
         cardList.add(bean);
 
@@ -72,7 +70,7 @@ public class CardListTest {
 
     @Test
     public final void testPeek() throws Exception {
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(new Beanometer());
 
         cardList.add(bean);
 
@@ -82,7 +80,7 @@ public class CardListTest {
 
     @Test
     public final void testAddE() throws Exception {
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(new Beanometer());
 
         cardList.add(bean);
 
@@ -91,7 +89,7 @@ public class CardListTest {
 
     @Test
     public final void testRemove() throws Exception {
-        Bean bean = discardPile.peek();
+        Bean bean = new BlackEyed(new Beanometer());
 
         cardList.add(bean);
 
@@ -106,7 +104,10 @@ public class CardListTest {
     @Test
     public final void testToString() throws Exception {
 
-        Bean bean = discardPile.peek();
+        Beanometer beanometer = new Beanometer();
+        beanometer.setCardsForFourCoins(0);
+
+        Bean bean = new BlackEyed(beanometer);
 
         cardList.add(bean);
 

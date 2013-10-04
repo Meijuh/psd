@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>CardListTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">bohnanza.game</a> &gt; <span class="el_source">CardListTest.java</span></div><h1>CardListTest.java</h1><pre class="source lang-java linenums">package bohnanza.game;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import bohnanza.game.factory.BlackEyed;
+
+<span class="fc" id="L16">public class CardListTest {</span>
+
+    @Rule
+<span class="fc" id="L19">    public ExpectedException thrown = ExpectedException.none();</span>
+
+    private CardList&lt;Bean&gt; cardList;
+
+    @Before
+    public final void setUp() {
+<span class="fc" id="L25">        cardList = new CardListMock();</span>
+<span class="fc" id="L26">    }</span>
+
+    @Test
+    public final void testCardList() throws Exception {
+<span class="fc" id="L30">        assertFalse(cardList.hasCards());</span>
+<span class="fc" id="L31">    }</span>
+
+    @Test
+    public final void testInitializeCollection() throws Exception {
+<span class="fc" id="L35">        assertFalse(cardList.hasCards());</span>
+<span class="fc" id="L36">    }</span>
+
+    @Test
+    public final void testGetCardsUnmodifiable() throws Exception {
+
+<span class="nc" id="L41">        thrown.expect(UnsupportedOperationException.class);</span>
+<span class="nc" id="L42">        cardList.getCardsUnmodifiable().add(new BlackEyed(new Beanometer()));</span>
+<span class="nc" id="L43">    }</span>
+
+    @Test
+    public final void testHasCards() throws Exception {
+<span class="fc" id="L47">        assertFalse(cardList.hasCards());</span>
+<span class="fc" id="L48">    }</span>
+
+    @Test
+    public final void testEmpty() throws Exception {
+<span class="fc" id="L52">        Bean bean = new BlackEyed(new Beanometer());</span>
+<span class="fc" id="L53">        cardList.add(bean);</span>
+
+<span class="fc" id="L55">        List&lt;Bean&gt; beans = new LinkedList&lt;Bean&gt;();</span>
+<span class="fc" id="L56">        beans.add(bean);</span>
+
+<span class="fc" id="L58">        assertEquals(cardList.empty(), beans);</span>
+
+<span class="fc" id="L60">    }</span>
+
+    @Test
+    public final void testIsType() throws Exception {
+<span class="fc" id="L64">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="fc" id="L66">        cardList.add(bean);</span>
+
+<span class="fc" id="L68">        cardList.isType(bean.getType());</span>
+<span class="fc" id="L69">    }</span>
+
+    @Test
+    public final void testPeek() throws Exception {
+<span class="fc" id="L73">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="fc" id="L75">        cardList.add(bean);</span>
+
+<span class="fc" id="L77">        assertEquals(bean, cardList.peek());</span>
+
+<span class="fc" id="L79">    }</span>
+
+    @Test
+    public final void testAddE() throws Exception {
+<span class="fc" id="L83">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="fc" id="L85">        cardList.add(bean);</span>
+
+<span class="fc" id="L87">        assertEquals(bean, cardList.peek());</span>
+<span class="fc" id="L88">    }</span>
+
+    @Test
+    public final void testRemove() throws Exception {
+<span class="fc" id="L92">        Bean bean = new BlackEyed(new Beanometer());</span>
+
+<span class="fc" id="L94">        cardList.add(bean);</span>
+
+<span class="fc" id="L96">        assertEquals(bean, cardList.remove());</span>
+<span class="fc" id="L97">    }</span>
+
+    @Test
+    public final void testGetSize() throws Exception {
+<span class="fc" id="L101">        assertEquals(0, cardList.getSize());</span>
+<span class="fc" id="L102">    }</span>
+
+    @Test
+    public final void testToString() throws Exception {
+
+<span class="fc" id="L107">        Beanometer beanometer = new Beanometer();</span>
+<span class="fc" id="L108">        beanometer.setCardsForFourCoins(0);</span>
+
+<span class="fc" id="L110">        Bean bean = new BlackEyed(beanometer);</span>
+
+<span class="fc" id="L112">        cardList.add(bean);</span>
+
+<span class="fc" id="L114">        assertEquals(bean.toString(), cardList.toString());</span>
+<span class="fc" id="L115">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

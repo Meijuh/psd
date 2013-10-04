@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>View.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.view</a> &gt; <span class="el_source">View.java</span></div><h1>View.java</h1><pre class="source lang-java linenums">package bohnanza.view;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Observer;
+
+import bohnanza.game.Bean;
+import bohnanza.game.Type;
+import bohnanza.game.player.Player;
+
+<span class="nc" id="L11">public abstract class View implements Observer {</span>
+
+    public abstract String getName(int player);
+
+    public abstract int mustPlant(Player player);
+
+    public abstract int mayPlant(Player player);
+
+    public abstract Collection&lt;Bean&gt; getOptionsFromHand(Collection&lt;Bean&gt; options);
+
+    public abstract Collection&lt;Bean&gt; getOptionsFromDrawArea(
+            Collection&lt;Bean&gt; options);
+
+    public abstract Bean getOptionFromKeepArea(List&lt;Bean&gt; options);
+
+    public abstract Collection&lt;Type&gt; getOptionsFromType(Collection&lt;Type&gt; options);
+
+    public abstract Player getTradePartner(Collection&lt;Type&gt; proposal,
+            Collection&lt;Bean&gt; cardsFromDrawArea, Collection&lt;Bean&gt; cardsFromHand,
+            Player currentPlayer);
+
+    public abstract boolean askTrade();
+
+    public abstract boolean confirmTrade(Collection&lt;Bean&gt; cardsFromDrawArea,
+            Collection&lt;Bean&gt; cardsFromHand, Player acceptingPlayer,
+            Collection&lt;Bean&gt; counterProposal);
+
+    public abstract boolean confirmBuy();
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

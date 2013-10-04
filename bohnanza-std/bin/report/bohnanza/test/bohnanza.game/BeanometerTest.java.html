@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BeanometerTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">bohnanza.game</a> &gt; <span class="el_source">BeanometerTest.java</span></div><h1>BeanometerTest.java</h1><pre class="source lang-java linenums">package bohnanza.game;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Before;
+import org.junit.Test;
+
+<span class="nc" id="L8">public class BeanometerTest {</span>
+
+    private static final int ZERO_COINS = 0;
+
+    private static final int ONE_CARD = 1;
+
+    private Beanometer beanometer;
+
+    private static final String TO_STRING = &quot;2-&gt;1, 4-&gt;2, 6-&gt;3, 8-&gt;4&quot;;
+
+    private static final String TO_STRING_NO_ONE_COIN = &quot;4-&gt;2, 6-&gt;3, 8-&gt;4&quot;;
+
+    @Before
+    public void setUp() {
+<span class="nc" id="L22">        beanometer = new Beanometer();</span>
+<span class="nc" id="L23">    }</span>
+
+    @Test
+    public final void testGetWorth() {
+<span class="nc" id="L27">        beanometer.setCardsForOneCoin(Beanometer.TWO_CARDS);</span>
+<span class="nc" id="L28">        beanometer.setCardsForTwoCoins(Beanometer.FOUR_CARDS);</span>
+<span class="nc" id="L29">        beanometer.setCardsForThreeCoins(Beanometer.SIX_CARDS);</span>
+<span class="nc" id="L30">        beanometer.setCardsForFourCoins(Beanometer.EIGHT_CARDS);</span>
+
+<span class="nc" id="L32">        assertEquals(ZERO_COINS, beanometer.getWorth(ONE_CARD));</span>
+<span class="nc" id="L33">        assertEquals(Beanometer.ONE_COIN,</span>
+<span class="nc" id="L34">                beanometer.getWorth(Beanometer.TWO_CARDS));</span>
+<span class="nc" id="L35">        assertEquals(Beanometer.ONE_COIN,</span>
+<span class="nc" id="L36">                beanometer.getWorth(Beanometer.THREE_CARDS));</span>
+<span class="nc" id="L37">        assertEquals(Beanometer.TWO_COINS,</span>
+<span class="nc" id="L38">                beanometer.getWorth(Beanometer.FOUR_CARDS));</span>
+<span class="nc" id="L39">        assertEquals(Beanometer.TWO_COINS,</span>
+<span class="nc" id="L40">                beanometer.getWorth(Beanometer.FIVE_CARDS));</span>
+<span class="nc" id="L41">        assertEquals(Beanometer.THREE_COINS,</span>
+<span class="nc" id="L42">                beanometer.getWorth(Beanometer.SIX_CARDS));</span>
+<span class="nc" id="L43">        assertEquals(Beanometer.THREE_COINS,</span>
+<span class="nc" id="L44">                beanometer.getWorth(Beanometer.SEVEN_CARDS));</span>
+<span class="nc" id="L45">        assertEquals(Beanometer.FOUR_COINS,</span>
+<span class="nc" id="L46">                beanometer.getWorth(Beanometer.EIGHT_CARDS));</span>
+<span class="nc" id="L47">        assertEquals(Beanometer.FOUR_COINS,</span>
+<span class="nc" id="L48">                beanometer.getWorth(Beanometer.NINE_CARDS));</span>
+<span class="nc" id="L49">    }</span>
+
+    @Test
+    public final void testSetNoCardsForOneCoin() {
+<span class="nc" id="L53">        assertEquals(ZERO_COINS, beanometer.getWorth(Beanometer.TWO_CARDS));</span>
+<span class="nc" id="L54">    }</span>
+
+    @Test
+    public final void testSetCardsForOneCoin() {
+<span class="nc" id="L58">        beanometer.setCardsForOneCoin(Beanometer.TWO_CARDS);</span>
+<span class="nc" id="L59">        assertEquals(Beanometer.ONE_COIN,</span>
+<span class="nc" id="L60">                beanometer.getWorth(Beanometer.TWO_CARDS));</span>
+<span class="nc" id="L61">    }</span>
+
+    @Test
+    public final void testSetCardsForTwoCoins() {
+<span class="nc" id="L65">        beanometer.setCardsForTwoCoins(Beanometer.FOUR_CARDS);</span>
+<span class="nc" id="L66">        assertEquals(Beanometer.TWO_COINS,</span>
+<span class="nc" id="L67">                beanometer.getWorth(Beanometer.FOUR_CARDS));</span>
+<span class="nc" id="L68">    }</span>
+
+    @Test
+    public final void testSetCardsForThreeCoins() {
+<span class="nc" id="L72">        beanometer.setCardsForThreeCoins(Beanometer.SIX_CARDS);</span>
+<span class="nc" id="L73">        assertEquals(Beanometer.THREE_COINS,</span>
+<span class="nc" id="L74">                beanometer.getWorth(Beanometer.SIX_CARDS));</span>
+<span class="nc" id="L75">    }</span>
+
+    @Test
+    public final void testSetCardsForFourCoins() {
+<span class="nc" id="L79">        beanometer.setCardsForFourCoins(Beanometer.EIGHT_CARDS);</span>
+<span class="nc" id="L80">        assertEquals(Beanometer.FOUR_COINS,</span>
+<span class="nc" id="L81">                beanometer.getWorth(Beanometer.EIGHT_CARDS));</span>
+<span class="nc" id="L82">    }</span>
+
+    @Test
+    public final void testToString() {
+<span class="nc" id="L86">        beanometer.setCardsForOneCoin(Beanometer.TWO_CARDS);</span>
+<span class="nc" id="L87">        beanometer.setCardsForTwoCoins(Beanometer.FOUR_CARDS);</span>
+<span class="nc" id="L88">        beanometer.setCardsForThreeCoins(Beanometer.SIX_CARDS);</span>
+<span class="nc" id="L89">        beanometer.setCardsForFourCoins(Beanometer.EIGHT_CARDS);</span>
+
+<span class="nc" id="L91">        assertEquals(TO_STRING, beanometer.toString());</span>
+<span class="nc" id="L92">    }</span>
+
+    @Test
+    public final void testToStringNoOneCoin() {
+<span class="nc" id="L96">        beanometer.setCardsForTwoCoins(Beanometer.FOUR_CARDS);</span>
+<span class="nc" id="L97">        beanometer.setCardsForThreeCoins(Beanometer.SIX_CARDS);</span>
+<span class="nc" id="L98">        beanometer.setCardsForFourCoins(Beanometer.EIGHT_CARDS);</span>
+
+<span class="nc" id="L100">        assertEquals(TO_STRING_NO_ONE_COIN, beanometer.toString());</span>
+<span class="nc" id="L101">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

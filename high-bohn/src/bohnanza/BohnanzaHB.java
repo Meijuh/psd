@@ -2,6 +2,7 @@ package bohnanza;
 
 import bohnanza.game.player.Player;
 import bohnanza.gameplay.GameContext;
+import bohnanza.module.BohnanzaHBModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
@@ -17,15 +18,16 @@ public class BohnanzaHB extends Bohnanza {
     private static final String RUN = "java bohnanza.BohnanzaHB";
 
     @Inject
-    protected BohnanzaHB(String[] args, GameContext gameContext,
+    protected BohnanzaHB(GameContext gameContext,
             Provider<Player> playerProvider) {
-        super(args, gameContext, playerProvider);
+        super(gameContext, playerProvider);
     }
 
     public static void main(String[] args) {
         Injector injector = Guice.createInjector(new BohnanzaHBModule());
         injector.injectMembers(args);
-        injector.getInstance(Bohnanza.class);
+        Bohnanza bohnanza = injector.getInstance(Bohnanza.class);
+        bohnanza.run(args);
     }
 
     @Override

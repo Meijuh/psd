@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Bohnanza.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza</a> &gt; <span class="el_source">Bohnanza.java</span></div><h1>Bohnanza.java</h1><pre class="source lang-java linenums">package bohnanza;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+
+import bohnanza.game.player.Player;
+import bohnanza.gameplay.GameContext;
+
+import com.google.inject.Inject;
+import com.google.inject.Provider;
+
+public abstract class Bohnanza {
+
+    public static final String LONG_OPTION_PLAYERS = &quot;players&quot;;
+    public static final String OPTION_PLAYERS = &quot;p&quot;;
+    public static final String OPTION_PLAYERS_DESCRIPTION = &quot;Number of players&quot;;
+
+    public static final String LONG_OPTION_HELP = &quot;help&quot;;
+    public static final String OPTION_HELP = &quot;h&quot;;
+    public static final String OPTION_HELP_DESCRIPTION = &quot;Prints this message&quot;;
+
+    public static final String PARSE_EXCEPTION_MESSAGE = &quot;Parsing of command line options failed, reason: %s, try '%s -h' to see help.&quot;;
+
+    public static final String NOT_A_NUMBER = &quot;Could not parse value, reason %s&quot;;
+
+<span class="nc" id="L34">    private static final Logger LOGGER = Logger.getLogger(Bohnanza.class</span>
+<span class="nc" id="L35">            .getName());</span>
+<span class="nc" id="L36">    private static final String PLAYER_RANGE = &quot;Amount of players should be between %d and %d, %d players given.&quot;;</span>
+
+    private final GameContext gameContext;
+
+    private final Provider&lt;Player&gt; playerProvider;
+
+    @Inject
+<span class="nc" id="L43">    protected Bohnanza(GameContext gameContext, Provider&lt;Player&gt; playerProvider) {</span>
+
+<span class="nc" id="L45">        this.gameContext = gameContext;</span>
+<span class="nc" id="L46">        this.playerProvider = playerProvider;</span>
+<span class="nc" id="L47">    }</span>
+
+    protected void run(String[] args) {
+
+<span class="nc" id="L51">        Options options = new Options();</span>
+
+<span class="nc" id="L53">        Option playersOption = new Option(OPTION_PLAYERS, LONG_OPTION_PLAYERS,</span>
+<span class="nc" id="L54">                true, OPTION_PLAYERS_DESCRIPTION);</span>
+<span class="nc" id="L55">        playersOption.setRequired(true);</span>
+<span class="nc" id="L56">        options.addOption(playersOption);</span>
+
+<span class="nc" id="L58">        options.addOption(new Option(OPTION_HELP, LONG_OPTION_HELP, false,</span>
+<span class="nc" id="L59">                OPTION_HELP_DESCRIPTION));</span>
+
+<span class="nc" id="L61">        CommandLineParser commandLineParser = new GnuParser();</span>
+
+<span class="nc" id="L63">        LOGGER.setLevel(Level.INFO);</span>
+
+        try {
+<span class="nc" id="L66">            CommandLine commandLine = commandLineParser.parse(options, args);</span>
+
+<span class="nc" id="L68">            HelpFormatter helpFormatter = new HelpFormatter();</span>
+
+<span class="nc bnc" id="L70" title="All 2 branches missed.">            if (commandLine.hasOption(OPTION_HELP)) {</span>
+<span class="nc" id="L71">                helpFormatter.printHelp(getRun(), options);</span>
+<span class="nc" id="L72">            } else {</span>
+
+<span class="nc" id="L74">                int playerCount = Integer.parseInt(commandLine</span>
+<span class="nc" id="L75">                        .getOptionValue(OPTION_PLAYERS));</span>
+
+<span class="nc bnc" id="L77" title="All 2 branches missed.">                if (getMinPlayers() &gt; playerCount</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                        || playerCount &gt; getMaxPlayers()) {</span>
+<span class="nc" id="L79">                    LOGGER.log(Level.SEVERE, String.format(PLAYER_RANGE,</span>
+<span class="nc" id="L80">                            getMinPlayers(), getMaxPlayers(), playerCount));</span>
+<span class="nc" id="L81">                } else {</span>
+
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                    for (int i = 0; i &lt; playerCount; i++) {</span>
+
+<span class="nc" id="L85">                        Player player = playerProvider.get();</span>
+<span class="nc" id="L86">                        gameContext.setPlayer(player);</span>
+                    }
+
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                    while (gameContext.getState() != null) {</span>
+<span class="nc" id="L90">                        gameContext.execute();</span>
+                    }
+
+<span class="nc" id="L93">                    System.exit(gameContext.getExitStatus());</span>
+                }
+            }
+<span class="nc" id="L96">        } catch (ParseException e) {</span>
+<span class="nc" id="L97">            LOGGER.log(</span>
+<span class="nc" id="L98">                    Level.SEVERE,</span>
+<span class="nc" id="L99">                    String.format(PARSE_EXCEPTION_MESSAGE, getRun(),</span>
+<span class="nc" id="L100">                            e.getMessage()));</span>
+<span class="nc" id="L101">        } catch (NumberFormatException e) {</span>
+<span class="nc" id="L102">            LOGGER.log(Level.SEVERE,</span>
+<span class="nc" id="L103">                    String.format(NOT_A_NUMBER, e.getMessage()));</span>
+        }
+<span class="nc" id="L105">        System.exit(1);</span>
+<span class="nc" id="L106">    }</span>
+
+    protected abstract String getRun();
+
+    protected abstract int getMinPlayers();
+
+    protected abstract int getMaxPlayers();
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

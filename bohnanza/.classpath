@@ -8,7 +8,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/mockito-1.9.5/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="lib/guice-4.0-beta/aopalliance.jar"/>
-	<classpathentry kind="lib" path="lib/guice-4.0-beta/COPYING"/>
 	<classpathentry kind="lib" path="lib/guice-4.0-beta/guice-4.0-beta.jar"/>
 	<classpathentry kind="lib" path="lib/guice-4.0-beta/guice-assistedinject-4.0-beta.jar"/>
 	<classpathentry kind="lib" path="lib/guice-4.0-beta/guice-grapher-4.0-beta.jar"/>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>GamePlayTest.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza-std</a> &gt; <a href="../index.html" class="el_bundle">test</a> &gt; <a href="index.html" class="el_package">bohnanza.gameplay</a> &gt; <span class="el_source">GamePlayTest.java</span></div><h1>GamePlayTest.java</h1><pre class="source lang-java linenums">package bohnanza.gameplay;
+
+import static org.mockito.Mockito.mock;
+
+import org.junit.Before;
+
+import bohnanza.game.player.BeanField;
+import bohnanza.game.player.DrawArea;
+import bohnanza.game.player.Hand;
+import bohnanza.game.player.KeepArea;
+import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
+import bohnanza.game.player.TreasuryStd;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.BoxStd;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DiscardPileStd;
+import bohnanza.game.shared.DrawDeck;
+import bohnanza.view.View;
+
+<span class="fc" id="L21">public abstract class GamePlayTest {</span>
+
+    protected static final String NAME_ONE = &quot;name1&quot;;
+
+    protected static final String NAME_TWO = &quot;name2&quot;;
+
+    protected static final int FIRST_PLAYER = 0;
+
+    protected static final int SECOND_PLAYER = 1;
+
+    protected static final int PLAYERS = 2;
+
+<span class="fc" id="L33">    private final DiscardPile discardPile = new DiscardPileStd();</span>
+
+<span class="fc" id="L35">    private final Box box = new BoxStd();</span>
+
+<span class="fc" id="L37">    private final DrawDeck drawDeck = new DrawDeck();</span>
+
+<span class="fc" id="L39">    private final End end = new EndStd();</span>
+
+    private View view;
+
+    private GameContext gameContext;
+
+    private Hand firstHand;
+    private DrawArea firstDrawArea;
+    private KeepArea firstKeepArea;
+    private Treasury firstTreasury;
+    private BeanField firstFirstBeanField;
+    private BeanField firstSecondBeanField;
+
+    private Hand secondHand;
+    private DrawArea secondDrawArea;
+    private KeepArea secondKeepArea;
+    private Treasury secondTreasury;
+    private BeanField secondFirstBeanField;
+    private BeanField secondSecondBeanField;
+
+    protected Hand getFirstHand() {
+<span class="fc" id="L60">        return firstHand;</span>
+    }
+
+    protected DrawArea getFirstDrawArea() {
+<span class="nc" id="L64">        return firstDrawArea;</span>
+    }
+
+    protected KeepArea getFirstKeepArea() {
+<span class="fc" id="L68">        return firstKeepArea;</span>
+    }
+
+    protected Treasury getFirstTreasury() {
+<span class="fc" id="L72">        return firstTreasury;</span>
+    }
+
+    protected BeanField getFirstFirstBeanField() {
+<span class="fc" id="L76">        return firstFirstBeanField;</span>
+    }
+
+    protected BeanField getFirstSecondBeanField() {
+<span class="fc" id="L80">        return firstSecondBeanField;</span>
+    }
+
+    protected Hand getSecondHand() {
+<span class="fc" id="L84">        return secondHand;</span>
+    }
+
+    protected DrawArea getSecondDrawArea() {
+<span class="nc" id="L88">        return secondDrawArea;</span>
+    }
+
+    protected KeepArea getSecondKeepArea() {
+<span class="nc" id="L92">        return secondKeepArea;</span>
+    }
+
+    protected Treasury getSecondTreasury() {
+<span class="nc" id="L96">        return secondTreasury;</span>
+    }
+
+    protected BeanField getSecondFirstBeanField() {
+<span class="nc" id="L100">        return secondFirstBeanField;</span>
+    }
+
+    protected BeanField getSecondSecondBeanField() {
+<span class="nc" id="L104">        return secondSecondBeanField;</span>
+    }
+
+    protected GameContext getGameContext() {
+<span class="fc" id="L108">        return gameContext;</span>
+    }
+
+    protected Box getBox() {
+<span class="fc" id="L112">        return box;</span>
+    }
+
+    protected DrawDeck getDrawDeck() {
+<span class="fc" id="L116">        return drawDeck;</span>
+    }
+
+    protected DiscardPile getDiscardPile() {
+<span class="fc" id="L120">        return discardPile;</span>
+    }
+
+    protected View getView() {
+<span class="fc" id="L124">        return view;</span>
+    }
+
+    @Before
+    public void setUp() {
+
+<span class="fc" id="L130">        view = mock(View.class);</span>
+
+<span class="fc" id="L132">        gameContext = new GameContextStd(end, view, discardPile, drawDeck, box);</span>
+
+        Player player;
+
+<span class="fc" id="L136">        firstHand = new Hand();</span>
+<span class="fc" id="L137">        firstDrawArea = new DrawArea();</span>
+<span class="fc" id="L138">        firstKeepArea = new KeepArea();</span>
+<span class="fc" id="L139">        firstTreasury = new TreasuryStd();</span>
+<span class="fc" id="L140">        firstFirstBeanField = new BeanField();</span>
+<span class="fc" id="L141">        firstSecondBeanField = new BeanField();</span>
+
+<span class="fc" id="L143">        player = new Player(firstHand, firstDrawArea, firstKeepArea,</span>
+<span class="fc" id="L144">                firstTreasury, firstFirstBeanField, firstSecondBeanField,</span>
+<span class="fc" id="L145">                drawDeck, discardPile, box);</span>
+<span class="fc" id="L146">        gameContext.setPlayer(player);</span>
+
+<span class="fc" id="L148">        secondHand = new Hand();</span>
+<span class="fc" id="L149">        secondDrawArea = new DrawArea();</span>
+<span class="fc" id="L150">        secondKeepArea = new KeepArea();</span>
+<span class="fc" id="L151">        secondTreasury = new TreasuryStd();</span>
+<span class="fc" id="L152">        secondFirstBeanField = new BeanField();</span>
+<span class="fc" id="L153">        secondSecondBeanField = new BeanField();</span>
+
+<span class="fc" id="L155">        player = new Player(secondHand, secondDrawArea, secondKeepArea,</span>
+<span class="fc" id="L156">                secondTreasury, secondFirstBeanField, secondSecondBeanField,</span>
+<span class="fc" id="L157">                drawDeck, discardPile, box);</span>
+<span class="fc" id="L158">        gameContext.setPlayer(player);</span>
+
+<span class="fc" id="L160">        getGameContext().getPlayers().get(FIRST_PLAYER).setName(NAME_ONE);</span>
+<span class="fc" id="L161">        getGameContext().getPlayers().get(SECOND_PLAYER).setName(NAME_TWO);</span>
+
+<span class="fc" id="L163">        getGameContext().getPlayers().get(FIRST_PLAYER)</span>
+<span class="fc" id="L164">                .setPlayerNumber(FIRST_PLAYER + 1);</span>
+<span class="fc" id="L165">        getGameContext().getPlayers().get(SECOND_PLAYER)</span>
+<span class="fc" id="L166">                .setPlayerNumber(SECOND_PLAYER + 2);</span>
+
+<span class="fc" id="L168">        getGameContext()</span>
+<span class="fc" id="L169">                .getPlayers()</span>
+<span class="fc" id="L170">                .get(FIRST_PLAYER)</span>
+<span class="fc" id="L171">                .setLeftPlayer(getGameContext().getPlayers().get(SECOND_PLAYER));</span>
+<span class="fc" id="L172">        getGameContext().getPlayers().get(SECOND_PLAYER)</span>
+<span class="fc" id="L173">                .setLeftPlayer(getGameContext().getPlayers().get(FIRST_PLAYER));</span>
+
+<span class="fc" id="L175">        getGameContext().setCurrentPlayer(</span>
+<span class="fc" id="L176">                getGameContext().getPlayers().get(FIRST_PLAYER));</span>
+
+<span class="fc" id="L178">        getGameContext().getCurrentPlayer().shuffle();</span>
+<span class="fc" id="L179">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>

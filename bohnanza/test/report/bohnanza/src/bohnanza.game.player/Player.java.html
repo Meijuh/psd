@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>Player.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza (Oct 4, 2013 3:58:10 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.game.player</a> &gt; <span class="el_source">Player.java</span></div><h1>Player.java</h1><pre class="source lang-java linenums">package bohnanza.game.player;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
+
+import bohnanza.game.Bean;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DrawDeck;
+
+public class Player extends Observable {
+
+    private String name;
+
+    private Player leftPlayer;
+
+    private final Hand hand;
+
+    private int playerNumber;
+
+    private final DrawArea drawArea;
+
+    private final BeanField firstBeanField;
+
+    private final BeanField secondBeanField;
+
+    private BeanField thirdBeanField;
+
+    private final DrawDeck drawDeck;
+
+    private final DiscardPile discardPile;
+
+    private final KeepArea keepArea;
+
+    private final Treasury treasury;
+
+    private final Box box;
+
+    private static final String TO_STRING_MESSAGE = &quot;name: %s\nhand: %s\ndraw area: %s\nkeep area: %s\nbean fields: %s %s %s&quot;;
+
+    public static final int FIRST_BEAN_FIELD = 1;
+
+    public static final int SECOND_BEAN_FIELD = 2;
+
+    public static final int THIRD_BEAN_FIELD = 3;
+
+    public static final int THIRD_BEAN_FIELD_COST = 3;
+
+    public static final String EMPTY = &quot;x&quot;;
+
+<span class="fc" id="L53">    public Player(Hand hand, DrawArea drawArea, KeepArea keepArea,</span>
+            Treasury treasury, BeanField firstBeanField,
+            BeanField secondBeanField, DrawDeck drawDeck,
+            DiscardPile discardPile, Box box) {
+<span class="fc" id="L57">        this.hand = hand;</span>
+<span class="fc" id="L58">        this.drawArea = drawArea;</span>
+<span class="fc" id="L59">        this.keepArea = keepArea;</span>
+<span class="fc" id="L60">        this.treasury = treasury;</span>
+<span class="fc" id="L61">        this.firstBeanField = firstBeanField;</span>
+<span class="fc" id="L62">        this.secondBeanField = secondBeanField;</span>
+<span class="fc" id="L63">        this.drawDeck = drawDeck;</span>
+<span class="fc" id="L64">        this.discardPile = discardPile;</span>
+<span class="fc" id="L65">        this.thirdBeanField = null;</span>
+<span class="fc" id="L66">        this.box = box;</span>
+<span class="fc" id="L67">    }</span>
+
+    public void setLeftPlayer(Player player) {
+<span class="fc" id="L70">        leftPlayer = player;</span>
+<span class="fc" id="L71">    }</span>
+
+    public Player getLeftPlayer() {
+<span class="fc" id="L74">        return leftPlayer;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L78">        this.name = name;</span>
+<span class="fc" id="L79">    }</span>
+
+    public String getName() {
+<span class="fc" id="L82">        return name;</span>
+    }
+
+    public void setPlayerNumber(int playerNumber) {
+<span class="fc" id="L86">        this.playerNumber = playerNumber;</span>
+
+<span class="fc" id="L88">    }</span>
+
+    public int getPlayerNumber() {
+<span class="fc" id="L91">        return playerNumber;</span>
+    }
+
+    public void plantHand(int beanFieldNumber) throws BohnanzaException {
+<span class="fc" id="L95">        plant(beanFieldNumber, hand.remove());</span>
+<span class="fc" id="L96">    }</span>
+
+    public void plantKeepArea(int beanFieldNumber, Bean bean)
+            throws BohnanzaException {
+<span class="nc" id="L100">        keepArea.remove(bean);</span>
+<span class="nc" id="L101">        plant(beanFieldNumber, bean);</span>
+<span class="nc" id="L102">    }</span>
+
+    private void plant(int beanFieldNumber, Bean bean) throws BohnanzaException {
+
+<span class="fc" id="L106">        BeanField beanField = getBeanField(beanFieldNumber);</span>
+
+<span class="fc bfc" id="L108" title="All 2 branches covered.">        if (!beanField.isType(bean.getType())) {</span>
+<span class="fc" id="L109">            harvestAndSell(beanField);</span>
+        }
+<span class="fc" id="L111">        beanField.add(bean);</span>
+<span class="fc" id="L112">        setChanged();</span>
+<span class="fc" id="L113">        notifyObservers(this);</span>
+<span class="fc" id="L114">    }</span>
+
+    public void harvestAndSellAll() throws BohnanzaException {
+<span class="nc" id="L117">        harvestAndSell(getBeanField(FIRST_BEAN_FIELD));</span>
+<span class="nc" id="L118">        harvestAndSell(getBeanField(SECOND_BEAN_FIELD));</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        if (hasThirdBeanField()) {</span>
+<span class="nc" id="L120">            harvestAndSell(getBeanField(THIRD_BEAN_FIELD));</span>
+        }
+<span class="nc" id="L122">    }</span>
+
+    private void harvestAndSell(BeanField beanField) {
+
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        if (beanField.hasCards()) {</span>
+
+<span class="fc" id="L128">            List&lt;Bean&gt; beans = beanField.empty();</span>
+
+<span class="fc" id="L130">            int i = 0;</span>
+<span class="fc bfc" id="L131" title="All 2 branches covered.">            for (Bean bean : beans) {</span>
+<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (i &lt; bean.getBeanometer().getWorth(beans.size())) {</span>
+<span class="fc" id="L133">                    treasury.add(bean);</span>
+<span class="fc" id="L134">                } else {</span>
+<span class="fc" id="L135">                    discardPile.add(bean);</span>
+                }
+<span class="fc" id="L137">                i++;</span>
+            }
+        }
+
+<span class="fc" id="L141">    }</span>
+
+    public boolean hasThirdBeanField() {
+<span class="fc bfc" id="L144" title="All 2 branches covered.">        return thirdBeanField != null;</span>
+    }
+
+    public void drawIntoDrawArea() {
+<span class="fc" id="L148">        drawArea.add(drawDeck.remove());</span>
+<span class="fc" id="L149">    }</span>
+
+    public void drawIntoHand() {
+<span class="fc" id="L152">        hand.add(drawDeck.remove());</span>
+<span class="fc" id="L153">    }</span>
+
+    public List&lt;Bean&gt; getDrawArea() {
+<span class="fc" id="L156">        return drawArea.getCardsUnmodifiable();</span>
+    }
+
+    public boolean isDrawAreaNotEmpty() {
+<span class="fc" id="L160">        return drawArea.hasCards();</span>
+    }
+
+    public void receiveFromHand(Collection&lt;Bean&gt; hand, Player player) {
+
+<span class="fc" id="L165">        keepArea.add(hand);</span>
+<span class="fc" id="L166">        player.removeFromHand(hand);</span>
+
+<span class="fc" id="L168">    }</span>
+
+    private void removeFromHand(Collection&lt;Bean&gt; beans) {
+<span class="fc" id="L171">        hand.remove(beans);</span>
+<span class="fc" id="L172">    }</span>
+
+    public void receiveFromDrawArea(Collection&lt;Bean&gt; drawArea, Player player) {
+<span class="fc" id="L175">        keepArea.add(drawArea);</span>
+<span class="fc" id="L176">        player.removeFromDrawArea(drawArea);</span>
+<span class="fc" id="L177">    }</span>
+
+    public void removeFromDrawArea(Collection&lt;Bean&gt; cardsFromDrawArea) {
+<span class="fc" id="L180">        drawArea.remove(cardsFromDrawArea);</span>
+<span class="fc" id="L181">    }</span>
+
+    public List&lt;Bean&gt; getKeepArea() {
+<span class="fc" id="L184">        return keepArea.getCardsUnmodifiable();</span>
+    }
+
+    public boolean isKeepAreaNotEmpty() {
+<span class="fc" id="L188">        return keepArea.hasCards();</span>
+    }
+
+    public void buy() throws BohnanzaException {
+
+<span class="fc bfc" id="L193" title="All 2 branches covered.">        if (getTreasury() &gt;= THIRD_BEAN_FIELD_COST) {</span>
+
+<span class="fc" id="L195">            int i = 0;</span>
+<span class="fc bfc" id="L196" title="All 2 branches covered.">            while (i &lt; THIRD_BEAN_FIELD_COST) {</span>
+
+<span class="fc" id="L198">                discardPile.add(treasury.remove());</span>
+
+<span class="fc" id="L200">                i++;</span>
+            }
+
+<span class="fc" id="L203">            thirdBeanField = new BeanField();</span>
+
+<span class="fc" id="L205">            box.remove();</span>
+<span class="fc" id="L206">        } else {</span>
+<span class="fc" id="L207">            throw new BohnanzaException(BohnanzaException.NOT_ENOUGH_MONEY);</span>
+        }
+<span class="fc" id="L209">    }</span>
+
+    public int getTreasury() {
+<span class="fc" id="L212">        return treasury.getSize();</span>
+    }
+
+    public boolean isHandNotEmpty() {
+<span class="fc" id="L216">        return hand.hasCards();</span>
+    }
+
+    public List&lt;Bean&gt; getHand() {
+<span class="fc" id="L220">        return hand.getCardsUnmodifiable();</span>
+    }
+
+    public void shuffle() {
+<span class="fc" id="L224">        List&lt;Bean&gt; temp = drawDeck.empty();</span>
+<span class="fc" id="L225">        temp.addAll(discardPile.empty());</span>
+
+<span class="fc" id="L227">        Collections.shuffle(temp);</span>
+
+<span class="fc" id="L229">        drawDeck.add(temp);</span>
+<span class="fc" id="L230">    }</span>
+
+    private BeanField getBeanField(int nr) throws BohnanzaException {
+<span class="fc" id="L233">        BeanField beanField = null;</span>
+<span class="pc bpc" id="L234" title="3 of 4 branches missed.">        switch (nr) {</span>
+        case FIRST_BEAN_FIELD:
+<span class="fc" id="L236">            beanField = firstBeanField;</span>
+<span class="fc" id="L237">            break;</span>
+        case SECOND_BEAN_FIELD:
+<span class="nc" id="L239">            beanField = secondBeanField;</span>
+<span class="nc" id="L240">            break;</span>
+        case THIRD_BEAN_FIELD:
+<span class="nc bnc" id="L242" title="All 2 branches missed.">            if (hasThirdBeanField()) {</span>
+<span class="nc" id="L243">                beanField = thirdBeanField;</span>
+<span class="nc" id="L244">            } else {</span>
+<span class="nc" id="L245">                throw new BohnanzaException(BohnanzaException.THIRD_FIELD);</span>
+            }
+            break;
+        default:
+<span class="nc" id="L249">            throw new BohnanzaException(BohnanzaException.NO_FIELD);</span>
+        }
+<span class="fc" id="L251">        return beanField;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L256">        return String.format(TO_STRING_MESSAGE, name, hand, drawArea, keepArea,</span>
+<span class="fc" id="L257">                firstBeanField, secondBeanField,</span>
+<span class="pc bpc" id="L258" title="1 of 2 branches missed.">                hasThirdBeanField() ? thirdBeanField : EMPTY);</span>
+    }
+
+    public void keep() {
+<span class="nc" id="L262">        keepArea.add(drawArea.empty());</span>
+<span class="nc" id="L263">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza (Oct 4, 2013 3:58:10 PM)</div></body></html>

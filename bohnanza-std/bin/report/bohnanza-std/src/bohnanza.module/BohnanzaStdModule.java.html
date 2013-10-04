@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../.resources/report.gif" type="image/gif"/><title>BohnanzaStdModule.java</title><link rel="stylesheet" href="../../../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="right"><a href="../../../.sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">bohnanza-std (Oct 4, 2013 3:58:44 PM)</a> &gt; <a href="../../index.html" class="el_group">bohnanza-std</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.html" class="el_package">bohnanza.module</a> &gt; <span class="el_source">BohnanzaStdModule.java</span></div><h1>BohnanzaStdModule.java</h1><pre class="source lang-java linenums">package bohnanza.module;
+
+import bohnanza.Bohnanza;
+import bohnanza.BohnanzaStd;
+import bohnanza.game.player.Player;
+import bohnanza.game.player.Treasury;
+import bohnanza.game.player.TreasuryStd;
+import bohnanza.game.shared.Box;
+import bohnanza.game.shared.BoxStd;
+import bohnanza.game.shared.DiscardPile;
+import bohnanza.game.shared.DiscardPileStd;
+import bohnanza.game.shared.DrawDeck;
+import bohnanza.gameplay.End;
+import bohnanza.gameplay.EndStd;
+import bohnanza.gameplay.GameContext;
+import bohnanza.gameplay.GameContextStd;
+import bohnanza.view.TUIView;
+import bohnanza.view.View;
+
+import com.google.inject.Provider;
+
+<span class="nc" id="L22">public class BohnanzaStdModule extends BohnanzaModule {</span>
+
+    @Override
+    protected Class&lt;? extends Provider&lt;? extends Player&gt;&gt; getPlayerProviderClass() {
+<span class="nc" id="L26">        return PlayerStdProvider.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends Box&gt; getBoxClass() {
+<span class="nc" id="L31">        return BoxStd.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends GameContext&gt; getGameContextClass() {
+<span class="nc" id="L36">        return GameContextStd.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends DrawDeck&gt; getDrawDeckClass() {
+<span class="nc" id="L41">        return DrawDeck.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends DiscardPile&gt; getDiscardPileClass() {
+<span class="nc" id="L46">        return DiscardPileStd.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends View&gt; getViewClass() {
+<span class="nc" id="L51">        return TUIView.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends Bohnanza&gt; getBohnanzaClass() {
+<span class="nc" id="L56">        return BohnanzaStd.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends End&gt; getEndClass() {
+<span class="nc" id="L61">        return EndStd.class;</span>
+    }
+
+    @Override
+    protected Class&lt;? extends Treasury&gt; getTreasuryClass() {
+<span class="nc" id="L66">        return TreasuryStd.class;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.6.3.201306030806</span>bohnanza-std (Oct 4, 2013 3:58:44 PM)</div></body></html>
