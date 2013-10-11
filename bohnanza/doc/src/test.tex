@@ -1,11 +1,14 @@
 \section{testing}
-The main goal of our testing approach is to test the more complex parts of game such as
+The main goal of our testing approach is to test the more complex parts of the game such as
 trading. One of our goals is not to achieve 100 percent statement coverage, but to test the complex parts
-in a a nice way. Our design is wel suited for testing. Since our design adheres to the dependency injection pattern
-injecting mocked objects of classes is easy. For mocking we used the Mockito\footnote{https://code.google.com/p/mockito/} framework. Since
+in a nice way. The statement coverage is shown in Figure \ref{fig:test:coverage} and \ref{fig:test:coverage-std}, both figures are
+generated using EclEmma\footnote{http://www.eclemma.org/}. Our design is well suited for testing.
+Since our design adheres to the dependency injection pattern injecting mocked objects of classes is easy. For mocking we use the Mockito\footnote{https://code.google.com/p/mockito/} framework. Since
 we made our design work with Guice making our design work with Mockito is easy. Mocking namely requires dependency injection to inject
 mocks into the object under test. Interesting to see is that both Guice and Mockito use annotations to inject objects, these annotations are
-\emph{@Inject} and \emph{@InjectMocks} respectively. Eclipse does not generate unit tests well from existing classes. So we installed an
+\emph{@Inject} and \emph{@InjectMocks} respectively.
+
+Eclipse does not generate unit tests well from existing classes. So we installed an
 Eclipse plugin named moreunit, which is able to generate unit tests including necessary mocks. Up until installing moreunit we were not
 aware of any mocking frameworks. Moreunit suggested to use Mockito and we found that this framework is the most mature one and beats
 mocking by hand.
@@ -19,7 +22,7 @@ However the \emph{bohnanza} module is rather abstract and thus testing some abst
 more concrete classes in either the \gls{std} module or the \gls{hb} module.
 In the bohanza module we mainly tested whether the \texttt{Beanometer} and \texttt{CardList}
 works correctly. This is shown in the coverage report in the package \texttt{bohnanza.game}. Since a
-game can not really be played in the bohnanza module the gameplay is tested in a concrete
+game can not really be played in the bohnanza module the game-play is tested in a concrete
 implementation of bohnanza, namely bohnanza-std. This is shown in the package
 \texttt{bohnanza.gameplay}.
 

@@ -13,7 +13,7 @@ The reason why these elements are composed this way and called modules is a resu
 injection (Guice\footnote{https://code.google.com/p/google-guice/}) framework we use. This framework supplies abstract module classes which
 need to be implemented. Such a module class contains a set of dependencies. For example the bohnanza module uses an abstract Player class.
 Both the bohnanza-std and bohnanza-hb module use an concrete implementation hereof. Another reason why these modules are composed this way
-is due to the fact that we chose that an extension (and the \gls{std} game) should extend classes of the base game and not implement hooks. 
+is due to the fact that we chose an extension (and the \gls{std} game) should extend classes of the base game and not implement hooks. 
 
 Every module is designed according to the MVC pattern. The main classes that are involved in the MVC pattern are shown in Figure
 \ref{fig:design:mvc}.
@@ -26,11 +26,11 @@ Every module is designed according to the MVC pattern. The main classes that are
 
 The \texttt{GameContext} is the main model class. It contains many assocations to other model classes such as the \texttt{Player}. Many
 model classes are \texttt{Observable} by \texttt{Observer}s such as the \texttt{View} class. This is how the view knows the status of the
-model. The \texttt{GameState} is the controller which updates the view and the model. The controller issues method calls such as
-\texttt{getOptionsFromHand()} which returns a sub set of \texttt{Bean} cards. The controller is part of a \emph{state} pattern. An
-alternative to the MVC pattern is the Model View Presenter pattern which could have been applied in this context. We chose to keep things
-simple and focus more on the extensibility of bohnanza rather than on implementing other views such as a graphical one. We think that the
-classic MVC pattern suffices here.
+model. We could also have given the \texttt{GameContext} to the \texttt{View}. The \texttt{GameState} is the controller which updates the
+view and the model and is part of a \emph{state} pattern. The controller issues method calls such as \texttt{getOptionsFromHand()} in the
+view and returns a sub set of \texttt{Bean} cards. An alternative to the MVC pattern is
+the Model View Presenter pattern which could have been applied in this context. We chose to keep things simple and focus more on the
+extensibility of bohnanza rather than on implementing other views such as a graphical one. We think that the classic MVC pattern suffices here.
  
 \subsection{Model}
 Three important parts of the model involve the hierarchy of cards (Figure \ref{fig:design:cards}),
@@ -50,12 +50,12 @@ the relation between different sets of cards and the players (Figure \ref{fig:de
 \end{figure}
 
 The hierarchy of the cards here is convenient, namely when creating extensions of bohnanza. When new cards are introduced to the game
-creating a new factory i.e. subtyping \texttt{CardCreator} or \texttt{BeanCreator} is easy because those factories expect a subtype of a
-\texttt{Card}. Instead of using a factory method pattern we could have approach this a little different. Guice allows creating multiple
-instances of a class by means of a \texttt{Provider} class. Using this alternative would have resulted in cleaner code. The reason why we
+creating a new factory i.e. subtyping \texttt{CardCreator} or \texttt{BeanCreator} is easy because those factories expect to create a
+subtype of a \texttt{Card}. Instead of using a factory method pattern we could have approached this a little different. Guice allows
+creating multiple instances of a class by means of a \texttt{Provider} class. Using this alternative would have resulted in cleaner code. The reason why we
 did not choose this alternative is because we introduced Guice into our project after we used the factory method pattern and did not want to
-rewrite our code. We did however use the provider method for creating \texttt{Player}s as shown in Figure \ref{fig:design:di}, because this
-was the only way to inject these objects into an \texttt{Bohnanza} object.
+restructure our code. We did however use the provider method for creating \texttt{Player}s as shown in Figure \ref{fig:design:di}, because
+this was the only way to inject these objects into an \texttt{Bohnanza} object.
 
 \begin{figure}[h!] 
     \includegraphics[width=\textwidth]{../umlgraph/PlayerGraph}
@@ -68,15 +68,16 @@ was the only way to inject these objects into an \texttt{Bohnanza} object.
 The controller of the game is implemented using a \emph{state} design pattern and is shown in Figure
 \ref{fig:design:controller}. An alternative we could use here is the \emph{strategy} pattern. The strategy pattern is more applicable in
 situations where strategies are chosen at runtime. But more importantly the strategy pattern is used in situation where the result of
-different strategies is the same. In bohnanza the order of states is rather fixed the order only varies depending on how often the deck is
+different strategies is the same. In bohnanza the order of states is rather fixed, the order only varies depending on how often the deck is
 shuffled or in case of execeptional behaviour. In case exceptional behaviour occurs in our application the next state is always the
 \texttt{Fail} state. In general the order of states that are executed are \texttt{Prepare} \textrightarrow{} \texttt{FirstTurn}
 \textrightarrow{} \texttt{SecondTurn} \textrightarrow{} \texttt{ThirdTurn} \textrightarrow{} \texttt{FourthTurn} \textrightarrow{}
 \texttt{FirstTurn} \textrightarrow{} \ldots \textrightarrow{} \texttt{End}. A typical implementation of the \texttt{GameState.execute}
-method is shown as follows in \texttt{FirstTurn}. Note how the next state is set by getting the singleton instance on Line 19. The
-application continues until a \texttt{GameState} sets the next state to \texttt{null}, i.e. when \texttt{GameContext.getState() == null}.
+method is shown from \texttt{FirstTurn} in Listing \ref{lst:firstturn-execute}. Note how the next state is set by getting the singleton
+instance on Line 19.
+The application continues until a \texttt{GameState} sets the next state to \texttt{null}, i.e. when \texttt{GameContext.getState() == null}.
 
-\begin{lstlisting}[language=Java, caption=FirstTurn.execute()]
+\begin{lstlisting}[language=Java, caption=FirstTurn.execute(), label=lst:firstturn-execute]
 @Override
 public void execute(GameContext context) {
 
@@ -130,23 +131,23 @@ Our modules contain the following packages.
 \item[bohnanza.view] contains the view classes.
 \end{description}
 
-The packages are rather self explainatory. It can be argued however that some packages such as \texttt{bohnanza.game.player} and
+The packages are rather self explanatory. It can be argued however that some packages such as \texttt{bohnanza.game.player} and
 \texttt{bohnanza.game.shared} may be merged. In an early stage of the development we chose to make some classes \emph{package private} such
-that for example only a \texttt{Player} could construct a \texttt{Hand} this would make sure there can only be as many \texttt{Hand}s in the
-game as there are \texttt{Player}s. This design choice was one of the reasons our code was not testable and we had to change the visibility
+that for example only a \texttt{Player} could construct a \texttt{Hand}. This would make sure there can only be as many \texttt{Hand}s in
+the game as there are \texttt{Player}s. This design choice was one of the reasons our code was not testable and we had to change the visibility
 parameters to use dependency injection.
 
 \subsection{Variations}
 
 \subsubsection{User}
-The user can specify during the startup of the application how many players there are using a
-commandline option. For example \texttt{java bohnanza.BohnanzaStd -p=3} starts the BohnanzaStd
-module with three players. Parsing commandline options is done using the Apache Commons CLI library.
+The user can specify during the start up of the application how many players there are using a
+command line option. For example \texttt{java bohnanza.BohnanzaStd -p=3} starts the BohnanzaStd
+module with three players. Parsing command line options is done using the Apache Commons CLI library.
 
 \subsubsection{Developer}
-Variability for the develop depends heavily on notion of \emph{dependency injection}. Dependency
+Variability for the developer depends heavily on notion of \emph{dependency injection}. Dependency
 injection is a design pattern that basically involves moving dependency resolution from a particular
-class to a framework dedicated to dependeny injection. We use Guice for this. Classes involved with dependency injection are shown in
+class to a framework dedicated to dependency injection. We use Guice for this. Classes involved with dependency injection are shown in
 Figure \ref{fig:design:di}. If a developer wants another variation of the application the developer can simply extend the
 \texttt{BohnanzaModule} class and define other classes to inject, note that BohnanzaModule
 extends the \texttt{AbstractModule} class from Guice. For example if a \texttt{Hand} object needs
@@ -155,7 +156,7 @@ define the extension in the extension of BohnanzaModule. BohnanzaModule itself i
 an abstract class and this class only knows the full list of required dependencies. A concrete class
 such as BohnanzaStdModule implements some methods that return concrete classes as
 dependencies. This relates closely to the \emph{single choice principle}. Listing \ref{lst:di} shows how one can change dependencies using
-an extension of the AbstractModule class. Note how the singleton pattern and the provider incoorporate nicely in the configure method.
+an extension of the AbstractModule class. Note how the singleton pattern and the provider incorporate nicely in the configure method.
 
 \begin{lstlisting}[language=Java, caption=BohnanzaModule.java, label=lst:di]
 public abstract class BohnanzaModule extends AbstractModule {
