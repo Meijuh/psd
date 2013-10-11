@@ -11,114 +11,114 @@ digraph G {
 	ranksep=0.5;
 	rankdir=LR;
 	// bohnanza.game.factory.ChiliCreator
-	c149 [label=<<table title="bohnanza.game.factory.ChiliCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c152 [label=<<table title="bohnanza.game.factory.ChiliCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> ChiliCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.SoyCreator
-	c151 [label=<<table title="bohnanza.game.factory.SoyCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c154 [label=<<table title="bohnanza.game.factory.SoyCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> SoyCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.CocoaCreator
-	c152 [label=<<table title="bohnanza.game.factory.CocoaCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c155 [label=<<table title="bohnanza.game.factory.CocoaCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> CocoaCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.RedCreator
-	c153 [label=<<table title="bohnanza.game.factory.RedCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c156 [label=<<table title="bohnanza.game.factory.RedCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> RedCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.StinkCreator
-	c157 [label=<<table title="bohnanza.game.factory.StinkCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c160 [label=<<table title="bohnanza.game.factory.StinkCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> StinkCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.ThirdBeanFieldCreator
-	c158 [label=<<table title="bohnanza.game.factory.ThirdBeanFieldCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c161 [label=<<table title="bohnanza.game.factory.ThirdBeanFieldCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> ThirdBeanFieldCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.GardenCreator
-	c160 [label=<<table title="bohnanza.game.factory.GardenCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c163 [label=<<table title="bohnanza.game.factory.GardenCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> GardenCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.CardCreator<E extends bohnanza.game.Card<?>>
-	c163 [label=<<table title="bohnanza.game.factory.CardCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c166 [label=<<table title="bohnanza.game.factory.CardCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="Helvetica-Oblique"> CardCreator&lt;E extends Card&lt;?&gt;&gt; </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.BlueCreator
-	c167 [label=<<table title="bohnanza.game.factory.BlueCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c170 [label=<<table title="bohnanza.game.factory.BlueCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> BlueCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.BeanCreator
-	c168 [label=<<table title="bohnanza.game.factory.BeanCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c171 [label=<<table title="bohnanza.game.factory.BeanCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="Helvetica-Oblique"> BeanCreator </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.WaxCreator
-	c169 [label=<<table title="bohnanza.game.factory.WaxCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c172 [label=<<table title="bohnanza.game.factory.WaxCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> WaxCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.BlackEyedCreator
-	c171 [label=<<table title="bohnanza.game.factory.BlackEyedCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c174 [label=<<table title="bohnanza.game.factory.BlackEyedCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> BlackEyedCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.GreenCreator
-	c172 [label=<<table title="bohnanza.game.factory.GreenCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c175 [label=<<table title="bohnanza.game.factory.GreenCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> GreenCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.CoffeeCreator
-	c173 [label=<<table title="bohnanza.game.factory.CoffeeCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c176 [label=<<table title="bohnanza.game.factory.CoffeeCreator" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> CoffeeCreator </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	//bohnanza.game.factory.ChiliCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c149:p [dir=back,arrowtail=empty];
+	c171:p -> c152:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.SoyCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c151:p [dir=back,arrowtail=empty];
+	c171:p -> c154:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.CocoaCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c152:p [dir=back,arrowtail=empty];
+	c171:p -> c155:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.RedCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c153:p [dir=back,arrowtail=empty];
+	c171:p -> c156:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.StinkCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c157:p [dir=back,arrowtail=empty];
+	c171:p -> c160:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.ThirdBeanFieldCreator extends bohnanza.game.factory.CardCreator<bohnanza.game.factory.ThirdBeanField>
-	c163:p -> c158:p [dir=back,arrowtail=empty];
+	c166:p -> c161:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.GardenCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c160:p [dir=back,arrowtail=empty];
+	c171:p -> c163:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.BlueCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c167:p [dir=back,arrowtail=empty];
+	c171:p -> c170:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.BeanCreator extends bohnanza.game.factory.CardCreator<bohnanza.game.Bean>
-	c163:p -> c168:p [dir=back,arrowtail=empty];
+	c166:p -> c171:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.WaxCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c169:p [dir=back,arrowtail=empty];
+	c171:p -> c172:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.BlackEyedCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c171:p [dir=back,arrowtail=empty];
+	c171:p -> c174:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.GreenCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c172:p [dir=back,arrowtail=empty];
+	c171:p -> c175:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.CoffeeCreator extends bohnanza.game.factory.BeanCreator
-	c168:p -> c173:p [dir=back,arrowtail=empty];
+	c171:p -> c176:p [dir=back,arrowtail=empty];
 }
 

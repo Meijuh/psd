@@ -1,44 +1,69 @@
 \section{Design goals}
+\subsection{Criteria}\label{ssec:criteria}
 The importance of particular quality criteria depend on in which environment the application is
 used. This environment also influences the stakeholders; not every categorie stakeholder is affected
 by the software system. We offer our system open sourced and free of charge
 online.\footnote{https://github.com/Meijuh/psd}. We assume the application is a highly popular one
-and is us used among many people. We identify the most important quality criteria for this
+and is used among many people. We identify the most important quality criteria for this
 environment as \emph{extensibility} and \emph{reusability}. The most affected stakeholders are the
 \emph{developers}, \emph{maintainers}, \emph{testers} and \emph{users}.
 
 Extensibility is an external criteria; it is most important for the user. Reusability is more
-important for developers etc. Both criteria are also covered under the term modularity. Modularity
-allow the user to easily use one of the many extensions, such as High Bohn or spin-offs, such as Al
-Cabohne. It should be easy to implement such extensions for developers etc.
+important for developers etc. Both criteria are also covered under the term modularity. A key
+feature of bohnanza is to add extensions to the \gls{std} game. Modularity allow the user to easily use one of the many extensions, such
+as High Bohn or spin-offs, such as Al Cabohne. Also, for developers it allows for easy implementations of these extensions.  
 
-There is one major design decisions that contribute to modularity. First we have three modules
+There is two major design decisions that contribute to modularity. First we have three modules
 which can be considered separate projects. One module contains basic objects and method related to
 bohnanza, such as shuffling the discard pile into the draw deck. Another module implements \gls{std} 
 bohnanza without extensions. The last module implements the \gls{hb} extension. All projects can
 of course be tested and compiled individually. The \gls{std} and \gls{hb} extension inherit from the
 base module. The base module provides an abstract class that resolves dependency resolution between
 modules. Both the \gls{std} and the \gls{hb} module implement this class. Making it possible to hide
-some information in modules and should result in understandable modules. 
+some information in modules and should result in understandable modules.
+Second, we had the option to introduce classes in the the model which do have a role in the bohnanza game, such as a player area. A class
+representing this role would have some proxy methods for retrieving (unmodifiable) lists and other methods to perform atomic operations. The
+class would have bean fields, a draw area etcetera, but not the discard pile. An atomic operation would be to plant a card from the draw
+area into a bean field. An operation a player area is not capable of is to move a card from the bean field to the discard pile. This is of
+course an advantage because it prevents incorrect behaviour. However we chose not to implement these kinds of classes because it makes it
+hard to test and proxy methods like \texttt{Player.getPlayerArea().getFarm().getBeanField()} make the source code unreadable. Instead we
+implemented methods directly in the \texttt{Player}, such that \texttt{Player.getBeanField()} is available.
 
-\begin{itemize}
-    \item Reusability
-    \item Extensibility
-    \item remove inadequacies
-    \item adapt to changing needs
-    \item extend functionality quickly
-    \item integrate with other systems
-    \item use components in other projects
-    \item Modularity
-    \item decomposability
-    \item composability
-    \item understandability
-    \item continuity
-    \item protection
-    \item direct mapping
-    \item few interfaces
-    \item small interfaces
-    \item explicit interfaces
-    \item information hiding
-    \item 
-\end{itemize}
+\subsection{Flexibility}
+Creating flexible software is not easy. Flexibility may introduce risks in software, but it allows for faster adaptation of software when
+external changes are desired. The basic bohnanza module should allow for creating an extension easily. However one should not over-engineer
+software to much. That is, by trying to anticipate what a future release of the software should support. The way we support flexiblity in
+the bohnanza game is only for creating extensions of the \gls{std} bohnanza game. These extensions can be created by subtyping certain
+classes in the \gls{base} module. An alternative would be to supply hooks in our base module. But one can only
+guess if this approach works well with extensions we have not implemented, such as el Cabohne. One can not simply override any method if
+behaviour needs to be changed, because this is bad practice. As \footnote{http://checkstyle.sourceforge.net/} suggests a method
+should either be final or abstract. Therefore if one needs to override a method a final method
+should be made abstract and (parts of it) should be implemented in a subtype. We find this closely
+relates to the \emph{open-closed principle} of modularity. The base module is \emph{open} because
+no classes are final and can thus be extended. But it is \emph{closed} -- thus harder to extend --
+because methods are final. In our base module behaviour is hard to \emph{modify} but behaviour can however
+be easily \emph{added}, since classes are not final. The trade-off here is that it is harder to modify behaviour of the base module and thus
+one can not easily break the way we intent bohnanza to work. On the other hand, it is unforseable if for some extension the base module
+needs to be changed. If this is the case one has to change the keywords like described earlier.
+
+% \begin{itemize}
+%     \item Reusability
+%     \item Extensibility
+%     \item remove inadequacies
+%     \item adapt to changing needs
+%     \item extend functionality quickly
+%     \item integrate with other systems
+%     \item use components in other projects
+%     \item Modularity
+%     \item decomposability
+%     \item composability
+%     \item understandability
+%     \item continuity
+%     \item protection
+%     \item direct mapping
+%     \item few interfaces
+%     \item small interfaces
+%     \item explicit interfaces
+%     \item information hiding
+%     \item 
+% \end{itemize}

@@ -11,135 +11,135 @@ digraph G {
 	ranksep=0.5;
 	rankdir=LR;
 	// bohnanza.game.Bean
-	c70 [label=<<table title="bohnanza.game.Bean" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c72 [label=<<table title="bohnanza.game.Bean" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="Helvetica-Oblique"> Bean </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.Card<E>
-	c73 [label=<<table title="bohnanza.game.Card" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c75 [label=<<table title="bohnanza.game.Card" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Card&lt;E&gt; </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.CardList<E extends bohnanza.game.Card<?>>
-	c76 [label=<<table title="bohnanza.game.CardList" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c78 [label=<<table title="bohnanza.game.CardList" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"><font face="Helvetica-Oblique"> CardList&lt;E extends Card&lt;?&gt;&gt; </font></td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.Beanometer
-	c80 [label=<<table title="bohnanza.game.Beanometer" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c82 [label=<<table title="bohnanza.game.Beanometer" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Beanometer </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.ThirdBeanField
-	c88 [label=<<table title="bohnanza.game.factory.ThirdBeanField" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c90 [label=<<table title="bohnanza.game.factory.ThirdBeanField" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> ThirdBeanField </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Green
-	c92 [label=<<table title="bohnanza.game.factory.Green" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c94 [label=<<table title="bohnanza.game.factory.Green" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Green </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.BlackEyed
-	c93 [label=<<table title="bohnanza.game.factory.BlackEyed" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c95 [label=<<table title="bohnanza.game.factory.BlackEyed" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> BlackEyed </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Garden
-	c94 [label=<<table title="bohnanza.game.factory.Garden" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c96 [label=<<table title="bohnanza.game.factory.Garden" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Garden </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Soy
-	c97 [label=<<table title="bohnanza.game.factory.Soy" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c99 [label=<<table title="bohnanza.game.factory.Soy" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Soy </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Cocoa
-	c99 [label=<<table title="bohnanza.game.factory.Cocoa" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c101 [label=<<table title="bohnanza.game.factory.Cocoa" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Cocoa </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Blue
-	c100 [label=<<table title="bohnanza.game.factory.Blue" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c102 [label=<<table title="bohnanza.game.factory.Blue" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Blue </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Red
-	c102 [label=<<table title="bohnanza.game.factory.Red" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c104 [label=<<table title="bohnanza.game.factory.Red" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Red </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Stink
-	c103 [label=<<table title="bohnanza.game.factory.Stink" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c105 [label=<<table title="bohnanza.game.factory.Stink" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Stink </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Wax
-	c104 [label=<<table title="bohnanza.game.factory.Wax" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c106 [label=<<table title="bohnanza.game.factory.Wax" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Wax </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Chili
-	c108 [label=<<table title="bohnanza.game.factory.Chili" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c110 [label=<<table title="bohnanza.game.factory.Chili" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Chili </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	// bohnanza.game.factory.Coffee
-	c112 [label=<<table title="bohnanza.game.factory.Coffee" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
+	c114 [label=<<table title="bohnanza.game.factory.Coffee" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Coffee </td></tr>
 		</table></td></tr>
 		</table>>, URL="null", fontname="Helvetica", fontcolor="black", fontsize=10.0];
 	//bohnanza.game.Bean extends bohnanza.game.Card<bohnanza.game.Type>
-	c73:p -> c70:p [dir=back,arrowtail=empty];
+	c75:p -> c72:p [dir=back,arrowtail=empty];
 	//bohnanza.game.CardList<E extends bohnanza.game.Card<?>> extends java.util.Observable
-	c124:p -> c76:p [dir=back,arrowtail=empty];
+	c126:p -> c78:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.ThirdBeanField extends bohnanza.game.Card<java.lang.String>
-	c73:p -> c88:p [dir=back,arrowtail=empty];
+	c75:p -> c90:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Green extends bohnanza.game.Bean
-	c70:p -> c92:p [dir=back,arrowtail=empty];
+	c72:p -> c94:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.BlackEyed extends bohnanza.game.Bean
-	c70:p -> c93:p [dir=back,arrowtail=empty];
+	c72:p -> c95:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Garden extends bohnanza.game.Bean
-	c70:p -> c94:p [dir=back,arrowtail=empty];
+	c72:p -> c96:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Soy extends bohnanza.game.Bean
-	c70:p -> c97:p [dir=back,arrowtail=empty];
+	c72:p -> c99:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Cocoa extends bohnanza.game.Bean
-	c70:p -> c99:p [dir=back,arrowtail=empty];
+	c72:p -> c101:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Blue extends bohnanza.game.Bean
-	c70:p -> c100:p [dir=back,arrowtail=empty];
+	c72:p -> c102:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Red extends bohnanza.game.Bean
-	c70:p -> c102:p [dir=back,arrowtail=empty];
+	c72:p -> c104:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Stink extends bohnanza.game.Bean
-	c70:p -> c103:p [dir=back,arrowtail=empty];
+	c72:p -> c105:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Wax extends bohnanza.game.Bean
-	c70:p -> c104:p [dir=back,arrowtail=empty];
+	c72:p -> c106:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Chili extends bohnanza.game.Bean
-	c70:p -> c108:p [dir=back,arrowtail=empty];
+	c72:p -> c110:p [dir=back,arrowtail=empty];
 	//bohnanza.game.factory.Coffee extends bohnanza.game.Bean
-	c70:p -> c112:p [dir=back,arrowtail=empty];
+	c72:p -> c114:p [dir=back,arrowtail=empty];
 	// bohnanza.game.Bean NAVASSOC bohnanza.game.Beanometer
-	c70:p -> c80:p [taillabel="", label="", headlabel="", fontname="Helvetica", fontcolor="black", fontsize=10.0, color="black", arrowhead=open];
+	c72:p -> c82:p [taillabel="", label="", headlabel="", fontname="Helvetica", fontcolor="black", fontsize=10.0, color="black", arrowhead=open];
 	// bohnanza.game.CardList<E extends bohnanza.game.Card<?>> NAVASSOC bohnanza.game.Card<E>
-	c76:p -> c73:p [taillabel="", label="", headlabel="*", fontname="Helvetica", fontcolor="black", fontsize=10.0, color="black", arrowhead=open];
+	c78:p -> c75:p [taillabel="", label="", headlabel="*", fontname="Helvetica", fontcolor="black", fontsize=10.0, color="black", arrowhead=open];
 	// java.util.Observable
-	c124 [label=<<table title="java.util.Observable" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/Observable.html">
+	c126 [label=<<table title="java.util.Observable" border="0" cellborder="1" cellspacing="0" cellpadding="2" port="p" href="http://java.sun.com/j2se/1.4.2/docs/api/java/util/Observable.html">
 		<tr><td><table border="0" cellspacing="0" cellpadding="1">
 <tr><td align="center" balign="center"> Observable </td></tr>
 		</table></td></tr>

@@ -4,7 +4,7 @@
         <javadoc 
         	access="public"
             additionalparam="
-        	     -views CardGraph.java CreatorGraph.java PlayerGraph.java StateGraph.java ModuleGraph.java
+        	     -views CardGraph.java CreatorGraph.java PlayerGraph.java StateGraph.java ModuleGraph.java MVCGraph.java
                  -output graph.dot
                  -d doc/umlgraph
                  -horizontal 
@@ -21,6 +21,7 @@
             src/bohnanza/umlgraph/PlayerGraph.java,
             src/bohnanza/umlgraph/StateGraph.java,
             src/bohnanza/umlgraph/Graph.java,
+            src/bohnanza/umlgraph/MVCGraph.java,
         	src/bohnanza/Bohnanza.java,
 			src/bohnanza/game/Bean.java,
 			src/bohnanza/game/player/Hand.java,

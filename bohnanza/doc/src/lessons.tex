@@ -1,0 +1,22 @@
+\section{lessons learned}
+Only rather late in the development process we came to the conclusion that our implementation was hard to test. Should we have used a Test
+Driven Development we would have come to the conclusion to use dependency injection much earlier. So on the principle of making testable
+code we might have failed, but we learned. Now we know that dependency injection is key to making testable code we do not think TDD is key
+we find that sometimes implementing first and then generate a unit test to some degree can be just as convenient.
+
+Some good principle we have learned came from using tools. After we installed moreunit it suggested to use the Mockito framework. This
+allowed us to easily mock classes such as the view. Instead of subtyping a view class we could simply invoke \texttt{View view =
+mock(View.class);} and \texttt{when(view.getOptionsFromHand())} \\ \texttt{.thenReturn(new ArrayList<Bean>());}. But more importantly what
+we learned is that one should not do partial mocking. That is either one should mocking everything of a class or nothing. Partial mocking is
+done by mocking one method and invoke the real implementation of an other method. Mockito warns the developer when he/she uses partial
+mocking. Since mocking does not allow assigning values to private fields of mocked objects one has to \emph{verify} behaviour. In Mockito
+this can be done with the \texttt{verify} method, e.g. \texttt{verify(discardPile, atLeastOnce()).add(new BlackEyed());}. For verifying
+advanced argument captors can be used and asserting that such a captor contains a certain value.
+
+Another good principle we have learned came from using Checkstyle. Checkstyle warned us about the fact that a method should either be final
+or abstract, which we discussed earlier.
+
+Furthermore we have learned there is only one good free and open source tool for generating class diagrams. This tool is called UMLGraph and
+uses Java classes for specifying -- with visibility parameters -- certain \emph{view}s on your design. To generate these diagrams one has to
+pass a custom doclet to the javadoc command. Visual Paradigm \footnote{http://www.visual-paradigm.com/} is a closed source and costly
+alternative which also supports round-tripping which is very convenient for larger projects.

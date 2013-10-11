@@ -1,5 +1,5 @@
 #TeXlipse project settings
-#Fri Oct 04 12:18:48 CEST 2013
+#Tue Oct 08 10:34:07 CEST 2013
 markTmpDer=true
 builderNum=2
 outputDir=bin/
@@ -7,8 +7,8 @@ makeIndSty=
 bibrefDir=
 outputFormat=pdf
 tempDir=tmp
-mainTexFile=assignment-doc.tex
-outputFile=assignment-doc.pdf
+mainTexFile=psdreport.tex
+outputFile=psdreport.pdf
 langSpell=en
 markDer=true
 srcDir=src/

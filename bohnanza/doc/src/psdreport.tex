@@ -4,7 +4,7 @@
 % This is a simple template for a LaTeX document using the "article" class.
 % See "book", "report", "letter" for other types of document.
 
-\documentclass[11pt]{article} % use larger type; default would be 10pt
+\documentclass[11pt]{article} % use larger type; default would be 10pt 
 
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 
@@ -45,6 +45,15 @@
 \usepackage{dot2texi}
 \usepackage{graphicx}
 
+\lstset{
+basicstyle=\small\sffamily,
+numbers=left,
+numberstyle=\tiny,
+frame=tb,
+columns=fullflexible,
+showstringspaces=false
+}
+
 % These packages are all incorporated in the memoir class to one degree or another...
 
 \input{glossary} 
@@ -84,14 +93,14 @@
 \input{design}  
 \input{test} 
 \input{process} 
+\input{lessons}
 \glsaddall
-
 \glossarystyle{superheader} 
 \printglossaries
 
-\input{appendix}
+% \input{appendix}
 
-\bibliographystyle{plain} 
-\bibliography{references} 
+% \bibliographystyle{plain} 
+% \bibliography{references} 
 
 \end{document}

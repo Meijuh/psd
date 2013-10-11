@@ -47,6 +47,5 @@ public class FirstTurn extends GameState {
                 Fail.getInstance().setException(e);
             }
         }
-
     }
 }
