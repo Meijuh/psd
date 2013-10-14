@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.9.11)  11 OCT 2013 16:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.9.11)  14 OCT 2013 15:02
 entering extended mode
  restricted \write18 enabled.
  Source specials enabled.
@@ -1117,8 +1117,8 @@ Package: moreverb 2008/06/03 v2.3a `more' verbatim facilities
 \listing@line=\count184
 )
 \verbatim@out=\write5
-runsystem(echo 'write18-test-201310111005'>"psdreport.w18")...disabled (restric
-ted).
+runsystem(echo 'write18-test-20131014902'>"psdreport.w18")...disabled (restrict
+ed).
 
 
 
@@ -1126,12 +1126,7 @@ Package dot2texi Warning: Shell escape not enabled.
 (dot2texi)                You'll need to convert the graphs yourself..
 
 \c@dtt@fignum=\count185
-) (./glossary.tex)
-\glo@main@file=\write6
-\openout6 = `psdreport.glo'.
-
-Package glossaries Info: Writing glossary file psdreport.glo on input line 60.
- (/usr/share/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+) (/usr/share/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
 \fancy@headwidth=\skip78
 \f@ncyO@elh=\skip79
 \f@ncyO@erh=\skip80
@@ -1336,49 +1331,51 @@ LaTeX Font Info:    Try loading font information for U+stmry on input line 90.
 
 (/usr/share/texmf-dist/tex/latex/stmaryrd/Ustmry.fd) (./goals.tex [1
 
-\openout4 = `psdreport.ist'.
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) [2] (./design.tex
-<../img/Mvc.png, id=21, 981.6675pt x 540.0175pt>
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) (./design.tex
+<../img/Mvc.png, id=17, 981.6675pt x 540.0175pt>
 File: ../img/Mvc.png Graphic file (type png)
  <use ../img/Mvc.png>
 Package pdftex.def Info: ../img/Mvc.png used on input line 22.
 (pdftex.def)             Requested size: 418.25368pt x 230.07707pt.
- [3 <../img/Mvc.png>] <../umlgraph/CardGraph.pdf, id=28, 728.7225pt x 712.6625p
-t>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[2] <../umlgraph/CardGraph.pdf, id=23, 728.7225pt x 712.6625pt>
 File: ../umlgraph/CardGraph.pdf Graphic file (type pdf)
 
 <use ../umlgraph/CardGraph.pdf>
-Package pdftex.def Info: ../umlgraph/CardGraph.pdf used on input line 41.
+Package pdftex.def Info: ../umlgraph/CardGraph.pdf used on input line 43.
 (pdftex.def)             Requested size: 418.25368pt x 409.02744pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<../umlgraph/CreatorGraph.pdf, id=29, 578.16pt x 658.46pt>
+<../umlgraph/CreatorGraph.pdf, id=24, 578.16pt x 658.46pt>
 File: ../umlgraph/CreatorGraph.pdf Graphic file (type pdf)
 
 <use ../umlgraph/CreatorGraph.pdf>
-Package pdftex.def Info: ../umlgraph/CreatorGraph.pdf used on input line 47.
+Package pdftex.def Info: ../umlgraph/CreatorGraph.pdf used on input line 49.
 (pdftex.def)             Requested size: 418.25368pt x 476.34143pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[3 <../img/Mvc.png>]
 <../umlgraph/PlayerGraph.pdf, id=30, 371.3875pt x 333.245pt>
 File: ../umlgraph/PlayerGraph.pdf Graphic file (type pdf)
 
 <use ../umlgraph/PlayerGraph.pdf>
-Package pdftex.def Info: ../umlgraph/PlayerGraph.pdf used on input line 61.
+Package pdftex.def Info: ../umlgraph/PlayerGraph.pdf used on input line 63.
 (pdftex.def)             Requested size: 418.25368pt x 375.30647pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[4] [5 <../umlgraph/CardGraph.pdf>]
+[4 <../umlgraph/CardGraph.pdf>] [5 <../umlgraph/CreatorGraph.pdf>]
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2013/08/26 1.5b listings language file
-) [6 <../umlgraph/CreatorGraph.pdf>]
+)
 LaTeX Font Info:    Try loading font information for OMS+cmss on input line 82.
 
 LaTeX Font Info:    No file OMScmss.fd. on input line 82.
@@ -1396,57 +1393,79 @@ LaTeX Font Warning: Font shape `OML/cmss/m/n' undefined
 (Font)              using `OML/cmm/m/it' instead
 (Font)              for symbol `textgreater' on input line 84.
 
-[7 <../umlgraph/PlayerGraph.pdf>]
-<../umlgraph/StateGraph.pdf, id=83, 529.98pt x 441.65pt>
+[6 <../umlgraph/PlayerGraph.pdf>]
+<../umlgraph/StateGraph.pdf, id=79, 529.98pt x 441.65pt>
 File: ../umlgraph/StateGraph.pdf Graphic file (type pdf)
 
 <use ../umlgraph/StateGraph.pdf>
-Package pdftex.def Info: ../umlgraph/StateGraph.pdf used on input line 110.
+Package pdftex.def Info: ../umlgraph/StateGraph.pdf used on input line 115.
 (pdftex.def)             Requested size: 418.25368pt x 348.54924pt.
- [8 <../umlgraph/StateGraph.pdf>] [9]
-Overfull \hbox (0.17505pt too wide) in paragraph at lines 172--173
-[][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-<../umlgraph/ModuleGraph.pdf, id=100, 457.71pt x 173.64874pt>
-File: ../umlgraph/ModuleGraph.pdf Graphic file (type pdf)
-
-<use ../umlgraph/ModuleGraph.pdf>
-Package pdftex.def Info: ../umlgraph/ModuleGraph.pdf used on input line 186.
-(pdftex.def)             Requested size: 418.25368pt x 158.68565pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./test.tex [10] [11 <../umlgraph/ModuleGraph.pdf>]
-<../img/coverage.png, id=117, 1168.365pt x 574.145pt>
+[7] [8 <../umlgraph/StateGraph.pdf>]
+Overfull \hbox (5.69344pt too wide) in paragraph at lines 153--161
+\OT1/cmr/m/n/10.95 and de-fine other classes to in-ject, note that Bohnan-zaMod
+-ule ex-tends the \OT1/cmtt/m/n/10.95 AbstractModule
+ []
+
+
+Overfull \hbox (0.17505pt too wide) in paragraph at lines 179--180
+[][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[9] <../umlgraph/ModuleGraph.pdf, id=100, 457.71pt x 173.64874pt>
+File: ../umlgraph/ModuleGraph.pdf Graphic file (type pdf)
+
+<use ../umlgraph/ModuleGraph.pdf>
+Package pdftex.def Info: ../umlgraph/ModuleGraph.pdf used on input line 193.
+(pdftex.def)             Requested size: 418.25368pt x 158.68565pt.
+) (./test.tex [10 <../umlgraph/ModuleGraph.pdf>] <../img/coverage.png, id=114, 
+1168.365pt x 574.145pt>
 File: ../img/coverage.png Graphic file (type png)
 
 <use ../img/coverage.png>
-Package pdftex.def Info: ../img/coverage.png used on input line 30.
+Package pdftex.def Info: ../img/coverage.png used on input line 34.
 (pdftex.def)             Requested size: 418.25368pt x 205.53563pt.
 
-<../img/coverage-std.png, id=118, 1168.365pt x 990.70125pt>
+<../img/coverage-std.png, id=115, 1168.365pt x 990.70125pt>
 File: ../img/coverage-std.png Graphic file (type png)
 
 <use ../img/coverage-std.png>
-Package pdftex.def Info: ../img/coverage-std.png used on input line 36.
+Package pdftex.def Info: ../img/coverage-std.png used on input line 40.
 (pdftex.def)             Requested size: 418.25368pt x 354.65675pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./process.tex) (./lessons.tex [12 <../img/coverage.png>] [13 <../img/coverag
-e-std.png>]) (./psdreport.gls [14]) [15] (./psdreport.aux)
+) (./process.tex [11 <../img/coverage.png>] [12 <../img/coverage-std.png>])
+(./lessons.tex
+Overfull \hbox (42.39528pt too wide) in paragraph at lines 7--22
+\OT1/cmr/m/n/10.95 able. In-stead we im-ple-mented meth-ods di-rectly in the \O
+T1/cmtt/m/n/10.95 Player\OT1/cmr/m/n/10.95 , such that \OT1/cmtt/m/n/10.95 Play
+er.getBeanField()
+ []
+
+[13])
+
+Package glossaries Warning: \makeglossaries hasn't been used,
+the glossaries will not be updated.
+
+
+Package glossaries Warning: No \printglossary or \printglossaries found.
+This document will not have a glossary.
+
+[14] (./psdreport.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 20159 strings out of 493311
- 332284 string characters out of 6143650
- 441136 words of memory out of 5000000
- 23102 multiletter control sequences out of 15000+600000
+ 20092 strings out of 493311
+ 331412 string characters out of 6143650
+ 441311 words of memory out of 5000000
+ 23042 multiletter control sequences out of 15000+600000
  18021 words of font info for 69 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  56i,12n,78p,1465b,1856s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1465,10 +1484,10 @@ type1/public/amsfonts/cm/cmti10.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sfrm10
 95.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/t
 exmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on psdreport.pdf (15 pages, 488116 bytes).
+Output written on psdreport.pdf (14 pages, 488638 bytes).
 PDF statistics:
- 186 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
+ 183 PDF objects out of 1000 (max. 8388607)
+ 127 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  53 words of extra memory for PDF output out of 10000 (max. 10000000)
 

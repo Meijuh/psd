@@ -1,25 +1,39 @@
-\section{lessons learned}
+\subsection{lessons learned}
 Only rather late in the development process we came to the conclusion that our implementation was hard to test. Should we have used a Test
 Driven Development approach we would have come to the conclusion to use dependency injection much earlier. So on the principle of making
 testable code we might have failed, but we learned. We know that dependency injection is key to making testable code, however we do not
-think TDD; sometimes implementing first and then generate a unit test to some degree can be just as convenient.
+think TDD key to software development; sometimes implementing first and then generate a unit test to some degree can be just as convenient.
 
-In the last paragraph of subsection \ref{ssec:criteria} we show that heuristic Uses Relationship 1 is not applicable. Mockito does not
-support injecting mocked objects into other mocked objects -- it is considered bad practise. We therefore make the observation that the
-heuristic is not applicable where mocking is necessary.
+Minimizing the amount of classes with which a class colaborates is a good design goal (heuristic \emph{Uses Relationship
+one} (UR1) from lecture two). One example where we tried to apply this was by introducing classes in the model which do have a role in the
+game such as a player area but no real behaviour. A class representing this role (the player area) would have methods to perform atomic
+operations making it harder to allow incorrect behaviour.
+The class would have bean fields, a draw area, a keep area etcetera, but not the discard pile. An atomic operation would be to plant a card from the draw area into a bean field. An
+operation a player area is not capable of is to move a card from the bean field to the discard pile. This is an advantage because it
+prevents incorrect behaviour. However we chose not to implement these kinds of classes because it makes it hard to test and proxy methods like
+\texttt{Player.getPlayerArea().getFarm().getBeanField()} make the source code unreadable. Instead we implemented methods directly in the
+\texttt{Player}, such that \texttt{Player.getBeanField()} is available. We changed this by refactoring in Eclipse; it allowed us to move
+methods and then remove classes such as the player area. One major reason why applying heuristic UR1 is not practical is that Mockito does
+not support injecting mocked objects into other mocked objects -- it is considered bad practise. For example if we want to test if a keep area has certain cards we have to mock both the player area and the keep area and then inject the keep area in the player
+area. We therefore make the observation that the heuristic is not applicable where mocking is necessary. Our solution has of course one
+major disadvantage, that is any \texttt{CardList} such as a \texttt{BeanField} exposes a list of cards it contains. Exposing this list
+allows to change the order of cards and even remove them. That is why every \texttt{CardList} exposes only a method that returns a (new)
+unmodifiable list of cards.
 
-Some good principle we have learned came from using tools. After we installed moreunit it suggested to use the Mockito framework. This
+Some good principles we have learned came from using tools. After we installed moreunit it suggested to use the Mockito framework. This
 allowed us to easily mock classes such as the view. Instead of subtyping a view class we could simply invoke \texttt{View view =
 mock(View.class);} and \texttt{when(view.getOptionsFromHand())} \\ \texttt{.thenReturn(new ArrayList<Bean>());}. But more importantly what
 we learned is that one should not do partial mocking. That is either one should mock everything of a class or nothing. Partial mocking is
-done by mocking one method and invoke the real implementation of an other method. Mockito warns the developer when he/she uses partial
+done by mocking one method and invoke the real implementation of another method. Mockito warns the developer when he/she uses partial
 mocking.
 
-Since mocking does not allow assigning values to private fields of mocked objects one has to \emph{verify} behaviour. In Mockito
+Because mocking does not allow assigning values to private fields of mocked objects one has to \emph{verify} behaviour. In Mockito
 this can be done with the \texttt{verify} method, e.g. \texttt{verify(discardPile, atLeastOnce()).add(new BlackEyed());}. For verifying
-advanced argument captors can be used and asserting that such a captor contains a certain value. Some developers circumvent the need for
+advanced argument captors can be used and asserting that such a captor contains a certain value. 
+
+Some developers circumvent the need for
 partial mocking by using a tool called PowerMock\footnote{https://code.google.com/p/powermock/}. PowerMock injects bytecode at runtime to
-test certain things. From what we have seen if one has to use PowerMock, either your design is flawed or one is dependent on external
+test certain things. From what we have seen if one has to use PowerMock, either the design is flawed or one is dependent on external
 libraries.
 
 Another good principle we have learned came from using Checkstyle. Checkstyle warned us about the fact that a method should either be final
@@ -27,5 +41,5 @@ or abstract, which we discussed earlier.
 
 Furthermore we have learned there is only one good free and open source tool for generating class diagrams. This tool is called UMLGraph and
 uses Java classes for specifying -- with visibility parameters -- certain \emph{view}s on your design. To generate these diagrams one has to
-pass a custom doclet to the javadoc command. Additionally Visual Paradigm\footnote{http://www.visual-paradigm.com/} is a closed source and
+pass a custom doclet to the javadoc command. Additionally, Visual Paradigm\footnote{http://www.visual-paradigm.com/} is a closed source and
 costly alternative which also supports round-tripping which is very convenient for larger projects.

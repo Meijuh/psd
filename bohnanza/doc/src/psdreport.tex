@@ -11,7 +11,7 @@
 %%% Examples of Article customizations
 % These packages are optional, depending whether you want the features they provide.
 % See the LaTeX Companion or other references for full information.
-
+ 
 %%% PAGE DIMENSIONS
 \usepackage{geometry} % to change the page dimensions
 \geometry{a4paper} % or letterpaper (US) or a5paper or....
@@ -56,8 +56,8 @@ showstringspaces=false
 
 % These packages are all incorporated in the memoir class to one degree or another...
 
-\input{glossary} 
-\makeglossaries 
+% \input{glossary} 
+% \makeglossaries 
 
 %%% HEADERS & FOOTERS
 \usepackage{fancyhdr} % This should be set AFTER setting up the page geometry
@@ -90,14 +90,13 @@ showstringspaces=false
 \maketitle
  
 \input{goals}
-\newpage
 \input{design}  
 \input{test} 
 \input{process} 
 \input{lessons}
-\glsaddall
-\glossarystyle{superheader} 
-\printglossaries
+% \glsaddall
+% \glossarystyle{superheader} 
+% \printglossaries
 
 % \input{appendix}
 

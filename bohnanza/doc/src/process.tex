@@ -1,7 +1,7 @@
 \section{development process}
 First we drew a class diagram using Software Ideas Modeler\footnote{http://www.softwareideas.net/} including methods and attributes. Using
 this diagram we generated Java class skeletons. Soon we came to the conclusion that many parts of our application could not be
-tested well, because we tried to protect it from incorrect behaviour to much. 
+tested well, because we tried to protect it from incorrect behaviour to much by minimizing the amount of collaborations.
 
 % This involved creating specific instances of classes in
 % constructors and hiding away to much by creating wrapper classes. One example of such a wrapper class is a \texttt{PlayerArea} which
@@ -10,8 +10,9 @@ tested well, because we tried to protect it from incorrect behaviour to much.
 % testable. We removed the wrapper classes and used a dependency injection framework instead.
 
 After standard bohnanza was implemented we began working on high bohn. We decided we could use the dependency injection framework to create
-the three modules. At this moment in time we saw that in order to have both the \gls{std} and \gls{hb} implementation we needed three
-instead of two modules. The main reason is that you should design for extension as suggested by Checkstyle. 
+the three modules. At this moment in time we saw that in order to have both the standard and high bohn implementation we needed three
+instead of two modules. The main reason is that you should design for extension as suggested by Checkstyle (see subsection
+\ref{ssec:flexibility}). 
 % This means one should
 % explicitly make some methods abstract which should be implemented by a more concrete class. Our first intention was to just override some
 % methods which needed different behaviour in high bohn than that in standard bohnanza.
@@ -22,5 +23,5 @@ UmlGraph \footnote{http://www.umlgraph.org/doc/indexw.html} to generate necessar
 Our design phase was rather short; we drew only a class diagram. In a bachelor course we learned proper software design with several phases
 such as domain analysis, domain models, high level designs, detailed designs and more. The class diagram we drew for bohnanza is most
 reasonably a detailed design. We find that the method learned during the bachelor course is well suited for creating complex software systems,
-but since this approach does not fit well in the required report (it should focus on the detailed design) we decided to focus more on
-explaining design decisions and applied techniques.
+but since this approach does not fit well in the required report for this assignment (it should focus on the detailed design) we decided to
+focus more on explaining design decisions and applied techniques.

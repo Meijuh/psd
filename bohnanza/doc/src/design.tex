@@ -2,35 +2,37 @@
 
 Our design is split up in three modules.
 \begin{description}
-    \item[bohnanza] {Mostly an abstract base module that contains logic for both the \gls{std} and
-    \gls{hb} game.}
+    \item[bohnanza] {Mostly an abstract base module that contains logic for both the std and
+    hb game.}
     \item[bohnanza-std] {A concrete module that uses the \emph{bohnanza} module in order to play
-    the \gls{std} bohnanza game.}
+    the std bohnanza game.}
     \item[bohnanza-hb] {A concrete module that uses the \emph{bohnanza} module in order to play the
-    \gls{hb} bohnanza game.}
+    hb bohnanza game.}
 \end{description}
 The reason why these elements are composed this way and called modules is a result of the dependency
 injection (Guice\footnote{https://code.google.com/p/google-guice/}) framework we use. This framework supplies abstract module classes which
 need to be implemented. Such a module class contains a set of dependencies. For example the bohnanza module uses an abstract Player class.
-Both the bohnanza-std and bohnanza-hb module use an concrete implementation hereof. Another reason why these modules are composed this way
-is due to the fact that we chose an extension (and the \gls{std} game) should extend classes of the base game and not implement hooks. 
+Both the bohnanza- and bohnanza-hb module use an concrete implementation hereof. Another reason why these modules are composed this way
+is due to the fact that we chose an extension (and the std game) should extend classes of the base game and not implement hooks. 
 
 Every module is designed according to the MVC pattern. The main classes that are involved in the MVC pattern are shown in Figure
 \ref{fig:design:mvc}.
 
  \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../img/Mvc}
-    \caption{Classes involved in MVC}
+    \caption{Classes involved in MVC} 
     \label{fig:design:mvc}
 \end{figure}
 
 The \texttt{GameContext} is the main model class. It contains many assocations to other model classes such as the \texttt{Player}. Many
-model classes are \texttt{Observable} by \texttt{Observer}s such as the \texttt{View} class. This is how the view knows the status of the
-model. We could also have given the \texttt{GameContext} to the \texttt{View}. The \texttt{GameState} is the controller which updates the
-view and the model and is part of a \emph{state} pattern. The controller issues method calls such as \texttt{getOptionsFromHand()} in the
-view and returns a sub set of \texttt{Bean} cards. An alternative to the MVC pattern is
-the Model View Presenter pattern which could have been applied in this context. We chose to keep things simple and focus more on the
-extensibility of bohnanza rather than on implementing other views such as a graphical one. We think that the classic MVC pattern suffices here.
+model classes are \texttt{Observable} by \texttt{Observer}s such as the \texttt{View} class; this is how the view knows the status of the
+model. We could also have given the \texttt{GameContext} to the \texttt{View}.
+
+The \texttt{GameState} is the controller which updates the view and the model and is part of a \emph{state} pattern. The controller issues
+method calls such as \texttt{getOptionsFromHand()} in the view and the method returns a sub set of \texttt{Bean} cards. An alternative to
+the MVC pattern is the Model View Presenter pattern which could have been applied in this context. We chose to keep things simple and focus more on the
+extensibility of bohnanza rather than on implementing other views such as a graphical one. We think that the classic MVC pattern suffices
+here. 
  
 \subsection{Model}
 Three important parts of the model involve the hierarchy of cards (Figure \ref{fig:design:cards}),
@@ -56,7 +58,7 @@ creating multiple instances of a class by means of a \texttt{Provider} class. Us
 did not choose this alternative is because we introduced Guice into our project after we used the factory method pattern and did not want to
 restructure our code. We did however use the provider method for creating \texttt{Player}s as shown in Figure \ref{fig:design:di}, because
 this was the only way to inject these objects into an \texttt{Bohnanza} object.
-
+ 
 \begin{figure}[h!] 
     \includegraphics[width=\textwidth]{../umlgraph/PlayerGraph}
     \caption{Class diagram for the player and association to particular sets of cards}
@@ -66,10 +68,8 @@ this was the only way to inject these objects into an \texttt{Bohnanza} object.
 \newpage
 \subsection{Controller}
 The controller of the game is implemented using a \emph{state} design pattern and is shown in Figure
-\ref{fig:design:controller}. An alternative we could use here is the \emph{strategy} pattern. The strategy pattern is more applicable in
-situations where strategies are chosen at runtime. But more importantly the strategy pattern is used in situation where the result of
-different strategies is the same. In bohnanza the order of states is rather fixed, the order only varies depending on how often the deck is
-shuffled or in case of execeptional behaviour. In case exceptional behaviour occurs in our application the next state is always the
+\ref{fig:design:controller}. In bohnanza the order of states is rather fixed, the order
+only varies depending on how often the deck is shuffled or in case of execeptional behaviour. In case exceptional behaviour occurs in our application the next state is always the
 \texttt{Fail} state. In general the order of states that are executed are \texttt{Prepare} \textrightarrow{} \texttt{FirstTurn}
 \textrightarrow{} \texttt{SecondTurn} \textrightarrow{} \texttt{ThirdTurn} \textrightarrow{} \texttt{FourthTurn} \textrightarrow{}
 \texttt{FirstTurn} \textrightarrow{} \ldots \textrightarrow{} \texttt{End}. A typical implementation of the \texttt{GameState.execute}
@@ -106,6 +106,11 @@ public void execute(GameContext context) {
 }
 \end{lstlisting}
 
+As concrete state classes we could have merged states such as the first turn and second turn. But we split the states the way we did,
+because they form units which can conveniently be tested in isolation. An entirely alternative design pattern for the controller we could
+use here is the \emph{strategy} pattern. The strategy pattern is more applicable in situations where strategies are chosen at runtime. But more importantly
+the strategy pattern is used in situations where the result of different strategies is the same, of course in bohnanza this is not the case. 
+
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../umlgraph/StateGraph}
     \caption{Class diagram for controlling the state of the game}
@@ -132,8 +137,8 @@ Our modules contain the following packages.
 \end{description}
 
 The packages are rather self explanatory. It can be argued however that some packages such as \texttt{bohnanza.game.player} and
-\texttt{bohnanza.game.shared} may be merged. In an early stage of the development we chose to make some classes \emph{package private} such
-that for example only a \texttt{Player} could construct a \texttt{Hand}. This would make sure there can only be as many \texttt{Hand}s in
+\texttt{bohnanza.game.shared} may be merged. We did not do this because in an early stage of the development we chose to make some classes
+\emph{package private} such that for example only a \texttt{Player} could construct a \texttt{Hand}. This would make sure there can only be as many \texttt{Hand}s in
 the game as there are \texttt{Player}s. This design choice was one of the reasons our code was not testable and we had to change the visibility
 parameters to use dependency injection.
 
@@ -147,12 +152,14 @@ module with three players. Parsing command line options is done using the Apache
 \subsubsection{Developer}
 Variability for the developer depends heavily on notion of \emph{dependency injection}. Dependency
 injection is a design pattern that basically involves moving dependency resolution from a particular
-class to a framework dedicated to dependency injection. We use Guice for this. Classes involved with dependency injection are shown in
+class to a framework dedicated to dependency injection. Classes involved with dependency injection are shown in
 Figure \ref{fig:design:di}. If a developer wants another variation of the application the developer can simply extend the
 \texttt{BohnanzaModule} class and define other classes to inject, note that BohnanzaModule
 extends the \texttt{AbstractModule} class from Guice. For example if a \texttt{Hand} object needs
-to behave differently for a particular extension of bohnanza one can extend Hand and
-define the extension in the extension of BohnanzaModule. BohnanzaModule itself is
+to behave differently for a particular extension of bohnanza one can extend the \texttt{Hand} class and
+define the extension in the extension of BohnanzaModule. 
+
+BohnanzaModule itself is
 an abstract class and this class only knows the full list of required dependencies. A concrete class
 such as BohnanzaStdModule implements some methods that return concrete classes as
 dependencies. This relates closely to the \emph{single choice principle}. Listing \ref{lst:di} shows how one can change dependencies using
@@ -180,7 +187,7 @@ We have not really considered an alternative to dependency injection, because to
 for it. There is however the service locater pattern, but both these patterns solve a problem which
 is not that hard, that is injecting instances of some classes in another object instead of
 constructing these instances in that particular object. We found that Guice was a good enough
-framework, so we did not consider an alternate framework.
+framework, so we did not consider an alternate framework. 
 
 \begin{figure}[h!]
     \includegraphics[width=\textwidth]{../umlgraph/ModuleGraph}

@@ -1,41 +1,25 @@
 \section{Design goals}
 \subsection{Criteria}\label{ssec:criteria}
-The importance of particular quality criteria depend on in which environment the application is
-used. This environment also influences the stakeholders; not every category stakeholder is affected
-by the software system. We offer our system open sourced and free of charge
-online.\footnote{https://github.com/Meijuh/psd}. We assume the application is a highly popular one
-and is used among many people. We identify the most important quality criteria for this
+We offer our system open source and free of charge online\footnote{https://github.com/Meijuh/psd}. We assume the application is a highly
+popular one and is used among many people. We identify the most important quality criteria for this
 environment as \emph{extensibility} and \emph{reusability}. The most affected stakeholders are the
 \emph{developers}, \emph{maintainers}, \emph{testers} and \emph{users}.
 
 Extensibility is an external criteria; it is most important for the user. Reusability is more
 important for developers etc. Both criteria are also covered under the term modularity. A key
-feature of bohnanza is to add extensions to the \gls{std} game. Modularity allow the user to easily use one of the many extensions, such
-as High Bohn or spin-offs, such as Al Cabohne. Also, for developers it allows for easy implementations of these extensions.  
+feature of bohnanza is to add extensions to the standard game. Modularity allow the user to easily use one of the many extensions, such
+as High Bohn or spin-offs, such as Al Cabohne. Also, for developers modularity allows for easy implementations of these extensions.
 
-There are two major design decisions that contribute to modularity. First we have three modules
-which are three separate Eclipse projects. One module contains basic objects and method related to
-bohnanza, such as shuffling the discard pile into the draw deck. Another module implements \gls{std} 
-bohnanza without extensions. The last module implements the \gls{hb} extension. All projects can
-of course be tested and compiled individually. The \gls{std} and \gls{hb} extension inherit from the
-base module. The base module provides an abstract class that resolves dependency resolution between
-modules. Both the \gls{std} and the \gls{hb} module implement this class. Making it possible to hide
-some information in modules and should result in understandable modules.
-Second, we had the option to introduce classes in the the model which do have a role in the bohnanza game, such as a player area but no
-real behaviour. A class representing this role would have some proxy methods for retrieving (unmodifiable) lists and other methods to
-perform atomic operations. The class would have bean fields, a draw area etcetera, but not the discard pile. An atomic operation would be
-to plant a card from the draw area into a bean field. An operation a player area is not capable of is to move a card from the bean field to
-the discard pile. This is of course an advantage because it prevents incorrect behaviour. However we chose not to implement these kinds of
-classes because it makes it hard to test and proxy methods like \texttt{Player.getPlayerArea().getFarm().getBeanField()} make the source
-code unreadable. Instead we implemented methods directly in the \texttt{Player}, such that \texttt{Player.getBeanField()} is available. The
-concept discussed here is closely related to the heuristic Uses Relationship one from lecture two. We find that this heuristic makes sense
-but is not applicable here.
-
-\subsection{Flexibility}
+A natural way of decomposing the application into modules to achieve modularity is to provide one base module which contains basic bohnanza
+logic. Another module containing the std bohnanza game and the third module containing the high bohn extension. Using these modules allows us to
+compile and test them separately. Also, to make an extension for bohnanza we can easily extend the base module. Every module is a distinct Eclipse
+project.
+ 
+\subsection{Flexibility}\label{ssec:flexibility}
 Creating flexible software is not easy. Flexibility may introduce risks in software, but it allows for faster adaptation of software when
 external changes are desired. The basic bohnanza module should allow for creating an extension easily. However one should not over-engineer
 software to much. That is, by trying to anticipate what a future release of the software should support. The way we support flexibility in
-the bohnanza game is only for creating extensions of the \gls{std} bohnanza game. These extensions can be created by subtyping certain
+the bohnanza game is only for creating extensions of the standard bohnanza game. These extensions can be created by subtyping certain
 classes in the base module. An alternative would be to supply hooks in our base module. But one can only
 guess if this approach works well with extensions we have not implemented, such as el Cabohne. 
 
